@@ -6,7 +6,7 @@ import { formatMinutes } from "@/lib/duration";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { motion } from "motion/react";
-import { Clock, Dumbbell, Flame, Zap, CalendarCheck } from "lucide-react";
+import { Clock, Dumbbell, Flame, Zap, CalendarCheck, Trophy, Medal } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
 import { StatCard } from "@/components/ui/stat-card";
 import { AnimatedNumber } from "@/components/ui/animated-number";
@@ -197,6 +197,31 @@ export function ReportsClient({ data }: ReportsClientProps) {
     () => new Map(earnedAchievements.map((a) => [a.key, a.earned_at])),
     [earnedAchievements]
   );
+
+  // Personal records — computed from all-time sessions
+  const personalRecords = useMemo(() => {
+    // Most calories burned in a single day
+    const caloriesByDay = new Map<string, number>();
+    // Most workouts in a single day
+    const workoutsByDay = new Map<string, number>();
+    for (const s of sessions) {
+      if (!s.completed_at) continue;
+      const dayKey = getLocalDayKey(s.completed_at, timeZone);
+      caloriesByDay.set(dayKey, (caloriesByDay.get(dayKey) ?? 0) + (s.estimated_calories ?? 0));
+      workoutsByDay.set(dayKey, (workoutsByDay.get(dayKey) ?? 0) + 1);
+    }
+    const bestCalorieDay = [...caloriesByDay.values()].reduce((a, b) => Math.max(a, b), 0);
+    const bestWorkoutDay = [...workoutsByDay.values()].reduce((a, b) => Math.max(a, b), 0);
+
+    return {
+      longestWorkout: allTime.longestSessionMinutes,
+      bestCalorieDay,
+      bestWorkoutDay,
+      totalWorkouts: allTime.workouts,
+      totalMinutes: allTime.minutes,
+      totalCalories: allTime.calories,
+    };
+  }, [sessions, timeZone, allTime]);
 
   const workoutsComparison =
     prevSummary && prevSummary.workouts > 0 && summary.workouts !== prevSummary.workouts
@@ -452,6 +477,66 @@ export function ReportsClient({ data }: ReportsClientProps) {
               )}
             </motion.section>
           </div>
+
+          {/* Personal records */}
+          {(personalRecords.longestWorkout > 0 || personalRecords.bestCalorieDay > 0 || personalRecords.bestWorkoutDay > 0) && (
+            <motion.section variants={item} className="mt-8" aria-label="Personal records">
+              <div className="mb-4 flex items-center gap-2.5">
+                <span className="grid size-9 place-items-center rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-500/10 text-amber-500">
+                  <Trophy className="size-4.5" aria-hidden />
+                </span>
+                <div>
+                  <h3 className="text-sm font-bold text-foreground">Personal Records</h3>
+                  <p className="text-xs text-muted-foreground">Your all-time bests</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                {personalRecords.longestWorkout > 0 && (
+                  <div className="titan-card group relative overflow-hidden p-4">
+                    <span aria-hidden className="absolute -right-4 -top-4 size-16 rounded-full bg-amber-500/10 blur-xl transition-opacity group-hover:opacity-100 opacity-0" />
+                    <span className="relative flex size-8 items-center justify-center rounded-lg bg-amber-500/10">
+                      <Clock className="size-4 text-amber-500" aria-hidden />
+                    </span>
+                    <p className="relative mt-2 text-2xl font-black tabular-nums text-amber-600 dark:text-amber-400">
+                      {formatMinutes(personalRecords.longestWorkout)}
+                    </p>
+                    <p className="relative text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                      Longest workout
+                    </p>
+                  </div>
+                )}
+                {personalRecords.bestCalorieDay > 0 && (
+                  <div className="titan-card group relative overflow-hidden p-4">
+                    <span aria-hidden className="absolute -right-4 -top-4 size-16 rounded-full bg-rose-500/10 blur-xl transition-opacity group-hover:opacity-100 opacity-0" />
+                    <span className="relative flex size-8 items-center justify-center rounded-lg bg-rose-500/10">
+                      <Flame className="size-4 text-rose-500" aria-hidden />
+                    </span>
+                    <p className="relative mt-2 text-2xl font-black tabular-nums text-rose-600 dark:text-rose-400">
+                      {personalRecords.bestCalorieDay.toLocaleString()}
+                    </p>
+                    <p className="relative text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                      Best day (kcal)
+                    </p>
+                  </div>
+                )}
+                {personalRecords.bestWorkoutDay > 1 && (
+                  <div className="titan-card group relative overflow-hidden p-4">
+                    <span aria-hidden className="absolute -right-4 -top-4 size-16 rounded-full bg-violet-500/10 blur-xl transition-opacity group-hover:opacity-100 opacity-0" />
+                    <span className="relative flex size-8 items-center justify-center rounded-lg bg-violet-500/10">
+                      <Medal className="size-4 text-violet-500" aria-hidden />
+                    </span>
+                    <p className="relative mt-2 text-2xl font-black tabular-nums text-violet-600 dark:text-violet-400">
+                      {personalRecords.bestWorkoutDay}
+                    </p>
+                    <p className="relative text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                      Most in a day
+                    </p>
+                  </div>
+                )}
+              </div>
+            </motion.section>
+          )}
 
           {/* Achievements gallery */}
           <motion.div variants={item} className="mt-10">

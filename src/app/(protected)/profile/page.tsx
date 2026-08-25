@@ -75,6 +75,14 @@ const item = {
 
 const lift = { whileHover: { y: -4 }, transition: { type: "spring" as const, stiffness: 300, damping: 22 } };
 
+function getMotivation(streak: number, sessions: number): string {
+  if (sessions === 0) return "Ready to start your journey?";
+  if (streak >= 7) return "Absolute machine. Keep the fire burning.";
+  if (streak >= 3) return `${streak} days strong. You're on a roll.`;
+  if (streak >= 1) return "Great start — consistency is everything.";
+  return "Every workout counts. Let's go.";
+}
+
 function getInitials(name: string | undefined | null): string {
   const parts = (name ?? "").trim().split(/\s+/).filter(Boolean);
   if (parts.length === 0) return "?";
@@ -92,7 +100,6 @@ function formatMemberSince(iso: string | null | undefined): string | null {
 export default function ProfilePage() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [fitnessProfile, setFitnessProfile] = useState<FitnessProfile | null>(null);
-  const [email, setEmail] = useState("");
   const [currentWeightKg, setCurrentWeightKg] = useState<number | null>(null);
   const [startWeightKg, setStartWeightKg] = useState<number | null>(null);
   // Editable body metrics (age / height / current weight).
@@ -156,7 +163,6 @@ export default function ProfilePage() {
 
       setProfile(prof as Profile | null);
       setFitnessProfile(fp as FitnessProfile | null);
-      setEmail(user.email ?? "");
       const latestKg = latestWeight?.weight_kg != null ? Number(latestWeight.weight_kg) : null;
       setCurrentWeightKg(latestKg);
       setStartWeightKg(firstWeight?.weight_kg ?? null);
@@ -343,32 +349,42 @@ export default function ProfilePage() {
   }
 
   const displayName = profile?.full_name?.trim() || "Athlete";
+  const firstName = displayName.split(/\s+/)[0];
   const memberSince = formatMemberSince(profile?.created_at);
+  const weightDelta = startWeightKg != null && currentWeightKg != null ? startWeightKg - currentWeightKg : 0;
 
   const snapshotTiles = [
     {
       icon: Flame,
       tint: "bg-orange-500/12 text-orange-500",
+      valueTint: "text-orange-500",
       label: "Current streak",
-      value: `${streak} ${streak === 1 ? "day" : "days"}`,
+      value: `${streak}`,
+      suffix: streak === 1 ? " day" : " days",
     },
     {
       icon: Dumbbell,
       tint: "bg-emerald-500/12 text-emerald-500",
+      valueTint: "text-emerald-500",
       label: "Workouts done",
       value: String(training.sessions),
+      suffix: "",
     },
     {
       icon: Timer,
       tint: "bg-sky-500/12 text-sky-500",
+      valueTint: "text-sky-500",
       label: "Time trained",
-      value: `${training.minutes.toLocaleString()} min`,
+      value: training.minutes.toLocaleString(),
+      suffix: " min",
     },
     {
       icon: TrendingDown,
       tint: "bg-violet-500/12 text-violet-500",
+      valueTint: "text-violet-500",
       label: "Weight to go",
-      value: goalProgress ? (goalProgress.reached ? "Reached!" : `${goalProgress.remaining} kg`) : "—",
+      value: goalProgress ? (goalProgress.reached ? "Reached!" : goalProgress.remaining) : "—",
+      suffix: goalProgress && !goalProgress.reached ? " kg" : "",
     },
   ];
 
@@ -432,9 +448,9 @@ export default function ProfilePage() {
 
             <div className="min-w-0 flex-1">
               <h2 className="truncate text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
-                {displayName}
+                {firstName}
               </h2>
-              <p className="mt-0.5 truncate text-sm text-zinc-400">{email}</p>
+              <p className="mt-0.5 truncate text-sm text-zinc-400">{getMotivation(streak, training.sessions)}</p>
               <div className="mt-3 flex flex-wrap items-center gap-2">
                 {fitnessProfile && (
                   <span className="inline-flex items-center gap-1.5 rounded-full bg-orange-500/15 px-3 py-1 text-xs font-bold uppercase tracking-wider text-orange-300 ring-1 ring-inset ring-orange-500/30">
@@ -456,13 +472,33 @@ export default function ProfilePage() {
                 )}
               </div>
             </div>
+
+            {/* Weight delta — the big number */}
+            {goalProgress && (
+              <div className="hidden shrink-0 text-right sm:block">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
+                  {goalProgress.reached ? "Goal reached" : "Total lost"}
+                </span>
+                <p className="mt-0.5 flex items-baseline justify-end gap-1">
+                  <span className="text-5xl font-black tabular-nums leading-none text-white">
+                    {goalProgress.reached ? goalProgress.remaining : weightDelta > 0 ? `−${weightDelta.toFixed(1)}` : "0.0"}
+                  </span>
+                  <span className="text-base font-bold text-zinc-400">kg</span>
+                </p>
+                {goalProgress.reached ? (
+                  <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-400">
+                    <Check className="size-3" /> Target hit
+                  </span>
+                ) : null}
+              </div>
+            )}
           </div>
         </div>
       </motion.section>
 
       {/* Training snapshot */}
       <motion.section variants={item} aria-label="Training snapshot" className="mb-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
-        {snapshotTiles.map(({ icon: Icon, tint, label, value }) => (
+        {snapshotTiles.map(({ icon: Icon, tint, valueTint, label, value, suffix }) => (
           <motion.div key={label} {...lift} className="titan-card group relative overflow-hidden p-4">
             <span
               aria-hidden
@@ -474,8 +510,9 @@ export default function ProfilePage() {
             <span className={cn("relative grid size-9 place-items-center rounded-xl", tint)}>
               <Icon className="size-4.5" aria-hidden />
             </span>
-            <p className="relative mt-2.5 truncate text-lg font-black tabular-nums leading-tight text-foreground">
+            <p className={cn("relative mt-2.5 text-2xl font-black tabular-nums leading-tight", valueTint)}>
               {value}
+              <span className="text-sm font-bold text-muted-foreground">{suffix}</span>
             </p>
             <p className="relative text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
               {label}
@@ -483,6 +520,91 @@ export default function ProfilePage() {
           </motion.div>
         ))}
       </motion.section>
+
+      {/* Activity heatmap */}
+      {completionDates.length > 0 && (
+        <motion.section variants={item} aria-label="Activity" className="titan-card mb-4 p-5 sm:p-6">
+          <div className="mb-4 flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <span className="grid size-9 place-items-center rounded-xl bg-orange-500/12 text-orange-500">
+                <CalendarDays className="size-4.5" aria-hidden />
+              </span>
+              <div>
+                <h3 className="text-sm font-bold text-foreground">Activity</h3>
+                <p className="text-xs text-muted-foreground">Workout consistency over 8 weeks</p>
+              </div>
+            </div>
+            <span className="text-xs font-bold text-orange-500">
+              {(() => {
+                const now2 = new Date();
+                const weeks2: string[][] = [];
+                const dow2 = (now2.getDay() + 6) % 7;
+                for (let w = 7; w >= 0; w--) {
+                  const week2: string[] = [];
+                  for (let d = 0; d < 7; d++) {
+                    const dt = new Date(now2);
+                    dt.setDate(dt.getDate() - (w * 7 + (dow2 - d)));
+                    week2.push(dt.toISOString().slice(0, 10));
+                  }
+                  weeks2.push(week2);
+                }
+                const actDays = new Set(completionDates.map((d) => d.slice(0, 10)));
+                let count = 0;
+                for (const wk of weeks2) for (const dk of wk) if (actDays.has(dk)) count++;
+                return `${count} / ${weeks2.length * 7}`;
+              })()}
+            </span>
+          </div>
+
+          <div className="flex gap-1.5">
+            <div className="flex flex-col gap-1 pr-1.5">
+              {["M", "T", "W", "T", "F", "S", "S"].map((label, i) => (
+                <span key={i} className="flex h-[14px] items-center text-[9px] font-bold text-muted-foreground/50">
+                  {label}
+                </span>
+              ))}
+            </div>
+            {(() => {
+              const now2 = new Date();
+              const dow2 = (now2.getDay() + 6) % 7;
+              const weeks2: string[][] = [];
+              for (let w = 7; w >= 0; w--) {
+                const week2: string[] = [];
+                for (let d = 0; d < 7; d++) {
+                  const dt = new Date(now2);
+                  dt.setDate(dt.getDate() - (w * 7 + (dow2 - d)));
+                  week2.push(dt.toISOString().slice(0, 10));
+                }
+                weeks2.push(week2);
+              }
+              const actDays = new Set(completionDates.map((d) => d.slice(0, 10)));
+              const todayStr = now2.toISOString().slice(0, 10);
+              return weeks2.map((week2, wi) => (
+                <div key={wi} className="flex flex-col gap-1">
+                  {week2.map((dayKey, di) => {
+                    const active = actDays.has(dayKey);
+                    const isFuture = dayKey > todayStr;
+                    return (
+                      <span
+                        key={di}
+                        className={cn(
+                          "size-[14px] rounded-[3px] transition-all duration-200",
+                          isFuture
+                            ? "bg-secondary/30"
+                            : active
+                              ? "bg-orange-500 shadow-sm shadow-orange-500/40 hover:scale-125"
+                              : "bg-secondary/70 hover:bg-secondary"
+                        )}
+                        title={dayKey}
+                      />
+                    );
+                  })}
+                </div>
+              ));
+            })()}
+          </div>
+        </motion.section>
+      )}
 
       {/* Goal progress */}
       {goalProgress && fitnessProfile && (
@@ -508,14 +630,16 @@ export default function ProfilePage() {
             aria-valuemin={0}
             aria-valuemax={100}
             aria-label="Progress toward target weight"
-            className="mt-4 h-3 overflow-hidden rounded-full bg-secondary"
+            className="mt-4 h-4 overflow-hidden rounded-full bg-secondary"
           >
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${goalProgress.pct}%` }}
               transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
-              className="h-full rounded-full bg-gradient-to-r from-orange-600 via-orange-500 to-amber-400 shadow-inner shadow-orange-900/20"
-            />
+              className="relative h-full rounded-full bg-gradient-to-r from-orange-600 via-orange-500 to-amber-400 shadow-inner shadow-orange-900/20"
+            >
+              <span aria-hidden className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-[shimmer_2s_ease-in-out_infinite]" />
+            </motion.div>
           </div>
 
           <p className="mt-2.5 flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
@@ -543,7 +667,7 @@ export default function ProfilePage() {
                 <Icon className="size-3.5 text-energy" aria-hidden />
                 {label}
               </dt>
-              <dd className="mt-1 truncate text-base font-extrabold tabular-nums text-foreground">
+              <dd className="mt-1.5 text-xl font-black tabular-nums text-foreground">
                 {value}
               </dd>
             </motion.div>

@@ -38,7 +38,7 @@ export default function DeleteAccountButton() {
     return (
       <button
         onClick={() => setShowConfirm(true)}
-        className="flex w-full items-center gap-3 rounded-xl border border-destructive/25 bg-destructive/5 px-4 py-3 text-sm font-semibold text-destructive transition-colors hover:bg-destructive/10"
+        className="flex w-full items-center gap-3 rounded-xl border border-destructive/25 bg-destructive/5 px-4 py-3 text-sm font-semibold text-destructive transition-all hover:border-destructive/40 hover:bg-destructive/10"
       >
         <Trash2 className="size-4.5" aria-hidden />
         Delete account
@@ -65,7 +65,7 @@ export default function DeleteAccountButton() {
           value={confirmText}
           onChange={(e) => setConfirmText(e.target.value)}
           autoComplete="off"
-          className="w-full rounded-xl border border-border bg-card px-3 py-2 text-sm text-foreground outline-none transition-colors focus:border-destructive focus:ring-2 focus:ring-destructive/20"
+          className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm text-foreground outline-none transition-colors focus:border-destructive focus:ring-2 focus:ring-destructive/20"
           placeholder="DELETE"
         />
       </div>
