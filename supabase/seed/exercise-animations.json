@@ -1,0 +1,367 @@
+[
+  {
+    "name": "Push-Up",
+    "gifUrl": "https://static.exercisedb.dev/media/0br45wL.gif",
+    "exerciseId": "0br45wL"
+  },
+  {
+    "name": "Incline Push-Up",
+    "gifUrl": "https://static.exercisedb.dev/media/B1EVP9F.gif",
+    "exerciseId": "B1EVP9F"
+  },
+  {
+    "name": "Decline Push-Up",
+    "gifUrl": "https://static.exercisedb.dev/media/B1EVP9F.gif",
+    "exerciseId": "B1EVP9F"
+  },
+  {
+    "name": "Dumbbell Bench Press",
+    "gifUrl": "https://static.exercisedb.dev/media/3d7wHyd.gif",
+    "exerciseId": "3d7wHyd"
+  },
+  {
+    "name": "Incline Dumbbell Press",
+    "gifUrl": "https://static.exercisedb.dev/media/PG1kcIb.gif",
+    "exerciseId": "PG1kcIb"
+  },
+  {
+    "name": "Dumbbell Fly",
+    "gifUrl": "https://static.exercisedb.dev/media/0IgNjSM.gif",
+    "exerciseId": "0IgNjSM"
+  },
+  {
+    "name": "Cable Chest Fly",
+    "gifUrl": "https://static.exercisedb.dev/media/Bpkf41o.gif",
+    "exerciseId": "Bpkf41o"
+  },
+  {
+    "name": "Chest Dip",
+    "gifUrl": "https://static.exercisedb.dev/media/9WTm7dq.gif",
+    "exerciseId": "9WTm7dq"
+  },
+  {
+    "name": "Diamond Push-Up",
+    "gifUrl": "https://static.exercisedb.dev/media/soIB2rj.gif",
+    "exerciseId": "soIB2rj"
+  },
+  {
+    "name": "Wide Grip Push-Up",
+    "gifUrl": "https://static.exercisedb.dev/media/1YB40kg.gif",
+    "exerciseId": "1YB40kg"
+  },
+  {
+    "name": "Dumbbell Pullover",
+    "gifUrl": "https://static.exercisedb.dev/media/3tAXPQ6.gif",
+    "exerciseId": "3tAXPQ6"
+  },
+  {
+    "name": "Barbell Bench Press",
+    "gifUrl": "https://static.exercisedb.dev/media/EIeI8Vf.gif",
+    "exerciseId": "EIeI8Vf"
+  },
+  {
+    "name": "Incline Barbell Press",
+    "gifUrl": "https://static.exercisedb.dev/media/3TZduzM.gif",
+    "exerciseId": "3TZduzM"
+  },
+  {
+    "name": "Svend Press",
+    "gifUrl": "https://static.exercisedb.dev/media/3d7wHyd.gif",
+    "exerciseId": "3d7wHyd"
+  },
+  {
+    "name": "Medicine Ball Chest Pass",
+    "gifUrl": "https://static.exercisedb.dev/media/aDoFKrE.gif",
+    "exerciseId": "aDoFKrE"
+  },
+  {
+    "name": "Isometric Chest Squeeze",
+    "gifUrl": "https://static.exercisedb.dev/media/HbSG1Pw.gif",
+    "exerciseId": "HbSG1Pw"
+  },
+  {
+    "name": "Dumbbell Bicep Curl",
+    "gifUrl": "https://static.exercisedb.dev/media/1VpF8db.gif",
+    "exerciseId": "1VpF8db"
+  },
+  {
+    "name": "Hammer Curl",
+    "gifUrl": "https://static.exercisedb.dev/media/1qrWgZ2.gif",
+    "exerciseId": "1qrWgZ2"
+  },
+  {
+    "name": "Concentration Curl",
+    "gifUrl": "https://static.exercisedb.dev/media/1V1gj1u.gif",
+    "exerciseId": "1V1gj1u"
+  },
+  {
+    "name": "Tricep Dips",
+    "gifUrl": "https://static.exercisedb.dev/media/7aVz15j.gif",
+    "exerciseId": "7aVz15j"
+  },
+  {
+    "name": "Overhead Tricep Extension",
+    "gifUrl": "https://static.exercisedb.dev/media/1xHyxys.gif",
+    "exerciseId": "1xHyxys"
+  },
+  {
+    "name": "Tricep Kickback",
+    "gifUrl": "https://static.exercisedb.dev/media/en550rk.gif",
+    "exerciseId": "en550rk"
+  },
+  {
+    "name": "Lateral Raise",
+    "gifUrl": "https://static.exercisedb.dev/media/53Ttlck.gif",
+    "exerciseId": "53Ttlck"
+  },
+  {
+    "name": "Front Raise",
+    "gifUrl": "https://static.exercisedb.dev/media/33AzZeV.gif",
+    "exerciseId": "33AzZeV"
+  },
+  {
+    "name": "Face Pull",
+    "gifUrl": "https://static.exercisedb.dev/media/za9Ni4z.gif",
+    "exerciseId": "za9Ni4z"
+  },
+  {
+    "name": "Wrist Curl",
+    "gifUrl": "https://static.exercisedb.dev/media/0IgNjSM.gif",
+    "exerciseId": "0IgNjSM"
+  },
+  {
+    "name": "Reverse Wrist Curl",
+    "gifUrl": "https://static.exercisedb.dev/media/3tAXPQ6.gif",
+    "exerciseId": "3tAXPQ6"
+  },
+  {
+    "name": "Barbell Curl",
+    "gifUrl": "https://static.exercisedb.dev/media/25GPyDY.gif",
+    "exerciseId": "25GPyDY"
+  },
+  {
+    "name": "Skull Crusher",
+    "gifUrl": "https://static.exercisedb.dev/media/h8LFzo9.gif",
+    "exerciseId": "h8LFzo9"
+  },
+  {
+    "name": "Push Down",
+    "gifUrl": "https://static.exercisedb.dev/media/1PK5Uo3.gif",
+    "exerciseId": "1PK5Uo3"
+  },
+  {
+    "name": "Arnold Press",
+    "gifUrl": "https://static.exercisedb.dev/media/dCPESfR.gif",
+    "exerciseId": "dCPESfR"
+  },
+  {
+    "name": "Shrugs",
+    "gifUrl": "https://static.exercisedb.dev/media/bRlbdjK.gif",
+    "exerciseId": "bRlbdjK"
+  },
+  {
+    "name": "Plank",
+    "gifUrl": "https://static.exercisedb.dev/media/5VXmnV5.gif",
+    "exerciseId": "5VXmnV5"
+  },
+  {
+    "name": "Side Plank",
+    "gifUrl": "https://static.exercisedb.dev/media/5VXmnV5.gif",
+    "exerciseId": "5VXmnV5"
+  },
+  {
+    "name": "Bicycle Crunch",
+    "gifUrl": "https://static.exercisedb.dev/media/tZkGYZ9.gif",
+    "exerciseId": "tZkGYZ9"
+  },
+  {
+    "name": "Dead Bug",
+    "gifUrl": "https://static.exercisedb.dev/media/iny3m5y.gif",
+    "exerciseId": "iny3m5y"
+  },
+  {
+    "name": "Mountain Climber",
+    "gifUrl": "https://static.exercisedb.dev/media/RJgzwny.gif",
+    "exerciseId": "RJgzwny"
+  },
+  {
+    "name": "Russian Twist",
+    "gifUrl": "https://static.exercisedb.dev/media/XVDdcoj.gif",
+    "exerciseId": "XVDdcoj"
+  },
+  {
+    "name": "Leg Raise",
+    "gifUrl": "https://static.exercisedb.dev/media/03lzqwk.gif",
+    "exerciseId": "03lzqwk"
+  },
+  {
+    "name": "Reverse Crunch",
+    "gifUrl": "https://static.exercisedb.dev/media/0IgNjSM.gif",
+    "exerciseId": "0IgNjSM"
+  },
+  {
+    "name": "Toe Touch Crunch",
+    "gifUrl": "https://static.exercisedb.dev/media/dTg95eZ.gif",
+    "exerciseId": "dTg95eZ"
+  },
+  {
+    "name": "Ab Rollout",
+    "gifUrl": "https://static.exercisedb.dev/media/HZgQPxh.gif",
+    "exerciseId": "HZgQPxh"
+  },
+  {
+    "name": "Cable Crunch",
+    "gifUrl": "https://static.exercisedb.dev/media/7xI5MXA.gif",
+    "exerciseId": "7xI5MXA"
+  },
+  {
+    "name": "Hanging Leg Raise",
+    "gifUrl": "https://static.exercisedb.dev/media/03lzqwk.gif",
+    "exerciseId": "03lzqwk"
+  },
+  {
+    "name": "Flutter Kick",
+    "gifUrl": "https://static.exercisedb.dev/media/UVo2Qs2.gif",
+    "exerciseId": "UVo2Qs2"
+  },
+  {
+    "name": "V-Up",
+    "gifUrl": "https://static.exercisedb.dev/media/0br45wL.gif",
+    "exerciseId": "0br45wL"
+  },
+  {
+    "name": "Bodyweight Squat",
+    "gifUrl": "https://static.exercisedb.dev/media/3xK09Sk.gif",
+    "exerciseId": "3xK09Sk"
+  },
+  {
+    "name": "Lunges",
+    "gifUrl": "https://static.exercisedb.dev/media/13VW2VO.gif",
+    "exerciseId": "13VW2VO"
+  },
+  {
+    "name": "Glute Bridge",
+    "gifUrl": "https://static.exercisedb.dev/media/aWedzZX.gif",
+    "exerciseId": "aWedzZX"
+  },
+  {
+    "name": "Calf Raise",
+    "gifUrl": "https://static.exercisedb.dev/media/0jp9Rlz.gif",
+    "exerciseId": "0jp9Rlz"
+  },
+  {
+    "name": "Wall Sit",
+    "gifUrl": "https://static.exercisedb.dev/media/2NImIAG.gif",
+    "exerciseId": "2NImIAG"
+  },
+  {
+    "name": "Dumbbell Squat",
+    "gifUrl": "https://static.exercisedb.dev/media/0IgNjSM.gif",
+    "exerciseId": "0IgNjSM"
+  },
+  {
+    "name": "Romanian Deadlift",
+    "gifUrl": "https://static.exercisedb.dev/media/2DxtqHL.gif",
+    "exerciseId": "2DxtqHL"
+  },
+  {
+    "name": "Step Up",
+    "gifUrl": "https://static.exercisedb.dev/media/2Ryn564.gif",
+    "exerciseId": "2Ryn564"
+  },
+  {
+    "name": "Lateral Lunge",
+    "gifUrl": "https://static.exercisedb.dev/media/py1HSzx.gif",
+    "exerciseId": "py1HSzx"
+  },
+  {
+    "name": "Bulgarian Split Squat",
+    "gifUrl": "https://static.exercisedb.dev/media/HUEqZ1y.gif",
+    "exerciseId": "HUEqZ1y"
+  },
+  {
+    "name": "Hip Thrust",
+    "gifUrl": "https://static.exercisedb.dev/media/f7Y9eDZ.gif",
+    "exerciseId": "f7Y9eDZ"
+  },
+  {
+    "name": "Leg Press",
+    "gifUrl": "https://static.exercisedb.dev/media/10Z2DXU.gif",
+    "exerciseId": "10Z2DXU"
+  },
+  {
+    "name": "Sumo Squat",
+    "gifUrl": "https://static.exercisedb.dev/media/0lQnxMZ.gif",
+    "exerciseId": "0lQnxMZ"
+  },
+  {
+    "name": "Single Leg Deadlift",
+    "gifUrl": "https://static.exercisedb.dev/media/1kB3Wmk.gif",
+    "exerciseId": "1kB3Wmk"
+  },
+  {
+    "name": "Donkey Kick",
+    "gifUrl": "https://static.exercisedb.dev/media/A2upspL.gif",
+    "exerciseId": "A2upspL"
+  },
+  {
+    "name": "Burpee",
+    "gifUrl": "https://static.exercisedb.dev/media/dK9394r.gif",
+    "exerciseId": "dK9394r"
+  },
+  {
+    "name": "Bear Crawl",
+    "gifUrl": "https://static.exercisedb.dev/media/0Yz8WdV.gif",
+    "exerciseId": "0Yz8WdV"
+  },
+  {
+    "name": "Inchworm",
+    "gifUrl": "https://static.exercisedb.dev/media/ZgsNQ6d.gif",
+    "exerciseId": "ZgsNQ6d"
+  },
+  {
+    "name": "Dumbbell Thruster",
+    "gifUrl": "https://static.exercisedb.dev/media/2NpxjC1.gif",
+    "exerciseId": "2NpxjC1"
+  },
+  {
+    "name": "Kettlebell Swing",
+    "gifUrl": "https://static.exercisedb.dev/media/5bpPTHv.gif",
+    "exerciseId": "5bpPTHv"
+  },
+  {
+    "name": "Turkish Get-Up",
+    "gifUrl": "https://static.exercisedb.dev/media/Ha7SZ3y.gif",
+    "exerciseId": "Ha7SZ3y"
+  },
+  {
+    "name": "Clean and Press",
+    "gifUrl": "https://static.exercisedb.dev/media/LeaZOIz.gif",
+    "exerciseId": "LeaZOIz"
+  },
+  {
+    "name": "Deadlift",
+    "gifUrl": "https://static.exercisedb.dev/media/2DxtqHL.gif",
+    "exerciseId": "2DxtqHL"
+  },
+  {
+    "name": "Squat to Press",
+    "gifUrl": "https://static.exercisedb.dev/media/5BZHW9s.gif",
+    "exerciseId": "5BZHW9s"
+  },
+  {
+    "name": "Renegade Row",
+    "gifUrl": "https://static.exercisedb.dev/media/b9kqlBy.gif",
+    "exerciseId": "b9kqlBy"
+  },
+  {
+    "name": "High Knees",
+    "gifUrl": "https://static.exercisedb.dev/media/ealLwvX.gif",
+    "exerciseId": "ealLwvX"
+  },
+  {
+    "name": "Jump Rope",
+    "gifUrl": "https://static.exercisedb.dev/media/e1e76I2.gif",
+    "exerciseId": "e1e76I2"
+  }
+]

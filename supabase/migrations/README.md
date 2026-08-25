@@ -1,0 +1,11 @@
+-- Migration index — TITAN Gym PWA
+--
+-- Migrations are applied in filename order by `supabase db reset` /
+-- `supabase migration up`. Numbers do NOT need to be contiguous.
+--
+-- NOTE: there is intentionally no 0033. The file was lost before the
+-- repository had its first commit; no environment has ever recorded it as
+-- applied (it is absent from every migration history), so the gap is safe
+-- to leave in place. Do NOT reuse the number 0033 for new work — add the
+-- next free number instead, and never renumber or edit an already-applied
+-- migration.

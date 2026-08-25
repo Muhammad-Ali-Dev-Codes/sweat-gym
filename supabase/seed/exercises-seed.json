@@ -1,0 +1,1602 @@
+[
+  {
+    "name": "Push-Up",
+    "description": null,
+    "instructions": [
+      "Start in a high plank position with hands slightly wider than shoulder-width apart.",
+      "Lower your body until your chest nearly touches the floor, keeping your elbows at a 45-degree angle.",
+      "Push through your palms to extend your arms and return to the starting position.",
+      "Keep your core tight and body in a straight line throughout the movement."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["pectorals"],
+    "secondary_muscle_slugs": ["triceps", "deltoids"],
+    "focus_area_slugs": ["chest"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Incline Push-Up",
+    "description": null,
+    "instructions": [
+      "Place your hands on an elevated surface such as a bench or sturdy chair.",
+      "Walk your feet back so your body forms a straight line from head to heels.",
+      "Lower your chest toward the edge of the surface by bending your elbows.",
+      "Press through your hands to return to the starting position."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["pectorals"],
+    "secondary_muscle_slugs": ["triceps", "deltoids"],
+    "focus_area_slugs": ["chest"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Decline Push-Up",
+    "description": null,
+    "instructions": [
+      "Place your feet on an elevated surface such as a bench or sturdy chair.",
+      "Position your hands on the floor slightly wider than shoulder-width apart.",
+      "Lower your chest toward the floor by bending your elbows while keeping your body straight.",
+      "Push through your palms to extend your arms and return to the starting position."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["pectorals"],
+    "secondary_muscle_slugs": ["triceps", "deltoids"],
+    "focus_area_slugs": ["chest"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Dumbbell Bench Press",
+    "description": null,
+    "instructions": [
+      "Lie flat on a bench with a dumbbell in each hand, resting on your thighs.",
+      "Press the dumbbells up to full arm extension above your chest, palms facing forward.",
+      "Lower the dumbbells in a controlled manner until they are level with your chest.",
+      "Press the dumbbells back up to the starting position."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["dumbbells", "bench"],
+    "target_muscle_slugs": ["pectorals"],
+    "secondary_muscle_slugs": ["triceps", "deltoids"],
+    "focus_area_slugs": ["chest"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Incline Dumbbell Press",
+    "description": null,
+    "instructions": [
+      "Set a bench to a 30-45 degree incline and sit with a dumbbell in each hand on your thighs.",
+      "Press the dumbbells up to full arm extension above your upper chest.",
+      "Lower the dumbbells slowly until they are level with your chest, with elbows out to the sides.",
+      "Press the dumbbells back up to the starting position."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["dumbbells", "bench"],
+    "target_muscle_slugs": ["pectorals"],
+    "secondary_muscle_slugs": ["deltoids", "triceps"],
+    "focus_area_slugs": ["chest"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Dumbbell Fly",
+    "description": null,
+    "instructions": [
+      "Lie flat on a bench holding a dumbbell in each hand with arms extended above your chest, palms facing each other.",
+      "With a slight bend in your elbows, lower the dumbbells out to the sides in a wide arc.",
+      "Lower until you feel a stretch across your chest, keeping your elbows slightly bent throughout.",
+      "Squeeze your chest to bring the dumbbells back together above your chest."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["dumbbells", "bench"],
+    "target_muscle_slugs": ["pectorals"],
+    "secondary_muscle_slugs": ["deltoids"],
+    "focus_area_slugs": ["chest"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Cable Chest Fly",
+    "description": null,
+    "instructions": [
+      "Stand between two cable pulleys set at shoulder height, grasping a handle in each hand.",
+      "Step forward slightly to create tension on the cables, with arms extended out to the sides.",
+      "With a slight bend in your elbows, bring the handles together in front of your chest in a hugging motion.",
+      "Slowly return to the starting position, controlling the resistance as your arms open back out."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["cable-machine"],
+    "target_muscle_slugs": ["pectorals"],
+    "secondary_muscle_slugs": ["deltoids"],
+    "focus_area_slugs": ["chest"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Chest Dip",
+    "description": null,
+    "instructions": [
+      "Grip parallel bars and lift yourself to a straight-arm position, leaning your torso slightly forward.",
+      "Bend your elbows to lower your body until your upper arms are parallel to the floor or below.",
+      "Keep your elbows flared out and your torso leaned forward to emphasize chest engagement.",
+      "Press through your palms to straighten your arms and return to the starting position."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["pull-up-bar"],
+    "target_muscle_slugs": ["pectorals"],
+    "secondary_muscle_slugs": ["triceps", "deltoids"],
+    "focus_area_slugs": ["chest"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Diamond Push-Up",
+    "description": null,
+    "instructions": [
+      "Start in a high plank position with your hands close together under your chest, forming a diamond shape with your index fingers and thumbs.",
+      "Lower your chest toward your hands by bending your elbows, keeping them close to your body.",
+      "Pause briefly at the bottom when your chest is just above your hands.",
+      "Push through your palms to extend your arms and return to the starting position."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["pectorals"],
+    "secondary_muscle_slugs": ["triceps", "deltoids"],
+    "focus_area_slugs": ["chest"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Wide Grip Push-Up",
+    "description": null,
+    "instructions": [
+      "Start in a high plank position with your hands placed significantly wider than shoulder-width apart.",
+      "Lower your chest toward the floor by bending your elbows out to the sides.",
+      "Lower until your chest is a few inches from the floor while keeping your body in a straight line.",
+      "Press through your palms to extend your arms and return to the starting position."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["pectorals"],
+    "secondary_muscle_slugs": ["deltoids", "triceps"],
+    "focus_area_slugs": ["chest"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Dumbbell Pullover",
+    "description": null,
+    "instructions": [
+      "Lie with your upper back across a flat bench, feet flat on the floor for stability.",
+      "Hold a single dumbbell with both hands directly above your chest, arms slightly bent.",
+      "Lower the dumbbell in an arc behind your head until you feel a stretch in your chest and lats.",
+      "Pull the dumbbell back to the starting position by contracting your chest muscles."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["dumbbells", "bench"],
+    "target_muscle_slugs": ["pectorals"],
+    "secondary_muscle_slugs": ["latissimus-dorsi", "triceps"],
+    "focus_area_slugs": ["chest"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Barbell Bench Press",
+    "description": null,
+    "instructions": [
+      "Lie flat on a bench with your eyes under the bar and grip the bar slightly wider than shoulder-width.",
+      "Unrack the bar and hold it directly above your chest with arms fully extended.",
+      "Lower the bar to your mid-chest in a controlled manner, keeping your elbows at roughly 45 degrees.",
+      "Press the bar back up to the starting position by driving through your feet and pushing with your chest."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["barbell", "bench"],
+    "target_muscle_slugs": ["pectorals"],
+    "secondary_muscle_slugs": ["triceps", "deltoids"],
+    "focus_area_slugs": ["chest"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Incline Barbell Press",
+    "description": null,
+    "instructions": [
+      "Set a bench to a 30-45 degree incline and lie back with your eyes under the bar.",
+      "Grip the bar slightly wider than shoulder-width and unrack it above your upper chest.",
+      "Lower the bar to your upper chest in a controlled manner.",
+      "Press the bar back up to full arm extension, focusing on engaging your upper chest."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["barbell", "bench"],
+    "target_muscle_slugs": ["pectorals"],
+    "secondary_muscle_slugs": ["deltoids", "triceps"],
+    "focus_area_slugs": ["chest"],
+    "level_slugs": ["advanced"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Svend Press",
+    "description": null,
+    "instructions": [
+      "Stand upright holding a light dumbbell or weight plate between your palms at chest level.",
+      "Press your palms together firmly to create isometric tension across your chest.",
+      "Extend your arms straight out in front of your chest, squeezing your pecs throughout.",
+      "Pull the weight back to your chest in a controlled motion and repeat."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["dumbbells"],
+    "target_muscle_slugs": ["pectorals"],
+    "secondary_muscle_slugs": ["deltoids"],
+    "focus_area_slugs": ["chest"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Medicine Ball Chest Pass",
+    "description": null,
+    "instructions": [
+      "Stand facing a wall or a partner, holding a medicine ball at chest level with both hands.",
+      "Hold the ball close to your chest with elbows tucked to your sides.",
+      "Explosively push the ball forward by extending your arms and pushing through your chest.",
+      "Catch the ball as it returns and bring it back to your chest before the next repetition."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["medicine-ball"],
+    "target_muscle_slugs": ["pectorals"],
+    "secondary_muscle_slugs": ["triceps", "deltoids"],
+    "focus_area_slugs": ["chest"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Isometric Chest Squeeze",
+    "description": null,
+    "instructions": [
+      "Stand or sit upright and press your palms together in front of your chest at a 90-degree angle.",
+      "Squeeze your palms together as hard as you can, activating your chest muscles.",
+      "Hold the contraction for the desired duration while breathing steadily.",
+      "Relax briefly and then repeat the squeeze."
+    ],
+    "animation_url": null,
+    "exercise_mode": "duration",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["pectorals"],
+    "secondary_muscle_slugs": ["deltoids"],
+    "focus_area_slugs": ["chest"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Dumbbell Bicep Curl",
+    "description": null,
+    "instructions": [
+      "Stand with a dumbbell in each hand at your sides, palms facing forward.",
+      "Keeping your upper arms stationary, curl the dumbbells up toward your shoulders by bending your elbows.",
+      "Squeeze your biceps at the top of the movement, then slowly lower the dumbbells back down.",
+      "Avoid swinging your body or using momentum throughout the exercise."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["dumbbells"],
+    "target_muscle_slugs": ["biceps"],
+    "secondary_muscle_slugs": ["forearms"],
+    "focus_area_slugs": ["arm"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Hammer Curl",
+    "description": null,
+    "instructions": [
+      "Stand with a dumbbell in each hand at your sides, palms facing your body.",
+      "Curl the dumbbells up toward your shoulders while keeping your palms facing each other.",
+      "Squeeze at the top, then lower the dumbbells back to the starting position in a controlled manner.",
+      "Keep your elbows pinned to your sides throughout the movement."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["dumbbells"],
+    "target_muscle_slugs": ["biceps"],
+    "secondary_muscle_slugs": ["forearms"],
+    "focus_area_slugs": ["arm"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Concentration Curl",
+    "description": null,
+    "instructions": [
+      "Sit on a bench with your legs spread apart, holding a dumbbell in one hand.",
+      "Rest the back of your upper arm against the inside of your same-side thigh.",
+      "Curl the dumbbell toward your shoulder by bending your elbow, squeezing your bicep at the top.",
+      "Slowly lower the dumbbell back to the starting position and complete all reps before switching arms."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["dumbbells"],
+    "target_muscle_slugs": ["biceps"],
+    "secondary_muscle_slugs": ["forearms"],
+    "focus_area_slugs": ["arm"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Tricep Dips",
+    "description": null,
+    "instructions": [
+      "Grip parallel bars and lift yourself up with arms straight, shoulders down away from your ears.",
+      "Lower your body by bending your elbows until your upper arms are parallel to the floor.",
+      "Keep your torso upright and your elbows tracking straight back throughout the movement.",
+      "Press through your palms to straighten your arms and return to the starting position."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["pull-up-bar"],
+    "target_muscle_slugs": ["triceps"],
+    "secondary_muscle_slugs": ["deltoids", "pectorals"],
+    "focus_area_slugs": ["arm"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Overhead Tricep Extension",
+    "description": null,
+    "instructions": [
+      "Stand or sit holding a single dumbbell with both hands behind your head, arms bent.",
+      "Keep your upper arms close to your ears and extend your elbows to press the dumbbell overhead.",
+      "Straighten your arms fully at the top without locking your elbows.",
+      "Slowly lower the dumbbell back behind your head by bending your elbows."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["dumbbells"],
+    "target_muscle_slugs": ["triceps"],
+    "secondary_muscle_slugs": [],
+    "focus_area_slugs": ["arm"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Tricep Kickback",
+    "description": null,
+    "instructions": [
+      "Hold a dumbbell in one hand and hinge forward at the hips with a flat back.",
+      "Keep your upper arm parallel to your torso and your elbow bent at 90 degrees.",
+      "Extend your forearm back until your arm is fully straight, squeezing your tricep at the top.",
+      "Slowly return to the starting position by bending your elbow back to 90 degrees."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["dumbbells"],
+    "target_muscle_slugs": ["triceps"],
+    "secondary_muscle_slugs": [],
+    "focus_area_slugs": ["arm"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Lateral Raise",
+    "description": null,
+    "instructions": [
+      "Stand with a dumbbell in each hand at your sides, palms facing inward.",
+      "With a slight bend in your elbows, raise the dumbbells out to the sides until they reach shoulder height.",
+      "Pause at the top, then slowly lower the dumbbells back to your sides.",
+      "Avoid shrugging your shoulders or using momentum to lift the weights."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["dumbbells"],
+    "target_muscle_slugs": ["deltoids"],
+    "secondary_muscle_slugs": ["trapezius"],
+    "focus_area_slugs": ["arm"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Front Raise",
+    "description": null,
+    "instructions": [
+      "Stand with a dumbbell in each hand at your sides or in front of your thighs, palms facing your body.",
+      "With a slight bend in your elbows, raise one or both dumbbells straight out in front of you to shoulder height.",
+      "Pause briefly at the top, then lower the dumbbells back down in a controlled manner.",
+      "Keep your torso stationary and avoid rocking to generate momentum."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["dumbbells"],
+    "target_muscle_slugs": ["deltoids"],
+    "secondary_muscle_slugs": ["trapezius"],
+    "focus_area_slugs": ["arm"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Face Pull",
+    "description": null,
+    "instructions": [
+      "Attach a resistance band to a door anchor or fixed point at face height.",
+      "Grip the ends of the band with both hands and step back to create tension.",
+      "Pull the band toward your face, driving your elbows back and rotating your hands outward.",
+      "Squeeze your rear deltoids and upper back at the end position, then slowly return to the start."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["resistance-band"],
+    "target_muscle_slugs": ["deltoids"],
+    "secondary_muscle_slugs": ["trapezius", "upper-back"],
+    "focus_area_slugs": ["arm"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Wrist Curl",
+    "description": null,
+    "instructions": [
+      "Sit on a bench and rest your forearms on your thighs with your palms facing up, wrists hanging over your knees.",
+      "Hold a dumbbell in each hand and let your wrists extend so the dumbbells lower toward the floor.",
+      "Curl your wrists up by contracting your forearm muscles to lift the dumbbells.",
+      "Squeeze at the top and then lower back down slowly."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["dumbbells"],
+    "target_muscle_slugs": ["forearms"],
+    "secondary_muscle_slugs": [],
+    "focus_area_slugs": ["arm"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Reverse Wrist Curl",
+    "description": null,
+    "instructions": [
+      "Sit on a bench and rest your forearms on your thighs with your palms facing down, wrists hanging over your knees.",
+      "Hold a dumbbell in each hand and let your wrists extend so the dumbbells lower toward the floor.",
+      "Curl your wrists upward by contracting your forearm extensors to lift the dumbbells.",
+      "Squeeze at the top and then lower back down slowly."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["dumbbells"],
+    "target_muscle_slugs": ["forearms"],
+    "secondary_muscle_slugs": [],
+    "focus_area_slugs": ["arm"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Barbell Curl",
+    "description": null,
+    "instructions": [
+      "Stand holding a barbell with an underhand grip at shoulder width, arms fully extended.",
+      "Curl the barbell up toward your shoulders by bending your elbows, keeping your upper arms still.",
+      "Squeeze your biceps at the top of the movement, then slowly lower the barbell back down.",
+      "Keep your elbows close to your sides and avoid swinging your body."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["barbell"],
+    "target_muscle_slugs": ["biceps"],
+    "secondary_muscle_slugs": ["forearms"],
+    "focus_area_slugs": ["arm"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Skull Crusher",
+    "description": null,
+    "instructions": [
+      "Lie flat on a bench holding a barbell with a narrow grip directly above your chest.",
+      "Keeping your upper arms perpendicular to the floor, bend your elbows to lower the bar toward your forehead.",
+      "Stop just before the bar touches your forehead or the top of your head.",
+      "Extend your elbows to press the bar back to the starting position."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["barbell"],
+    "target_muscle_slugs": ["triceps"],
+    "secondary_muscle_slugs": [],
+    "focus_area_slugs": ["arm"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Push Down",
+    "description": null,
+    "instructions": [
+      "Stand facing a cable machine with a straight bar or rope attachment set at the high pulley position.",
+      "Grip the bar with an overhand grip, elbows bent at your sides.",
+      "Push the bar down by extending your elbows until your arms are fully straight.",
+      "Slowly return the bar to the starting position by letting your elbows bend back to 90 degrees."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["cable-machine"],
+    "target_muscle_slugs": ["triceps"],
+    "secondary_muscle_slugs": [],
+    "focus_area_slugs": ["arm"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Arnold Press",
+    "description": null,
+    "instructions": [
+      "Sit on a bench holding dumbbells at shoulder height with palms facing your body, elbows bent.",
+      "As you press the dumbbells overhead, rotate your palms outward so they face forward at the top.",
+      "Lower the dumbbells back down while rotating your palms to face your body again.",
+      "Keep your core engaged and your back straight throughout the movement."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["dumbbells"],
+    "target_muscle_slugs": ["deltoids"],
+    "secondary_muscle_slugs": ["triceps"],
+    "focus_area_slugs": ["arm"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Shrugs",
+    "description": null,
+    "instructions": [
+      "Stand holding a dumbbell in each hand at your sides with arms fully extended.",
+      "Shrug your shoulders up toward your ears as high as possible.",
+      "Hold the top position for a moment, squeezing your traps.",
+      "Slowly lower your shoulders back to the starting position."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["dumbbells"],
+    "target_muscle_slugs": ["trapezius"],
+    "secondary_muscle_slugs": ["upper-back"],
+    "focus_area_slugs": ["arm"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Plank",
+    "description": null,
+    "instructions": [
+      "Start in a forearm plank position with your elbows directly under your shoulders and forearms on the floor.",
+      "Extend your legs behind you with your toes on the floor, lifting your body off the ground.",
+      "Keep your body in a straight line from your head to your heels, engaging your core.",
+      "Hold the position without letting your hips sag or rise for the target duration."
+    ],
+    "animation_url": null,
+    "exercise_mode": "duration",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["abs"],
+    "secondary_muscle_slugs": ["glutes", "quadriceps"],
+    "focus_area_slugs": ["abs"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping", "no-crunch"]
+  },
+  {
+    "name": "Side Plank",
+    "description": null,
+    "instructions": [
+      "Lie on your side with your forearm on the floor, elbow directly under your shoulder.",
+      "Stack your feet on top of each other and lift your hips off the floor.",
+      "Keep your body in a straight line from head to feet, engaging your obliques.",
+      "Hold the position without letting your hips drop for the target duration, then switch sides."
+    ],
+    "animation_url": null,
+    "exercise_mode": "duration",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["obliques"],
+    "secondary_muscle_slugs": ["abs"],
+    "focus_area_slugs": ["abs"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping", "no-crunch"]
+  },
+  {
+    "name": "Bicycle Crunch",
+    "description": null,
+    "instructions": [
+      "Lie on your back with your hands behind your head and your legs raised with knees bent at 90 degrees.",
+      "Bring your right elbow toward your left knee while extending your right leg straight out.",
+      "Switch sides by bringing your left elbow toward your right knee while extending your left leg.",
+      "Continue alternating in a pedaling motion, rotating through your core with each repetition."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["abs", "obliques"],
+    "secondary_muscle_slugs": ["hip-flexors"],
+    "focus_area_slugs": ["abs"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Dead Bug",
+    "description": null,
+    "instructions": [
+      "Lie on your back with your arms extended straight up toward the ceiling and knees bent at 90 degrees above your hips.",
+      "Press your lower back firmly into the floor to engage your core.",
+      "Simultaneously lower your right arm behind your head and extend your left leg straight out toward the floor.",
+      "Return to the starting position and repeat on the opposite side, keeping your lower back pressed down."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["abs"],
+    "secondary_muscle_slugs": ["hip-flexors"],
+    "focus_area_slugs": ["abs"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Bird Dog",
+    "description": null,
+    "instructions": [
+      "Start on all fours with your hands under your shoulders and knees under your hips.",
+      "Extend your right arm forward and your left leg back simultaneously until both are parallel to the floor.",
+      "Hold the extended position briefly, keeping your hips level and core braced.",
+      "Return to the starting position and repeat on the opposite side."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["abs"],
+    "secondary_muscle_slugs": ["glutes", "lower-back"],
+    "focus_area_slugs": ["abs"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Mountain Climber",
+    "description": null,
+    "instructions": [
+      "Start in a high plank position with your hands under your shoulders and body in a straight line.",
+      "Drive your right knee toward your chest as quickly as possible.",
+      "Immediately switch legs, driving your left knee toward your chest while extending your right leg back.",
+      "Continue alternating legs in a running motion, keeping your hips low and core engaged."
+    ],
+    "animation_url": null,
+    "exercise_mode": "both",
+    "is_low_impact": false,
+    "requires_jumping": true,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["abs"],
+    "secondary_muscle_slugs": ["hip-flexors", "quadriceps"],
+    "focus_area_slugs": ["abs"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": []
+  },
+  {
+    "name": "Russian Twist",
+    "description": null,
+    "instructions": [
+      "Sit on the floor with your knees bent and feet lifted slightly off the ground.",
+      "Lean back slightly to engage your core, keeping your spine straight.",
+      "Clasp your hands together or hold a weight at your chest and rotate your torso to the right.",
+      "Rotate to the left side in a controlled motion, completing one repetition per side."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["obliques"],
+    "secondary_muscle_slugs": ["abs"],
+    "focus_area_slugs": ["abs"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Leg Raise",
+    "description": null,
+    "instructions": [
+      "Lie flat on your back with your legs straight and your hands under your lower back or at your sides for support.",
+      "Keeping your legs straight, raise them toward the ceiling until they are perpendicular to the floor.",
+      "Lower your legs slowly back toward the floor without letting them touch down.",
+      "Keep your lower back pressed into the floor throughout the movement."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["abs"],
+    "secondary_muscle_slugs": ["hip-flexors"],
+    "focus_area_slugs": ["abs"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Reverse Crunch",
+    "description": null,
+    "instructions": [
+      "Lie on your back with your knees bent and feet flat on the floor, arms at your sides.",
+      "Press your lower back into the floor and lift your feet off the ground, bringing your knees toward your chest.",
+      "Curl your hips off the floor by contracting your lower abs, rolling your pelvis toward your ribs.",
+      "Slowly lower your hips and legs back to the starting position in a controlled manner."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["abs"],
+    "secondary_muscle_slugs": ["hip-flexors"],
+    "focus_area_slugs": ["abs"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Toe Touch Crunch",
+    "description": null,
+    "instructions": [
+      "Lie on your back with your legs extended straight up toward the ceiling, feet flexed.",
+      "Extend your arms toward your toes with your shoulders lifted off the floor.",
+      "Reach your fingertips toward your toes by contracting your upper abs.",
+      "Lower your shoulders back to the floor and repeat, keeping your legs stationary."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["abs"],
+    "secondary_muscle_slugs": ["obliques"],
+    "focus_area_slugs": ["abs"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Hollow Body Hold",
+    "description": null,
+    "instructions": [
+      "Lie on your back with your arms extended overhead and legs straight.",
+      "Press your lower back firmly into the floor and lift your shoulders and legs off the ground.",
+      "Reach your arms and legs in opposite directions, creating a shallow banana or boat shape.",
+      "Hold the position while breathing steadily, keeping your lower back pressed into the floor."
+    ],
+    "animation_url": null,
+    "exercise_mode": "duration",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["abs"],
+    "secondary_muscle_slugs": ["hip-flexors"],
+    "focus_area_slugs": ["abs"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Ab Rollout",
+    "description": null,
+    "instructions": [
+      "Kneel on a mat and grip the ab roller handles with both hands, arms bent at 90 degrees.",
+      "Roll the ab roller forward by extending your arms, allowing your hips to follow.",
+      "Continue rolling out until your body is nearly parallel to the floor, keeping your core tight.",
+      "Pull the ab roller back toward your knees by engaging your abs to return to the starting position."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["ab-roller"],
+    "target_muscle_slugs": ["abs"],
+    "secondary_muscle_slugs": ["lower-back", "deltoids"],
+    "focus_area_slugs": ["abs"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Cable Crunch",
+    "description": null,
+    "instructions": [
+      "Kneel facing a cable machine with a rope attachment set at the high pulley position.",
+      "Hold the rope behind your head with both hands, elbows pointed down.",
+      "Crunch your torso downward by contracting your abs, bringing your elbows toward your knees.",
+      "Slowly return to the upright starting position in a controlled manner."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["cable-machine"],
+    "target_muscle_slugs": ["abs"],
+    "secondary_muscle_slugs": ["obliques"],
+    "focus_area_slugs": ["abs"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Hanging Leg Raise",
+    "description": null,
+    "instructions": [
+      "Hang from a pull-up bar with an overhand grip, arms fully extended and shoulders engaged.",
+      "Keeping your legs straight, raise them up toward the bar by contracting your lower abs.",
+      "Lift until your legs are at least parallel to the floor or higher if possible.",
+      "Lower your legs back down in a controlled motion without swinging."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["pull-up-bar"],
+    "target_muscle_slugs": ["abs"],
+    "secondary_muscle_slugs": ["hip-flexors", "obliques"],
+    "focus_area_slugs": ["abs"],
+    "level_slugs": ["advanced"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Flutter Kick",
+    "description": null,
+    "instructions": [
+      "Lie on your back with your hands under your lower back or at your sides for support.",
+      "Lift both legs a few inches off the floor with your legs straight.",
+      "Alternate kicking your legs up and down in small, rapid scissor-like motions.",
+      "Keep your lower back pressed into the floor and your core engaged throughout."
+    ],
+    "animation_url": null,
+    "exercise_mode": "duration",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["abs"],
+    "secondary_muscle_slugs": ["hip-flexors"],
+    "focus_area_slugs": ["abs"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "V-Up",
+    "description": null,
+    "instructions": [
+      "Lie flat on your back with your arms extended overhead and legs straight.",
+      "Simultaneously lift your torso and legs off the floor, reaching your hands toward your toes.",
+      "Fold your body into a V-shape at the top, balancing on your sit bones.",
+      "Lower your arms and legs back to the starting position in a controlled manner."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["abs"],
+    "secondary_muscle_slugs": ["hip-flexors"],
+    "focus_area_slugs": ["abs"],
+    "level_slugs": ["advanced"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Bodyweight Squat",
+    "description": null,
+    "instructions": [
+      "Stand with your feet shoulder-width apart and your arms extended in front of you or at your sides.",
+      "Push your hips back and bend your knees to lower your body as if sitting into a chair.",
+      "Descend until your thighs are at least parallel to the floor, keeping your chest up.",
+      "Drive through your heels to stand back up to the starting position."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["quadriceps"],
+    "secondary_muscle_slugs": ["glutes", "hamstrings"],
+    "focus_area_slugs": ["butt-and-legs"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Lunges",
+    "description": null,
+    "instructions": [
+      "Stand with your feet together and your hands on your hips or at your sides.",
+      "Step forward with one leg and lower your hips until both knees are bent at approximately 90 degrees.",
+      "Keep your front knee directly over your ankle and your back knee hovering just above the floor.",
+      "Push through your front heel to step back to the starting position and repeat on the other side."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["quadriceps"],
+    "secondary_muscle_slugs": ["glutes", "hamstrings"],
+    "focus_area_slugs": ["butt-and-legs"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Glute Bridge",
+    "description": null,
+    "instructions": [
+      "Lie on your back with your knees bent, feet flat on the floor hip-width apart, and arms at your sides.",
+      "Press through your heels to lift your hips toward the ceiling until your body forms a straight line from knees to shoulders.",
+      "Squeeze your glutes at the top and hold for a moment.",
+      "Lower your hips back down to the floor in a controlled manner."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["glutes"],
+    "secondary_muscle_slugs": ["hamstrings", "lower-back"],
+    "focus_area_slugs": ["butt-and-legs"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Calf Raise",
+    "description": null,
+    "instructions": [
+      "Stand on the edge of a step or flat on the floor with your feet hip-width apart.",
+      "Rise up onto your toes as high as possible by extending your ankles.",
+      "Hold the top position briefly, squeezing your calf muscles.",
+      "Lower your heels back down slowly below the level of the step if using one, or to the floor."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["calves"],
+    "secondary_muscle_slugs": [],
+    "focus_area_slugs": ["butt-and-legs"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Wall Sit",
+    "description": null,
+    "instructions": [
+      "Stand with your back flat against a wall and your feet shoulder-width apart.",
+      "Slide your back down the wall until your thighs are parallel to the floor.",
+      "Keep your knees directly above your ankles and your back pressed against the wall.",
+      "Hold the position for the target duration without letting your hips rise."
+    ],
+    "animation_url": null,
+    "exercise_mode": "duration",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["quadriceps"],
+    "secondary_muscle_slugs": ["glutes", "calves"],
+    "focus_area_slugs": ["butt-and-legs"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Dumbbell Squat",
+    "description": null,
+    "instructions": [
+      "Stand with your feet shoulder-width apart, holding a dumbbell in each hand at your sides or at your shoulders.",
+      "Push your hips back and bend your knees to lower into a squat position.",
+      "Descend until your thighs are at least parallel to the floor, keeping your chest up.",
+      "Drive through your heels to return to the standing position."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["dumbbells"],
+    "target_muscle_slugs": ["quadriceps"],
+    "secondary_muscle_slugs": ["glutes", "hamstrings"],
+    "focus_area_slugs": ["butt-and-legs"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Romanian Deadlift",
+    "description": null,
+    "instructions": [
+      "Stand with your feet hip-width apart holding a dumbbell in each hand in front of your thighs.",
+      "Hinge at your hips, pushing them backward while keeping a slight bend in your knees.",
+      "Lower the dumbbells along the front of your legs until you feel a deep stretch in your hamstrings.",
+      "Drive your hips forward and squeeze your glutes to return to the standing position."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["dumbbells"],
+    "target_muscle_slugs": ["hamstrings"],
+    "secondary_muscle_slugs": ["glutes", "lower-back"],
+    "focus_area_slugs": ["butt-and-legs"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Step Up",
+    "description": null,
+    "instructions": [
+      "Stand in front of a bench or sturdy step with your feet hip-width apart.",
+      "Place your right foot firmly on the bench and press through your heel to lift your body up.",
+      "Step your left foot up to meet your right, standing fully on the bench.",
+      "Step back down with your left foot first, followed by your right, and repeat leading with the other leg."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["bench"],
+    "target_muscle_slugs": ["quadriceps"],
+    "secondary_muscle_slugs": ["glutes", "hamstrings"],
+    "focus_area_slugs": ["butt-and-legs"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Lateral Lunge",
+    "description": null,
+    "instructions": [
+      "Stand with your feet together and your hands at your sides or at your chest.",
+      "Take a wide step to the right, bending your right knee and pushing your hips back.",
+      "Keep your left leg straight and your right foot flat on the floor as you sink into the lunge.",
+      "Push off your right foot to return to the starting position and repeat on the left side."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["quadriceps"],
+    "secondary_muscle_slugs": ["glutes", "hamstrings"],
+    "focus_area_slugs": ["butt-and-legs"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Bulgarian Split Squat",
+    "description": null,
+    "instructions": [
+      "Stand about two feet in front of a bench and place your rear foot on the bench behind you.",
+      "Hold dumbbells at your sides or place your hands on your hips for balance.",
+      "Lower your body by bending your front knee until your front thigh is parallel to the floor.",
+      "Drive through your front heel to stand back up to the starting position."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["bench"],
+    "target_muscle_slugs": ["quadriceps"],
+    "secondary_muscle_slugs": ["glutes", "hamstrings"],
+    "focus_area_slugs": ["butt-and-legs"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Hip Thrust",
+    "description": null,
+    "instructions": [
+      "Sit on the floor with your upper back resting against a bench and your knees bent, feet flat on the floor.",
+      "Press through your heels to lift your hips toward the ceiling until your body forms a straight line from knees to shoulders.",
+      "Squeeze your glutes hard at the top and hold for a moment.",
+      "Lower your hips back to the floor in a controlled manner."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["bench"],
+    "target_muscle_slugs": ["glutes"],
+    "secondary_muscle_slugs": ["hamstrings"],
+    "focus_area_slugs": ["butt-and-legs"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Leg Press",
+    "description": null,
+    "instructions": [
+      "Sit in a leg press machine with your back flat against the pad and feet shoulder-width apart on the platform.",
+      "Release the safety locks and lower the platform toward your chest by bending your knees.",
+      "Lower until your knees are bent at 90 degrees without your lower back lifting off the pad.",
+      "Press through your heels to push the platform back to the starting position."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["quadriceps"],
+    "secondary_muscle_slugs": ["glutes", "hamstrings"],
+    "focus_area_slugs": ["butt-and-legs"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Sumo Squat",
+    "description": null,
+    "instructions": [
+      "Stand with your feet wider than shoulder-width apart, toes pointed outward at a 45-degree angle.",
+      "Hold a dumbbell vertically in front of you with both hands, or place your hands at your hips.",
+      "Lower your hips straight down, bending your knees and keeping them tracking over your toes.",
+      "Push through your heels to stand back up, squeezing your inner thighs and glutes at the top."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["dumbbells"],
+    "target_muscle_slugs": ["glutes"],
+    "secondary_muscle_slugs": ["quadriceps", "hamstrings"],
+    "focus_area_slugs": ["butt-and-legs"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Single Leg Deadlift",
+    "description": null,
+    "instructions": [
+      "Stand on your right leg holding a dumbbell in your left hand, with a slight bend in your right knee.",
+      "Hinge at your hips to lower the dumbbell toward the floor while extending your left leg straight behind you.",
+      "Keep your hips square to the floor and your back flat throughout the movement.",
+      "Drive through your right heel to return to the starting position and complete all reps before switching legs."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["dumbbells"],
+    "target_muscle_slugs": ["hamstrings"],
+    "secondary_muscle_slugs": ["glutes", "lower-back"],
+    "focus_area_slugs": ["butt-and-legs"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Donkey Kick",
+    "description": null,
+    "instructions": [
+      "Start on all fours with your hands under your shoulders and knees under your hips.",
+      "Keeping your right knee bent at 90 degrees, lift your right leg up toward the ceiling.",
+      "Squeeze your glute at the top of the movement without arching your lower back.",
+      "Lower your leg back to the starting position and complete all reps before switching sides."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["glutes"],
+    "secondary_muscle_slugs": ["hamstrings"],
+    "focus_area_slugs": ["butt-and-legs"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Fire Hydrant",
+    "description": null,
+    "instructions": [
+      "Start on all fours with your hands under your shoulders and knees under your hips.",
+      "Keeping your right knee bent, lift your right leg out to the side as high as you can.",
+      "Keep your hips level and avoid rotating your torso as you lift your leg.",
+      "Lower your leg back to the starting position and complete all reps before switching sides."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["glutes"],
+    "secondary_muscle_slugs": ["obliques"],
+    "focus_area_slugs": ["butt-and-legs"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Burpee",
+    "description": null,
+    "instructions": [
+      "Stand with your feet shoulder-width apart and your arms at your sides.",
+      "Drop into a squat position and place your hands on the floor in front of you.",
+      "Kick your feet back into a push-up position, perform a push-up, then jump your feet back toward your hands.",
+      "Explosively jump straight up with your arms overhead and land softly to begin the next repetition."
+    ],
+    "animation_url": null,
+    "exercise_mode": "both",
+    "is_low_impact": false,
+    "requires_jumping": true,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["quadriceps"],
+    "secondary_muscle_slugs": ["pectorals", "triceps", "abs"],
+    "focus_area_slugs": ["full-body"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": []
+  },
+  {
+    "name": "Jumping Jack",
+    "description": null,
+    "instructions": [
+      "Stand with your feet together and your arms at your sides.",
+      "Jump your feet out to slightly wider than shoulder-width while raising your arms overhead.",
+      "Jump your feet back together while lowering your arms back to your sides.",
+      "Repeat the movement continuously at a steady pace."
+    ],
+    "animation_url": null,
+    "exercise_mode": "both",
+    "is_low_impact": false,
+    "requires_jumping": true,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["quadriceps"],
+    "secondary_muscle_slugs": ["calves", "deltoids"],
+    "focus_area_slugs": ["full-body"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": []
+  },
+  {
+    "name": "Bear Crawl",
+    "description": null,
+    "instructions": [
+      "Start on all fours with your hands under your shoulders and knees under your hips, knees hovering just above the floor.",
+      "Move your right hand and left foot forward simultaneously.",
+      "Then move your left hand and right foot forward in a crawling motion.",
+      "Continue crawling forward, keeping your hips low and your core engaged the entire time."
+    ],
+    "animation_url": null,
+    "exercise_mode": "duration",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["quadriceps"],
+    "secondary_muscle_slugs": ["deltoids", "abs"],
+    "focus_area_slugs": ["full-body"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Inchworm",
+    "description": null,
+    "instructions": [
+      "Stand with your feet together and hinge at the hips to place your hands on the floor.",
+      "Walk your hands forward along the floor until you are in a high plank position.",
+      "Pause briefly in the plank, then walk your hands back toward your feet.",
+      "Stand up to the starting position and repeat."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["deltoids"],
+    "secondary_muscle_slugs": ["abs", "hamstrings"],
+    "focus_area_slugs": ["full-body"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Dumbbell Thruster",
+    "description": null,
+    "instructions": [
+      "Stand with your feet shoulder-width apart, holding a dumbbell in each hand at shoulder height.",
+      "Lower into a full squat, keeping your chest up and elbows pointing forward.",
+      "Drive up explosively from the squat and use the momentum to press the dumbbells overhead.",
+      "Lower the dumbbells back to shoulder height as you descend into the next squat."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["dumbbells"],
+    "target_muscle_slugs": ["quadriceps"],
+    "secondary_muscle_slugs": ["glutes", "deltoids"],
+    "focus_area_slugs": ["full-body"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Kettlebell Swing",
+    "description": null,
+    "instructions": [
+      "Stand with your feet slightly wider than shoulder-width apart, holding a kettlebell with both hands.",
+      "Hinge at your hips to swing the kettlebell back between your legs.",
+      "Drive your hips forward explosively to swing the kettlebell up to chest height.",
+      "Control the kettlebell as it swings back down and immediately hinge into the next rep."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["kettlebell"],
+    "target_muscle_slugs": ["glutes"],
+    "secondary_muscle_slugs": ["hamstrings", "lower-back"],
+    "focus_area_slugs": ["full-body"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Turkish Get-Up",
+    "description": null,
+    "instructions": [
+      "Lie on your back holding a kettlebell or dumbbell in your right hand with your arm extended above your chest.",
+      "Bend your right knee and place your left hand out to the side, then press up onto your left forearm.",
+      "Continue pressing up to your left hand, then lift your hips and sweep your left leg through to a kneeling position.",
+      "Stand up fully, then reverse the entire sequence step-by-step to return to the lying position."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["kettlebell"],
+    "target_muscle_slugs": ["deltoids"],
+    "secondary_muscle_slugs": ["abs", "glutes"],
+    "focus_area_slugs": ["full-body"],
+    "level_slugs": ["advanced"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Clean and Press",
+    "description": null,
+    "instructions": [
+      "Stand with your feet hip-width apart, holding a barbell with an overhand grip at knee height.",
+      "Explosively pull the barbell up along your body and catch it at shoulder height in a front rack position.",
+      "With the bar at your shoulders, press the barbell overhead to full arm extension.",
+      "Lower the bar back to your shoulders, then to the starting position at knee height."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["barbell"],
+    "target_muscle_slugs": ["deltoids"],
+    "secondary_muscle_slugs": ["quadriceps", "glutes"],
+    "focus_area_slugs": ["full-body"],
+    "level_slugs": ["advanced"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Deadlift",
+    "description": null,
+    "instructions": [
+      "Stand with your feet hip-width apart with the barbell over your mid-foot, shins touching the bar.",
+      "Hinge at your hips, grip the bar just outside your knees, and flatten your back.",
+      "Drive through your heels and extend your hips and knees to lift the bar to standing.",
+      "Lower the bar back to the floor by hinging at your hips first, then bending your knees."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["barbell"],
+    "target_muscle_slugs": ["hamstrings"],
+    "secondary_muscle_slugs": ["glutes", "lower-back"],
+    "focus_area_slugs": ["full-body"],
+    "level_slugs": ["advanced"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Squat to Press",
+    "description": null,
+    "instructions": [
+      "Stand with your feet shoulder-width apart, holding a dumbbell in each hand at shoulder height.",
+      "Lower into a squat by pushing your hips back and bending your knees.",
+      "Drive up from the squat and press the dumbbells overhead in one fluid motion.",
+      "Lower the dumbbells back to shoulder height as you prepare for the next rep."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["dumbbells"],
+    "target_muscle_slugs": ["quadriceps"],
+    "secondary_muscle_slugs": ["deltoids", "glutes"],
+    "focus_area_slugs": ["full-body"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Renegade Row",
+    "description": null,
+    "instructions": [
+      "Start in a high plank position with your hands gripping dumbbells on the floor, slightly wider than shoulder-width.",
+      "Keeping your hips level and core tight, row the right dumbbell up toward your hip.",
+      "Lower the dumbbell back to the floor and repeat on the left side.",
+      "Alternate sides while maintaining a rigid plank position throughout."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": true,
+    "requires_jumping": false,
+    "equipment_slugs": ["dumbbells"],
+    "target_muscle_slugs": ["latissimus-dorsi"],
+    "secondary_muscle_slugs": ["abs", "deltoids"],
+    "focus_area_slugs": ["full-body"],
+    "level_slugs": ["advanced"],
+    "restriction_slugs": ["low-impact", "no-jumping"]
+  },
+  {
+    "name": "Man Maker",
+    "description": null,
+    "instructions": [
+      "Stand with dumbbells at your sides, then hinge forward and place them on the floor to enter a plank.",
+      "Perform a push-up on the dumbbells, then row the right dumbbell to your hip, followed by the left.",
+      "Jump your feet toward your hands and clean the dumbbells to your shoulders.",
+      "Press the dumbbells overhead to complete one repetition, then return to the starting position."
+    ],
+    "animation_url": null,
+    "exercise_mode": "reps",
+    "is_low_impact": false,
+    "requires_jumping": true,
+    "equipment_slugs": ["dumbbells"],
+    "target_muscle_slugs": ["quadriceps"],
+    "secondary_muscle_slugs": ["latissimus-dorsi", "deltoids", "abs"],
+    "focus_area_slugs": ["full-body"],
+    "level_slugs": ["advanced"],
+    "restriction_slugs": []
+  },
+  {
+    "name": "Sprawl",
+    "description": null,
+    "instructions": [
+      "Stand with your feet shoulder-width apart and your hands at your sides.",
+      "Drop down and place your hands on the floor, kicking your feet back into a plank position.",
+      "Lower your hips to the floor briefly, keeping your arms extended.",
+      "Jump your feet back toward your hands and stand up to the starting position."
+    ],
+    "animation_url": null,
+    "exercise_mode": "both",
+    "is_low_impact": false,
+    "requires_jumping": true,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["quadriceps"],
+    "secondary_muscle_slugs": ["abs", "deltoids"],
+    "focus_area_slugs": ["full-body"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": []
+  },
+  {
+    "name": "Lateral Shuffle",
+    "description": null,
+    "instructions": [
+      "Stand with your feet shoulder-width apart and knees slightly bent in an athletic stance.",
+      "Push off your right foot and step laterally to the left with your left foot.",
+      "Quickly bring your right foot toward your left, then push off again to continue shuffling.",
+      "Shuffle a set distance or time in one direction, then reverse direction."
+    ],
+    "animation_url": null,
+    "exercise_mode": "duration",
+    "is_low_impact": false,
+    "requires_jumping": false,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["quadriceps"],
+    "secondary_muscle_slugs": ["glutes", "calves"],
+    "focus_area_slugs": ["full-body"],
+    "level_slugs": ["intermediate"],
+    "restriction_slugs": []
+  },
+  {
+    "name": "High Knees",
+    "description": null,
+    "instructions": [
+      "Stand with your feet hip-width apart and your arms bent at your sides.",
+      "Drive your right knee up toward your chest as high as possible.",
+      "Quickly switch legs, driving your left knee up while lowering your right.",
+      "Continue alternating legs at a rapid pace, pumping your arms in sync with your legs."
+    ],
+    "animation_url": null,
+    "exercise_mode": "both",
+    "is_low_impact": false,
+    "requires_jumping": true,
+    "equipment_slugs": ["none"],
+    "target_muscle_slugs": ["quadriceps"],
+    "secondary_muscle_slugs": ["abs", "hip-flexors"],
+    "focus_area_slugs": ["full-body"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": []
+  },
+  {
+    "name": "Jump Rope",
+    "description": null,
+    "instructions": [
+      "Hold the jump rope handles at your sides with the rope behind your heels.",
+      "Swing the rope overhead and jump over it as it approaches your feet, landing softly on the balls of your feet.",
+      "Keep your jumps low, just high enough to clear the rope.",
+      "Rotate your wrists to swing the rope and maintain a steady rhythm."
+    ],
+    "animation_url": null,
+    "exercise_mode": "both",
+    "is_low_impact": false,
+    "requires_jumping": true,
+    "equipment_slugs": ["jump-rope"],
+    "target_muscle_slugs": ["calves"],
+    "secondary_muscle_slugs": ["deltoids", "quadriceps"],
+    "focus_area_slugs": ["full-body"],
+    "level_slugs": ["beginner"],
+    "restriction_slugs": []
+  }
+]

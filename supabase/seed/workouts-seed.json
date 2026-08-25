@@ -1,0 +1,1271 @@
+[
+  {
+    "name": "Beginner Full Body Blast",
+    "description": "A total body strength workout designed for beginners. Build foundational muscle and confidence with simple bodyweight movements.",
+    "duration_minutes": 20,
+    "estimated_calories": 200,
+    "category_slugs": ["strength_and_tone"],
+    "focus_area_slugs": ["full_body"],
+    "level_slugs": ["beginner"],
+    "exercises": [
+      {
+        "exercise_name": "Bodyweight Squat",
+        "order_index": 1,
+        "sets": 3,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 30
+      },
+      {
+        "exercise_name": "Push-Up",
+        "order_index": 2,
+        "sets": 3,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 30
+      },
+      {
+        "exercise_name": "Glute Bridge",
+        "order_index": 3,
+        "sets": 3,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 30
+      },
+      {
+        "exercise_name": "Plank",
+        "order_index": 4,
+        "sets": 3,
+        "reps": null,
+        "duration_seconds": 30,
+        "rest_seconds": 20
+      },
+      {
+        "exercise_name": "Lunges",
+        "order_index": 5,
+        "sets": 3,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 30
+      },
+      {
+        "exercise_name": "Dead Bug",
+        "order_index": 6,
+        "sets": 2,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 20
+      }
+    ]
+  },
+  {
+    "name": "Lose Belly Fat",
+    "description": "Target your midsection with this focused core and cardio workout designed to burn fat and strengthen your abs.",
+    "duration_minutes": 15,
+    "estimated_calories": 180,
+    "category_slugs": ["fat_burning"],
+    "focus_area_slugs": ["abs"],
+    "level_slugs": ["beginner"],
+    "exercises": [
+      {
+        "exercise_name": "Bicycle Crunch",
+        "order_index": 1,
+        "sets": 3,
+        "reps": 15,
+        "duration_seconds": null,
+        "rest_seconds": 20
+      },
+      {
+        "exercise_name": "Mountain Climber",
+        "order_index": 2,
+        "sets": 3,
+        "reps": null,
+        "duration_seconds": 30,
+        "rest_seconds": 20
+      },
+      {
+        "exercise_name": "Plank",
+        "order_index": 3,
+        "sets": 3,
+        "reps": null,
+        "duration_seconds": 30,
+        "rest_seconds": 20
+      },
+      {
+        "exercise_name": "Leg Raise",
+        "order_index": 4,
+        "sets": 3,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 20
+      },
+      {
+        "exercise_name": "Dead Bug",
+        "order_index": 5,
+        "sets": 2,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 20
+      },
+      {
+        "exercise_name": "Flutter Kick",
+        "order_index": 6,
+        "sets": 3,
+        "reps": null,
+        "duration_seconds": 30,
+        "rest_seconds": 15
+      }
+    ]
+  },
+  {
+    "name": "Dumbbell Arm Toning",
+    "description": "Sculpt and tone your arms with this dumbbell-focused workout targeting biceps, triceps, and shoulders.",
+    "duration_minutes": 12,
+    "estimated_calories": 120,
+    "category_slugs": ["strength_and_tone"],
+    "focus_area_slugs": ["arm"],
+    "level_slugs": ["beginner"],
+    "exercises": [
+      {
+        "exercise_name": "Dumbbell Bicep Curl",
+        "order_index": 1,
+        "sets": 3,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 30
+      },
+      {
+        "exercise_name": "Hammer Curl",
+        "order_index": 2,
+        "sets": 3,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 30
+      },
+      {
+        "exercise_name": "Lateral Raise",
+        "order_index": 3,
+        "sets": 3,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 30
+      },
+      {
+        "exercise_name": "Tricep Kickback",
+        "order_index": 4,
+        "sets": 3,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 30
+      },
+      {
+        "exercise_name": "Front Raise",
+        "order_index": 5,
+        "sets": 3,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 30
+      },
+      {
+        "exercise_name": "Wrist Curl",
+        "order_index": 6,
+        "sets": 2,
+        "reps": 15,
+        "duration_seconds": null,
+        "rest_seconds": 30
+      }
+    ]
+  },
+  {
+    "name": "Quick Chest Building",
+    "description": "Build chest strength and definition with this intermediate workout combining bodyweight and dumbbell exercises.",
+    "duration_minutes": 15,
+    "estimated_calories": 150,
+    "category_slugs": ["strength_and_tone"],
+    "focus_area_slugs": ["chest"],
+    "level_slugs": ["intermediate"],
+    "exercises": [
+      {
+        "exercise_name": "Push-Up",
+        "order_index": 1,
+        "sets": 3,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 30
+      },
+      {
+        "exercise_name": "Diamond Push-Up",
+        "order_index": 2,
+        "sets": 3,
+        "reps": 8,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Dumbbell Bench Press",
+        "order_index": 3,
+        "sets": 3,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Incline Dumbbell Press",
+        "order_index": 4,
+        "sets": 3,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Dumbbell Fly",
+        "order_index": 5,
+        "sets": 3,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Isometric Chest Squeeze",
+        "order_index": 6,
+        "sets": 3,
+        "reps": null,
+        "duration_seconds": 30,
+        "rest_seconds": 30
+      }
+    ]
+  },
+  {
+    "name": "Lose Fat No Jumping",
+    "description": "A complete fat-burning workout with zero jumping. Perfect for apartments or anyone needing a low-impact option.",
+    "duration_minutes": 20,
+    "estimated_calories": 200,
+    "category_slugs": ["fat_burning"],
+    "focus_area_slugs": ["full_body"],
+    "level_slugs": ["beginner"],
+    "exercises": [
+      {
+        "exercise_name": "Sumo Squat",
+        "order_index": 1,
+        "sets": 3,
+        "reps": 15,
+        "duration_seconds": null,
+        "rest_seconds": 30
+      },
+      {
+        "exercise_name": "Lunges",
+        "order_index": 2,
+        "sets": 3,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 30
+      },
+      {
+        "exercise_name": "Glute Bridge",
+        "order_index": 3,
+        "sets": 3,
+        "reps": 15,
+        "duration_seconds": null,
+        "rest_seconds": 20
+      },
+      {
+        "exercise_name": "Side Plank",
+        "order_index": 4,
+        "sets": 3,
+        "reps": null,
+        "duration_seconds": 30,
+        "rest_seconds": 20
+      },
+      {
+        "exercise_name": "Bear Crawl",
+        "order_index": 5,
+        "sets": 3,
+        "reps": null,
+        "duration_seconds": 30,
+        "rest_seconds": 25
+      },
+      {
+        "exercise_name": "Wall Sit",
+        "order_index": 6,
+        "sets": 3,
+        "reps": null,
+        "duration_seconds": 30,
+        "rest_seconds": 20
+      },
+      {
+        "exercise_name": "Inchworm",
+        "order_index": 7,
+        "sets": 2,
+        "reps": 8,
+        "duration_seconds": null,
+        "rest_seconds": 30
+      }
+    ]
+  },
+  {
+    "name": "Butt & Legs Sculpt",
+    "description": "Shape and strengthen your lower body with this targeted glutes and legs workout using dumbbells.",
+    "duration_minutes": 15,
+    "estimated_calories": 160,
+    "category_slugs": ["strength_and_tone"],
+    "focus_area_slugs": ["butt_legs"],
+    "level_slugs": ["intermediate"],
+    "exercises": [
+      {
+        "exercise_name": "Bodyweight Squat",
+        "order_index": 1,
+        "sets": 3,
+        "reps": 15,
+        "duration_seconds": null,
+        "rest_seconds": 30
+      },
+      {
+        "exercise_name": "Bulgarian Split Squat",
+        "order_index": 2,
+        "sets": 3,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Hip Thrust",
+        "order_index": 3,
+        "sets": 3,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 30
+      },
+      {
+        "exercise_name": "Romanian Deadlift",
+        "order_index": 4,
+        "sets": 3,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Calf Raise",
+        "order_index": 5,
+        "sets": 3,
+        "reps": 15,
+        "duration_seconds": null,
+        "rest_seconds": 30
+      },
+      {
+        "exercise_name": "Lateral Lunge",
+        "order_index": 6,
+        "sets": 3,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 30
+      }
+    ]
+  },
+  {
+    "name": "Fresh Start Warm Up",
+    "description": "Ease into your workout with this gentle full-body warm up that mobilizes joints and activates key muscles.",
+    "duration_minutes": 8,
+    "estimated_calories": 60,
+    "category_slugs": ["stretching_and_warmup"],
+    "focus_area_slugs": ["full_body"],
+    "level_slugs": ["beginner"],
+    "exercises": [
+      {
+        "exercise_name": "Inchworm",
+        "order_index": 1,
+        "sets": 2,
+        "reps": 6,
+        "duration_seconds": null,
+        "rest_seconds": 15
+      },
+      {
+        "exercise_name": "Bird Dog",
+        "order_index": 2,
+        "sets": 2,
+        "reps": 8,
+        "duration_seconds": null,
+        "rest_seconds": 10
+      },
+      {
+        "exercise_name": "Donkey Kick",
+        "order_index": 3,
+        "sets": 2,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 10
+      },
+      {
+        "exercise_name": "Glute Bridge",
+        "order_index": 4,
+        "sets": 2,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 10
+      },
+      {
+        "exercise_name": "Lateral Lunge",
+        "order_index": 5,
+        "sets": 2,
+        "reps": 8,
+        "duration_seconds": null,
+        "rest_seconds": 10
+      },
+      {
+        "exercise_name": "Wall Sit",
+        "order_index": 6,
+        "sets": 2,
+        "reps": null,
+        "duration_seconds": 20,
+        "rest_seconds": 10
+      }
+    ]
+  },
+  {
+    "name": "Beginner Abs Workout",
+    "description": "Strengthen your core with this beginner-friendly ab workout. Build stability and definition with controlled movements.",
+    "duration_minutes": 10,
+    "estimated_calories": 100,
+    "category_slugs": ["strength_and_tone"],
+    "focus_area_slugs": ["abs"],
+    "level_slugs": ["beginner"],
+    "exercises": [
+      {
+        "exercise_name": "Plank",
+        "order_index": 1,
+        "sets": 3,
+        "reps": null,
+        "duration_seconds": 20,
+        "rest_seconds": 20
+      },
+      {
+        "exercise_name": "Dead Bug",
+        "order_index": 2,
+        "sets": 3,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 20
+      },
+      {
+        "exercise_name": "Reverse Crunch",
+        "order_index": 3,
+        "sets": 3,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 20
+      },
+      {
+        "exercise_name": "Side Plank",
+        "order_index": 4,
+        "sets": 2,
+        "reps": null,
+        "duration_seconds": 20,
+        "rest_seconds": 20
+      },
+      {
+        "exercise_name": "Toe Touch Crunch",
+        "order_index": 5,
+        "sets": 3,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 20
+      },
+      {
+        "exercise_name": "Flutter Kick",
+        "order_index": 6,
+        "sets": 3,
+        "reps": null,
+        "duration_seconds": 25,
+        "rest_seconds": 20
+      }
+    ]
+  },
+  {
+    "name": "Advanced Barbell Power",
+    "description": "Heavy compound lifting for experienced trainees. Deadlifts, cleans, and presses to build raw full-body strength and power.",
+    "duration_minutes": 30,
+    "estimated_calories": 320,
+    "category_slugs": ["strength_and_tone"],
+    "focus_area_slugs": ["full_body"],
+    "level_slugs": ["advanced"],
+    "exercises": [
+      {
+        "exercise_name": "Deadlift",
+        "order_index": 1,
+        "sets": 4,
+        "reps": 6,
+        "duration_seconds": null,
+        "rest_seconds": 90
+      },
+      {
+        "exercise_name": "Clean and Press",
+        "order_index": 2,
+        "sets": 4,
+        "reps": 8,
+        "duration_seconds": null,
+        "rest_seconds": 90
+      },
+      {
+        "exercise_name": "Incline Barbell Press",
+        "order_index": 3,
+        "sets": 4,
+        "reps": 8,
+        "duration_seconds": null,
+        "rest_seconds": 75
+      },
+      {
+        "exercise_name": "Turkish Get-Up",
+        "order_index": 4,
+        "sets": 3,
+        "reps": 5,
+        "duration_seconds": null,
+        "rest_seconds": 60
+      }
+    ]
+  },
+  {
+    "name": "Hardcore Core Circuit",
+    "description": "A demanding core circuit for advanced athletes. Hanging leg raises, V-ups, and weighted carries to forge serious midline strength.",
+    "duration_minutes": 20,
+    "estimated_calories": 220,
+    "category_slugs": ["strength_and_tone"],
+    "focus_area_slugs": ["abs"],
+    "level_slugs": ["advanced"],
+    "exercises": [
+      {
+        "exercise_name": "Hanging Leg Raise",
+        "order_index": 1,
+        "sets": 4,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 60
+      },
+      {
+        "exercise_name": "V-Up",
+        "order_index": 2,
+        "sets": 4,
+        "reps": 15,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Renegade Row",
+        "order_index": 3,
+        "sets": 3,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 60
+      },
+      {
+        "exercise_name": "Man Maker",
+        "order_index": 4,
+        "sets": 3,
+        "reps": 8,
+        "duration_seconds": null,
+        "rest_seconds": 75
+      },
+      {
+        "exercise_name": "Turkish Get-Up",
+        "order_index": 5,
+        "sets": 3,
+        "reps": 5,
+        "duration_seconds": null,
+        "rest_seconds": 60
+      }
+    ]
+  },
+  {
+    "name": "Elite Full Body Burner",
+    "description": "High-intensity metabolic conditioning with dumbbell complexes. Minimal rest, maximal output — not for the faint of heart.",
+    "duration_minutes": 25,
+    "estimated_calories": 300,
+    "category_slugs": ["fat_burning"],
+    "focus_area_slugs": ["full_body"],
+    "level_slugs": ["advanced"],
+    "exercises": [
+      {
+        "exercise_name": "Man Maker",
+        "order_index": 1,
+        "sets": 4,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 60
+      },
+      {
+        "exercise_name": "Clean and Press",
+        "order_index": 2,
+        "sets": 4,
+        "reps": 8,
+        "duration_seconds": null,
+        "rest_seconds": 60
+      },
+      {
+        "exercise_name": "Renegade Row",
+        "order_index": 3,
+        "sets": 4,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Turkish Get-Up",
+        "order_index": 4,
+        "sets": 3,
+        "reps": 5,
+        "duration_seconds": null,
+        "rest_seconds": 60
+      }
+    ]
+  },
+  {
+    "name": "Upper Body Strength Split",
+    "description": "A classic push-focused strength session for intermediate lifters. Bench, dips, and tricep work to build a bigger upper body.",
+    "duration_minutes": 25,
+    "estimated_calories": 240,
+    "category_slugs": ["strength_and_tone"],
+    "focus_area_slugs": ["chest"],
+    "level_slugs": ["intermediate"],
+    "exercises": [
+      {
+        "exercise_name": "Barbell Bench Press",
+        "order_index": 1,
+        "sets": 4,
+        "reps": 8,
+        "duration_seconds": null,
+        "rest_seconds": 75
+      },
+      {
+        "exercise_name": "Incline Dumbbell Press",
+        "order_index": 2,
+        "sets": 3,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 60
+      },
+      {
+        "exercise_name": "Chest Dip",
+        "order_index": 3,
+        "sets": 3,
+        "reps": 8,
+        "duration_seconds": null,
+        "rest_seconds": 60
+      },
+      {
+        "exercise_name": "Skull Crusher",
+        "order_index": 4,
+        "sets": 3,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Face Pull",
+        "order_index": 5,
+        "sets": 3,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      }
+    ]
+  },
+  {
+    "name": "Sculpted Shoulders & Arms",
+    "description": "Targeted deltoid, bicep, and tricep training with dumbbells. Build round shoulders and defined arms in one focused session.",
+    "duration_minutes": 20,
+    "estimated_calories": 190,
+    "category_slugs": ["strength_and_tone"],
+    "focus_area_slugs": ["arm"],
+    "level_slugs": ["intermediate"],
+    "exercises": [
+      {
+        "exercise_name": "Arnold Press",
+        "order_index": 1,
+        "sets": 4,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 60
+      },
+      {
+        "exercise_name": "Lateral Raise",
+        "order_index": 2,
+        "sets": 3,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Front Raise",
+        "order_index": 3,
+        "sets": 3,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Overhead Tricep Extension",
+        "order_index": 4,
+        "sets": 3,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Concentration Curl",
+        "order_index": 5,
+        "sets": 3,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Shrugs",
+        "order_index": 6,
+        "sets": 3,
+        "reps": 15,
+        "duration_seconds": null,
+        "rest_seconds": 30
+      }
+    ]
+  },
+  {
+    "name": "HIIT Fat Furnace",
+    "description": "Short, sharp, and sweaty. A high-intensity interval circuit mixing burpees, swings, and sprints to torch calories fast.",
+    "duration_minutes": 18,
+    "estimated_calories": 260,
+    "category_slugs": ["fat_burning"],
+    "focus_area_slugs": ["full_body"],
+    "level_slugs": ["intermediate"],
+    "exercises": [
+      {
+        "exercise_name": "Burpee",
+        "order_index": 1,
+        "sets": 4,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Kettlebell Swing",
+        "order_index": 2,
+        "sets": 4,
+        "reps": 15,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Mountain Climber",
+        "order_index": 3,
+        "sets": 4,
+        "reps": null,
+        "duration_seconds": 40,
+        "rest_seconds": 30
+      },
+      {
+        "exercise_name": "Sprawl",
+        "order_index": 4,
+        "sets": 3,
+        "reps": null,
+        "duration_seconds": 30,
+        "rest_seconds": 30
+      },
+      {
+        "exercise_name": "Lateral Shuffle",
+        "order_index": 5,
+        "sets": 3,
+        "reps": null,
+        "duration_seconds": 40,
+        "rest_seconds": 30
+      }
+    ]
+  },
+  {
+    "name": "Core Crusher Challenge",
+    "description": "Take your core training beyond crunches. Anti-extension holds, rollouts, and rotation for a rock-solid midsection.",
+    "duration_minutes": 18,
+    "estimated_calories": 170,
+    "category_slugs": ["strength_and_tone"],
+    "focus_area_slugs": ["abs"],
+    "level_slugs": ["intermediate"],
+    "exercises": [
+      {
+        "exercise_name": "Russian Twist",
+        "order_index": 1,
+        "sets": 3,
+        "reps": 20,
+        "duration_seconds": null,
+        "rest_seconds": 30
+      },
+      {
+        "exercise_name": "Leg Raise",
+        "order_index": 2,
+        "sets": 3,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Hollow Body Hold",
+        "order_index": 3,
+        "sets": 3,
+        "reps": null,
+        "duration_seconds": 30,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Ab Rollout",
+        "order_index": 4,
+        "sets": 3,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 60
+      },
+      {
+        "exercise_name": "Cable Crunch",
+        "order_index": 5,
+        "sets": 3,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      }
+    ]
+  },
+  {
+    "name": "Kettlebell Lower Body Power",
+    "description": "Explosive kettlebell work paired with single-leg strength. Build powerful glutes, hamstrings, and quads.",
+    "duration_minutes": 22,
+    "estimated_calories": 230,
+    "category_slugs": ["strength_and_tone"],
+    "focus_area_slugs": ["butt_legs"],
+    "level_slugs": ["intermediate"],
+    "exercises": [
+      {
+        "exercise_name": "Kettlebell Swing",
+        "order_index": 1,
+        "sets": 4,
+        "reps": 15,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Sumo Squat",
+        "order_index": 2,
+        "sets": 4,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Single Leg Deadlift",
+        "order_index": 3,
+        "sets": 3,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 60
+      },
+      {
+        "exercise_name": "Step Up",
+        "order_index": 4,
+        "sets": 3,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Hip Thrust",
+        "order_index": 5,
+        "sets": 3,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      }
+    ]
+  },
+  {
+    "name": "Recover & Restore Stretch",
+    "description": "A gentle recovery flow for rest days. Low-intensity movements to release tension, restore mobility, and calm your body.",
+    "duration_minutes": 12,
+    "estimated_calories": 70,
+    "category_slugs": ["stretching_and_warmup"],
+    "focus_area_slugs": ["full_body"],
+    "level_slugs": ["beginner"],
+    "exercises": [
+      {
+        "exercise_name": "Bird Dog",
+        "order_index": 1,
+        "sets": 2,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 15
+      },
+      {
+        "exercise_name": "Dead Bug",
+        "order_index": 2,
+        "sets": 2,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 15
+      },
+      {
+        "exercise_name": "Fire Hydrant",
+        "order_index": 3,
+        "sets": 2,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 15
+      },
+      {
+        "exercise_name": "Donkey Kick",
+        "order_index": 4,
+        "sets": 2,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 15
+      },
+      {
+        "exercise_name": "Glute Bridge",
+        "order_index": 5,
+        "sets": 2,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 20
+      },
+      {
+        "exercise_name": "Side Plank",
+        "order_index": 6,
+        "sets": 2,
+        "reps": null,
+        "duration_seconds": 20,
+        "rest_seconds": 20
+      }
+    ]
+  },
+  {
+    "name": "Chest & Triceps Starter",
+    "description": "A beginner-friendly introduction to upper body pushing. Gentle progressions to build pressing strength safely.",
+    "duration_minutes": 18,
+    "estimated_calories": 150,
+    "category_slugs": ["strength_and_tone"],
+    "focus_area_slugs": ["chest"],
+    "level_slugs": ["beginner"],
+    "exercises": [
+      {
+        "exercise_name": "Incline Push-Up",
+        "order_index": 1,
+        "sets": 3,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Wide Grip Push-Up",
+        "order_index": 2,
+        "sets": 3,
+        "reps": 8,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Push-Up",
+        "order_index": 3,
+        "sets": 3,
+        "reps": 8,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Svend Press",
+        "order_index": 4,
+        "sets": 3,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 30
+      },
+      {
+        "exercise_name": "Overhead Tricep Extension",
+        "order_index": 5,
+        "sets": 3,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Isometric Chest Squeeze",
+        "order_index": 6,
+        "sets": 2,
+        "reps": null,
+        "duration_seconds": 30,
+        "rest_seconds": 30
+      }
+    ]
+  },
+  {
+    "name": "Jump Start Cardio",
+    "description": "An easy-entry cardio session to get your heart rate up. Simple moves, no experience needed — just bring energy.",
+    "duration_minutes": 15,
+    "estimated_calories": 180,
+    "category_slugs": ["fat_burning"],
+    "focus_area_slugs": ["full_body"],
+    "level_slugs": ["beginner"],
+    "exercises": [
+      {
+        "exercise_name": "Jumping Jack",
+        "order_index": 1,
+        "sets": 3,
+        "reps": null,
+        "duration_seconds": 45,
+        "rest_seconds": 30
+      },
+      {
+        "exercise_name": "High Knees",
+        "order_index": 2,
+        "sets": 3,
+        "reps": null,
+        "duration_seconds": 40,
+        "rest_seconds": 30
+      },
+      {
+        "exercise_name": "Jump Rope",
+        "order_index": 3,
+        "sets": 3,
+        "reps": null,
+        "duration_seconds": 45,
+        "rest_seconds": 30
+      },
+      {
+        "exercise_name": "Inchworm",
+        "order_index": 4,
+        "sets": 3,
+        "reps": 8,
+        "duration_seconds": null,
+        "rest_seconds": 30
+      },
+      {
+        "exercise_name": "Wall Sit",
+        "order_index": 5,
+        "sets": 2,
+        "reps": null,
+        "duration_seconds": 30,
+        "rest_seconds": 30
+      },
+      {
+        "exercise_name": "Plank",
+        "order_index": 6,
+        "sets": 2,
+        "reps": null,
+        "duration_seconds": 30,
+        "rest_seconds": 20
+      }
+    ]
+  },
+  {
+    "name": "Posterior Chain Powerhouse",
+    "description": "A heavy pull-focused session for advanced lifters. Deadlift variations and ballistic swings to build a powerful backside and unbreakable posterior chain.",
+    "duration_minutes": 30,
+    "estimated_calories": 330,
+    "category_slugs": ["strength_and_tone"],
+    "focus_area_slugs": ["butt_legs"],
+    "level_slugs": ["advanced"],
+    "exercises": [
+      {
+        "exercise_name": "Deadlift",
+        "order_index": 1,
+        "sets": 5,
+        "reps": 5,
+        "duration_seconds": null,
+        "rest_seconds": 120
+      },
+      {
+        "exercise_name": "Romanian Deadlift",
+        "order_index": 2,
+        "sets": 4,
+        "reps": 8,
+        "duration_seconds": null,
+        "rest_seconds": 90
+      },
+      {
+        "exercise_name": "Single Leg Deadlift",
+        "order_index": 3,
+        "sets": 3,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 60
+      },
+      {
+        "exercise_name": "Kettlebell Swing",
+        "order_index": 4,
+        "sets": 4,
+        "reps": 15,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Hanging Leg Raise",
+        "order_index": 5,
+        "sets": 3,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 60
+      }
+    ]
+  },
+  {
+    "name": "Elite Upper Body Push",
+    "description": "Maximum pressing volume for experienced trainees. Barbell and bodyweight pressing finished with a dumbbell complex burner.",
+    "duration_minutes": 28,
+    "estimated_calories": 300,
+    "category_slugs": ["strength_and_tone"],
+    "focus_area_slugs": ["chest"],
+    "level_slugs": ["advanced"],
+    "exercises": [
+      {
+        "exercise_name": "Incline Barbell Press",
+        "order_index": 1,
+        "sets": 4,
+        "reps": 8,
+        "duration_seconds": null,
+        "rest_seconds": 75
+      },
+      {
+        "exercise_name": "Barbell Bench Press",
+        "order_index": 2,
+        "sets": 4,
+        "reps": 8,
+        "duration_seconds": null,
+        "rest_seconds": 75
+      },
+      {
+        "exercise_name": "Chest Dip",
+        "order_index": 3,
+        "sets": 4,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 60
+      },
+      {
+        "exercise_name": "Diamond Push-Up",
+        "order_index": 4,
+        "sets": 3,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Man Maker",
+        "order_index": 5,
+        "sets": 3,
+        "reps": 8,
+        "duration_seconds": null,
+        "rest_seconds": 60
+      }
+    ]
+  },
+  {
+    "name": "Kettlebell Conditioning Inferno",
+    "description": "Sustained high-output kettlebell conditioning. Get-ups, swings, and thrusters strung together to test your engine and your grip.",
+    "duration_minutes": 25,
+    "estimated_calories": 320,
+    "category_slugs": ["fat_burning"],
+    "focus_area_slugs": ["full_body"],
+    "level_slugs": ["advanced"],
+    "exercises": [
+      {
+        "exercise_name": "Turkish Get-Up",
+        "order_index": 1,
+        "sets": 4,
+        "reps": 5,
+        "duration_seconds": null,
+        "rest_seconds": 60
+      },
+      {
+        "exercise_name": "Kettlebell Swing",
+        "order_index": 2,
+        "sets": 5,
+        "reps": 20,
+        "duration_seconds": null,
+        "rest_seconds": 30
+      },
+      {
+        "exercise_name": "Dumbbell Thruster",
+        "order_index": 3,
+        "sets": 4,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Burpee",
+        "order_index": 4,
+        "sets": 4,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      },
+      {
+        "exercise_name": "Sprawl",
+        "order_index": 5,
+        "sets": 3,
+        "reps": null,
+        "duration_seconds": 30,
+        "rest_seconds": 30
+      }
+    ]
+  },
+  {
+    "name": "Warrior Arms & Shoulders",
+    "description": "High-density arm and shoulder training with minimal rest. Constant tension, supersets, and finishers for serious upper arm development.",
+    "duration_minutes": 25,
+    "estimated_calories": 270,
+    "category_slugs": ["strength_and_tone"],
+    "focus_area_slugs": ["arm"],
+    "level_slugs": ["advanced"],
+    "exercises": [
+      {
+        "exercise_name": "Arnold Press",
+        "order_index": 1,
+        "sets": 4,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 60
+      },
+      {
+        "exercise_name": "Barbell Curl",
+        "order_index": 2,
+        "sets": 4,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 60
+      },
+      {
+        "exercise_name": "Skull Crusher",
+        "order_index": 3,
+        "sets": 4,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 60
+      },
+      {
+        "exercise_name": "Renegade Row",
+        "order_index": 4,
+        "sets": 3,
+        "reps": 10,
+        "duration_seconds": null,
+        "rest_seconds": 60
+      },
+      {
+        "exercise_name": "Lateral Raise",
+        "order_index": 5,
+        "sets": 4,
+        "reps": 15,
+        "duration_seconds": null,
+        "rest_seconds": 30
+      },
+      {
+        "exercise_name": "Hammer Curl",
+        "order_index": 6,
+        "sets": 3,
+        "reps": 12,
+        "duration_seconds": null,
+        "rest_seconds": 45
+      }
+    ]
+  }
+]
