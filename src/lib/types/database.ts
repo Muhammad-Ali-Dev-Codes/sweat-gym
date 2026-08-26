@@ -31,11 +31,25 @@ export interface WeightEntry {
   created_at: string;
 }
 
+export type ExerciseDifficulty = "beginner" | "intermediate" | "advanced";
+
+export type ExerciseType =
+  | "strength"
+  | "cardio"
+  | "mobility"
+  | "stretching"
+  | "warm_up"
+  | "cool_down"
+  | "core"
+  | "balance";
+
 export interface Exercise {
   id: string;
   external_source: string | null;
   external_exercise_id: string | null;
   name: string;
+  slug?: string;
+  short_description?: string | null;
   description: string | null;
   instructions: string[] | null;
   animation_url: string | null;
@@ -43,11 +57,57 @@ export interface Exercise {
   video_url: string | null;
   media_source: string;
   exercise_mode: string;
+  difficulty?: ExerciseDifficulty;
+  exercise_type?: ExerciseType;
   is_low_impact: boolean;
   requires_jumping: boolean;
   is_active: boolean;
+  is_featured?: boolean;
+  default_sets?: number | null;
+  default_reps?: number | null;
+  default_rest_seconds?: number | null;
+  duration_seconds?: number | null;
+  calories_estimate?: number | null;
+  form_tips?: string[] | null;
+  safety_notes?: string[] | null;
   created_at: string;
   updated_at: string;
+}
+
+export interface ExerciseWithRelations extends Exercise {
+  exercise_muscles: {
+    muscle_id: string;
+    is_primary: boolean;
+    muscles: { name: string; slug: string } | null;
+  }[];
+  exercise_focus_areas: {
+    focus_areas: { name: string; slug: string } | null;
+  }[];
+  exercise_levels: {
+    levels: { name: string; slug: string } | null;
+  }[];
+  exercise_equipment: {
+    equipment: { name: string; slug: string } | null;
+  }[];
+}
+
+export interface ExerciseFavorite {
+  user_id: string;
+  exercise_id: string;
+  created_at: string;
+}
+
+export type ExerciseSortOption = "name" | "difficulty" | "newest";
+
+export interface ExerciseFilters {
+  search?: string;
+  category?: string;
+  difficulty?: ExerciseDifficulty;
+  muscle?: string;
+  equipment?: string;
+  exerciseType?: string;
+  favoritesOnly?: boolean;
+  sort?: ExerciseSortOption;
 }
 
 export interface Workout {

@@ -85,17 +85,50 @@ export interface LocalMeta {
   updatedAt: number;
 }
 
+export interface CachedLibraryExercise {
+  id: string;
+  name: string;
+  slug: string;
+  shortDescription: string | null;
+  description: string | null;
+  instructions: string[] | null;
+  animationUrl: string | null;
+  exerciseType: string;
+  difficulty: string;
+  exerciseMode: string;
+  isLowImpact: boolean;
+  requiresJumping: boolean;
+  isFeatured: boolean;
+  defaultSets: number | null;
+  defaultReps: number | null;
+  defaultRestSeconds: number | null;
+  durationSeconds: number | null;
+  caloriesEstimate: number | null;
+  formTips: string[] | null;
+  safetyNotes: string[] | null;
+  primaryMuscle: string | null;
+  primaryMuscleSlug: string | null;
+  focusArea: string | null;
+  focusAreaSlug: string | null;
+  level: string | null;
+  levelSlug: string | null;
+  equipment: string | null;
+  equipmentSlug: string | null;
+  cachedAt: number;
+}
+
 class GymDatabase extends Dexie {
   pendingSync!: Table<PendingSync>;
   offlineWorkoutSessions!: Table<OfflineWorkoutSession>;
   cachedWorkouts!: Table<CachedWorkout>;
   cachedExercises!: Table<CachedExercise>;
+  cachedExerciseLibrary!: Table<CachedLibraryExercise>;
   cachedMedia!: Table<CachedMedia>;
   localMeta!: Table<LocalMeta>;
 
   constructor() {
     super("gym-pwa-db");
-    this.version(2).stores({
+    this.version(3).stores({
       pendingSync:
         "++id, operationId, status, createdAt",
       offlineWorkoutSessions:
@@ -104,6 +137,8 @@ class GymDatabase extends Dexie {
         "workoutId, cachedAt",
       cachedExercises:
         "exerciseId, workoutExerciseId",
+      cachedExerciseLibrary:
+        "id, slug, difficulty, exerciseType, primaryMuscleSlug, focusAreaSlug, cachedAt",
       cachedMedia:
         "url, status",
       localMeta:

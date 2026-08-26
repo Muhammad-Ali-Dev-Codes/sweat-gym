@@ -8,6 +8,7 @@ import {
   Compass,
   Dumbbell,
   LayoutDashboard,
+  List,
   User,
   type LucideIcon,
 } from "lucide-react";
@@ -17,6 +18,7 @@ import { FireMark } from "@/components/brand/fire-mark";
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/plan", label: "Plan", icon: CalendarDays },
+  { href: "/exercises", label: "Exercises", icon: List },
   { href: "/discover", label: "Discover", icon: Compass },
   { href: "/workout", label: "Workout", icon: Dumbbell },
   { href: "/reports", label: "Reports", icon: ChartColumn },
