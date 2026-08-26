@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import {
   DAILY_SESSION_TARGET_KCAL,
   plannedDailyDeficitKcal,
+  type PlanDurationDays,
 } from "@/lib/weight-loss";
 import { RecoverPlanButton } from "@/components/recover-plan-button";
 import { PlanDays } from "./plan-days";
@@ -292,7 +293,11 @@ export default async function PlanPage() {
           )}
 
           <div className="mt-8">
-            <PlanDays days={days} opensTomorrowDay={opensTomorrowDay} />
+            <PlanDays
+              days={days}
+              opensTomorrowDay={opensTomorrowDay}
+              planDuration={Number(plan.plan_duration_days) as PlanDurationDays}
+            />
           </div>
         </>
       )}
