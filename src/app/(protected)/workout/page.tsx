@@ -153,6 +153,7 @@ export default function WorkoutPage() {
   const searchParams = useSearchParams();
   const planDayId = searchParams.get("planDayId");
   const workoutIdParam = searchParams.get("workoutId");
+  const autoStart = Boolean(planDayId || workoutIdParam);
 
   const [loading, setLoading] = useState(!!planDayId || !!workoutIdParam);
   const [notFound, setNotFound] = useState(false);
@@ -184,6 +185,8 @@ export default function WorkoutPage() {
   // Dexie session id while running in offline mode.
   const [offlineDbId, setOfflineDbId] = useState<number | null>(null);
   const [completionInfo, setCompletionInfo] = useState<CompletionInfo | null>(null);
+  const startWorkoutRef = useRef<() => void>(() => undefined);
+  const autoStartTriggeredRef = useRef(false);
 
   const resultsRef = useRef<Map<number, RecordedResult>>(new Map());
   // Bumped whenever resultsRef changes so persistence effects can observe it.
@@ -641,6 +644,21 @@ export default function WorkoutPage() {
     }
   };
 
+  startWorkoutRef.current = startWorkout;
+
+  useEffect(() => {
+    if (
+      !loading &&
+      autoStart &&
+      !workoutStarted &&
+      !workoutComplete &&
+      !autoStartTriggeredRef.current
+    ) {
+      autoStartTriggeredRef.current = true;
+      void startWorkoutRef.current();
+    }
+  }, [autoStart, loading, workoutComplete, workoutStarted]);
+
   const finishWorkout = useCallback(async () => {
     if (finishingRef.current) return;
     finishingRef.current = true;
@@ -928,6 +946,8 @@ export default function WorkoutPage() {
 
   // ---- Render branches -----------------------------------------------------
   if (loading) {
+    if (autoStart) return null;
+
     return (
       <div className="space-y-4 font-[family-name:var(--font-geist-sans)]">
         <div className="titan-hero h-64 animate-pulse rounded-2xl" />
@@ -987,6 +1007,19 @@ export default function WorkoutPage() {
     );
   }
 
+  if (!workoutStarted && autoStart && !startError) {
+    return null;
+  }
+
+  if (!workoutStarted && startError) {
+    return (
+      <div className="flex flex-col items-center rounded-2xl border border-dashed border-border bg-card p-10 text-center font-[family-name:var(--font-geist-sans)]">
+        <p role="alert" className="text-sm font-semibold text-destructive">{startError}</p>
+        <Link href="/plan" className="mt-5 rounded-full bg-foreground px-5 py-2.5 text-sm font-bold text-background">Back to Plan</Link>
+      </div>
+    );
+  }
+
   if (workoutComplete) {
     return (
       <WorkoutComplete
@@ -1006,7 +1039,7 @@ export default function WorkoutPage() {
   const metaCalories = workoutMeta?.targetCalories ?? 0;
 
   // ---- Start screen --------------------------------------------------------
-  if (!workoutStarted) {
+  if (!workoutStarted && Boolean(searchParams.get("showPreview"))) {
     return (
       <motion.div
         initial={{ opacity: 0, y: 16 }}

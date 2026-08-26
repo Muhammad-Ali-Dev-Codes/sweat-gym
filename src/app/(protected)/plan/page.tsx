@@ -184,7 +184,7 @@ export default async function PlanPage() {
 
               {nextUp ? (
                 <Link
-                  href={`/workout?planDayId=${nextUp.id}`}
+                  href={`/workout?planDayId=${nextUp.id}&autoStart=1`}
                   className="group relative flex w-full items-center gap-4 rounded-2xl border border-white/10 bg-white/8 p-4 backdrop-blur transition-all duration-300 outline-none hover:bg-white/12 focus-visible:ring-2 focus-visible:ring-white sm:ml-auto sm:w-auto sm:max-w-xs"
                 >
                   <span className="grid size-11 shrink-0 place-items-center rounded-full bg-white text-zinc-900 shadow-lg transition-transform duration-200 group-hover:scale-110 group-active:scale-95">

@@ -77,7 +77,7 @@ export function PlanDays({
                 return (
                   <motion.li key={day.id} variants={item} className="list-none">
                     <Link
-                      href={isActionable || isCompleted ? `/workout?planDayId=${day.id}` : "#"}
+                      href={isActionable || isCompleted ? `/plan/${day.id}` : "#"}
                       aria-disabled={!isActionable && !isCompleted}
                       tabIndex={isActionable || isCompleted ? 0 : -1}
                       className={cn(
