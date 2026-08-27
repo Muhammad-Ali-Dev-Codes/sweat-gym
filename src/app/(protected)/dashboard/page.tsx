@@ -12,10 +12,7 @@ import {
   Zap,
   Trophy,
   Calendar,
-  ArrowUpRight,
-  ArrowDownRight,
   Heart,
-  Scale,
 } from "lucide-react";
 import { formatClock, formatMinutes } from "@/lib/duration";
 import { ProgressRing } from "@/components/ui/progress-ring";
@@ -29,6 +26,7 @@ import { cn } from "@/lib/utils";
 import { computeStreaks, getLocalDayKey } from "@/lib/dates";
 import { RegeneratePlanButton } from "./regenerate-plan-button";
 import { RecoverPlanButton } from "@/components/recover-plan-button";
+import { DashboardWeightInsights } from "./dashboard-weight-insights";
 import type { ReactNode } from "react";
 import type {
   Profile,
@@ -223,13 +221,24 @@ export default async function DashboardPage() {
       .select("*")
       .eq("user_id", user.id)
       .order("recorded_at", { ascending: false })
-      .limit(60),
+      .limit(365),
   ]);
 
   const fitnessProfile = fpResult.data as FitnessProfile | null;
   const plan = activePlanResult as UserPlan | null;
   const sessions = (sessionsResult.data as SessionRow[] | null) ?? [];
   const weights = (weightsResult.data as WeightEntry[] | null) ?? [];
+  const currentWeight = weights[0] ?? null;
+  const targetWeight = fitnessProfile?.target_weight_kg ?? null;
+  const remainingKg =
+    currentWeight && targetWeight !== null
+      ? Math.abs(currentWeight.weight_kg - targetWeight)
+      : null;
+  const goalReached = remainingKg !== null && remainingKg < 0.15;
+  const goalDirection =
+    currentWeight && targetWeight !== null && targetWeight < currentWeight.weight_kg - 0.05
+      ? "lose"
+      : null;
 
   let planDays: (UserPlanDay & { workouts: { name: string } | null })[] = [];
   let currentDay: (UserPlanDay & { workouts: { name: string } | null }) | null =
@@ -300,50 +309,6 @@ export default async function DashboardPage() {
   const isRecoveryDay = Boolean(currentDay && currentDay.status === "completed" && !allDaysDone);
   // Daily pacing: today's workout is done — next day opens tomorrow.
   const gatedNextDay = getGatedNextDay(planDays, timeZone);
-
-  const currentWeight = weights[0] ?? null;
-  const previousWeight = weights[1] ?? null;
-  const startWeight = weights.length > 0 ? weights[weights.length - 1] : null;
-  const weightDelta =
-    currentWeight && previousWeight
-      ? Number((currentWeight.weight_kg - previousWeight.weight_kg).toFixed(1))
-      : null;
-  const targetWeight = fitnessProfile?.target_weight_kg ?? null;
-
-  // ---- Weight-goal journey (weight-loss only — SWEAT has no gain path) -----
-  // A target above the current weight is rejected at onboarding; legacy data
-  // in that state shows no journey rather than a gain goal.
-  const goalDirection: "lose" | null =
-    currentWeight &&
-    targetWeight !== null &&
-    targetWeight < currentWeight.weight_kg - 0.05
-      ? "lose"
-      : null;
-  const remainingKg =
-    currentWeight && targetWeight !== null
-      ? Math.abs(currentWeight.weight_kg - targetWeight)
-      : null;
-  const goalReached = remainingKg !== null && remainingKg < 0.15;
-  let journeyPercent: number | null = null;
-  if (
-    startWeight &&
-    currentWeight &&
-    targetWeight !== null &&
-    startWeight.weight_kg - targetWeight >= 0.05
-  ) {
-    const totalKg = startWeight.weight_kg - targetWeight;
-    const doneKg = Math.max(
-      0,
-      startWeight.weight_kg - currentWeight.weight_kg
-    );
-    journeyPercent = Math.min(
-      100,
-      Math.max(0, Math.round((doneKg / totalKg) * 100))
-    );
-  }
-  // §12 Actual scale change ≠ fat loss. Direction only; never converted to
-  // calories or planning equivalents here.
-  const deltaIsGood = weightDelta !== null && weightDelta < 0;
 
   const ctaLabel = isRecoveryDay
     ? null
@@ -592,138 +557,11 @@ export default async function DashboardPage() {
       {/* Weight goal journey + weekly activity */}
       <Reveal delay={0.08}>
         <section className="grid grid-cols-1 gap-4 lg:grid-cols-5">
-          {currentWeight ? (
-            <div className="titan-card flex flex-col p-7 sm:p-9 lg:col-span-3">
-              <div className="mb-5 flex items-start justify-between gap-2">
-                <div className="flex items-center gap-2.5">
-                  <span className="flex size-10 items-center justify-center rounded-xl bg-energy/10 text-energy">
-                    <Scale className="size-5" aria-hidden />
-                  </span>
-                  <div>
-                    <h3 className="text-base font-extrabold text-foreground">
-                      Weight Goal
-                    </h3>
-                    <p className="text-xs font-medium text-muted-foreground">
-                      {goalDirection === "lose"
-                        ? "Cutting — burn it off"
-                        : "Track your progress"}
-                    </p>
-                  </div>
-                </div>
-                {weightDelta !== null && weightDelta !== 0 && (
-                  <span
-                    className={cn(
-                      "inline-flex items-center gap-0.5 rounded-full px-2.5 py-1 text-xs font-bold tabular-nums",
-                      deltaIsGood
-                        ? "bg-emerald-500/10 text-emerald-600 dark:bg-emerald-400/10 dark:text-emerald-400"
-                        : "bg-red-500/10 text-red-600 dark:bg-red-400/10 dark:text-red-400"
-                    )}
-                  >
-                    {weightDelta < 0 ? (
-                      <ArrowDownRight className="size-3.5" aria-hidden />
-                    ) : (
-                      <ArrowUpRight className="size-3.5" aria-hidden />
-                    )}
-                    {Math.abs(weightDelta).toFixed(1)} kg
-                  </span>
-                )}
-              </div>
-
-              <div className="flex flex-wrap items-end justify-between gap-3">
-                <div className="flex items-end gap-2">
-                  <span className="text-6xl font-black leading-none tracking-tighter text-foreground tabular-nums">
-                    {currentWeight.weight_kg.toFixed(1)}
-                  </span>
-                  <span className="pb-1.5 text-base font-bold text-muted-foreground">
-                    kg
-                  </span>
-                </div>
-                {goalReached ? (
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-3.5 py-2 text-sm font-bold text-emerald-600 dark:bg-emerald-400/10 dark:text-emerald-400">
-                    <Trophy className="size-4" aria-hidden />
-                    Target reached 🎉
-                  </span>
-                ) : remainingKg !== null ? (
-                  <span className="rounded-2xl bg-muted px-4 py-2 text-right">
-                    <span className="block text-xl font-black leading-none text-foreground tabular-nums">
-                      {remainingKg.toFixed(1)}
-                    </span>
-                    <span className="mt-0.5 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-                      kg to go
-                    </span>
-                  </span>
-                ) : null}
-              </div>
-
-              {journeyPercent !== null &&
-              startWeight &&
-              targetWeight !== null ? (
-                <div className="mt-6">
-                  <div className="flex items-center justify-between text-xs font-semibold tabular-nums text-muted-foreground">
-                    <span>{startWeight.weight_kg.toFixed(1)} start</span>
-                    <span className="font-extrabold uppercase tracking-wider text-energy">
-                      {journeyPercent}% there
-                    </span>
-                    <span className="font-bold text-foreground">
-                      {targetWeight.toFixed(1)} goal
-                    </span>
-                  </div>
-                  <div className="relative mt-2.5 h-3 rounded-full bg-muted">
-                    <div
-                      className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-orange-600 to-amber-400 transition-all duration-700"
-                      style={{ width: `${journeyPercent}%` }}
-                    />
-                    <div
-                      className="absolute top-1/2 size-5 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-card bg-energy shadow-md transition-all duration-700"
-                      style={{ left: `${journeyPercent}%` }}
-                    />
-                  </div>
-                </div>
-              ) : targetWeight !== null ? (
-                <p className="mt-6 rounded-xl bg-secondary px-4 py-3 text-sm font-medium text-muted-foreground">
-                  First weigh-in logged — your journey to{" "}
-                  <span className="font-bold tabular-nums text-foreground">
-                    {targetWeight.toFixed(1)} kg
-                  </span>{" "}
-                  starts now.
-                </p>
-              ) : null}
-
-              <p className="mt-auto pt-5 text-xs font-medium text-muted-foreground">
-                Last logged {formatSessionDate(currentWeight.recorded_at, timeZone)}
-                {goalReached
-                  ? " — target reached! Keep training for fitness, not for the scale."
-                  : goalDirection === "lose"
-                    ? " — consistency beats crash diets."
-                    : ""}
-              </p>
-            </div>
-          ) : (
-            <Link
-              href="/reports"
-              className="titan-card group flex flex-col items-start justify-center gap-3 p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md lg:col-span-3 sm:p-7"
-            >
-              <span className="flex size-11 items-center justify-center rounded-xl bg-energy/10 text-energy">
-                <Scale className="size-5.5" aria-hidden />
-              </span>
-              <div>
-                <h3 className="text-base font-extrabold text-foreground">
-                  Log your starting weight
-                </h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  Every transformation begins with a first weigh-in. Add yours
-                  to unlock goal tracking.
-                </p>
-              </div>
-              <span className="inline-flex items-center gap-1 text-sm font-bold text-energy">
-                Log weight
-                <ChevronRight
-                  className="size-4 transition-transform duration-200 group-hover:translate-x-1"
-                  aria-hidden
-                />
-              </span>
-            </Link>
-          )}
+          <DashboardWeightInsights
+            entries={weights}
+            targetWeight={targetWeight}
+            timeZone={timeZone}
+          />
 
           {/* Weekly activity */}
           <div className="titan-card p-7 sm:p-9 lg:col-span-2">
