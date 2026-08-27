@@ -100,7 +100,7 @@ export function PlanDays({
                           fill
                           className={cn(
                             "object-cover transition-transform duration-300 group-hover:scale-105",
-                            isLocked && "opacity-40 grayscale"
+                            isLocked && "opacity-70"
                           )}
                           sizes="(max-width: 640px) 112px, 128px"
                         />

@@ -27,6 +27,7 @@ import { computeStreaks, getLocalDayKey } from "@/lib/dates";
 import { RegeneratePlanButton } from "./regenerate-plan-button";
 import { RecoverPlanButton } from "@/components/recover-plan-button";
 import { DashboardWeightInsights } from "./dashboard-weight-insights";
+import { DashboardCalorieInsights } from "./dashboard-calorie-insights";
 import type { ReactNode } from "react";
 import type {
   Profile,
@@ -114,18 +115,22 @@ function buildWeekActivity(sessions: SessionRow[], timeZone: string) {
 
   // Bucket minutes by the user's local calendar day, not the server clock.
   const byDay = new Map<string, number>();
+  const caloriesByDay = new Map<string, number>();
   for (const s of sessions) {
     if (!s.completed_at) continue;
     const key = getLocalDayKey(s.completed_at, timeZone);
     byDay.set(key, (byDay.get(key) ?? 0) + Math.round((s.duration_seconds ?? 0) / 60));
+    caloriesByDay.set(key, (caloriesByDay.get(key) ?? 0) + (s.estimated_calories ?? 0));
   }
 
   const minutes = days.map((d) => byDay.get(getLocalDayKey(d, timeZone)) ?? 0);
+  const calories = days.map((d) => caloriesByDay.get(getLocalDayKey(d, timeZone)) ?? 0);
 
   const maxMinutes = Math.max(...minutes, 1);
   const sessionCount = days.filter((_, i) => minutes[i] > 0).length;
+  const maxCalories = Math.max(...calories, 1);
 
-  return { days, minutes, maxMinutes, sessionCount };
+  return { days, minutes, maxMinutes, sessionCount, calories, maxCalories };
 }
 
 function formatSessionDate(completedAt: string, timeZone: string): string {
@@ -668,8 +673,18 @@ export default async function DashboardPage() {
         </section>
       </Reveal>
 
+      <Reveal delay={0.14}>
+        <DashboardCalorieInsights
+          days={week.days}
+          calories={week.calories}
+          maxCalories={week.maxCalories}
+          totalCalories={totalCalories}
+          timeZone={timeZone}
+        />
+      </Reveal>
+
       {/* Recent workouts */}
-      <Reveal delay={0.16}>
+      <Reveal delay={0.18}>
         <section aria-label="Recent workouts">
           <div className="flex items-end justify-between gap-4">
             <div>
