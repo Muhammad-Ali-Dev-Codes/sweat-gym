@@ -281,6 +281,7 @@ export function ExerciseLibraryClient({ userId }: Props) {
       {/* Filter sheet */}
       {showFilters && (
         <ExerciseFilterSheet
+          open={showFilters}
           filters={filters}
           onApply={setFilters}
           onClose={() => setShowFilters(false)}

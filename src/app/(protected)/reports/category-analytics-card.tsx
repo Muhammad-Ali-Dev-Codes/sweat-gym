@@ -138,7 +138,7 @@ export function CategoryAnalyticsCard({
               </li>
             ))}
           </ul>
-          <p className="mt-2 text-[11px] leading-relaxed text-muted-foreground/70">
+          <p className="mt-2 text-[11px] leading-relaxed text-muted-foreground">
             Levels reflect workout difficulty — match them to how you feel, not
             what looks best.
           </p>

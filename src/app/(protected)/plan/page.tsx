@@ -8,7 +8,8 @@ import type {
 } from "@/lib/types/database";
 import { Flame, Lock, Play } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
-import { getGatedNextDay, repairPlanProgression } from "@/services/plan";
+import { getGatedNextDay, repairPlanProgression, getActivePlan } from "@/services/plan";
+import { getProfile } from "@/services/onboarding";
 import { formatClock } from "@/lib/duration";
 import { cn } from "@/lib/utils";
 import {
@@ -25,37 +26,22 @@ export default async function PlanPage() {
 
   if (!user) redirect("/login");
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("user_id", user.id)
-    .single();
+  const [profile, activePlanResult] = await Promise.all([
+    getProfile(user.id),
+    getActivePlan(user.id).then((data) => ({ data })),
+  ]);
 
   // Guard against onboarding loop: if the flag is missing but an active plan
   // exists, the user completed onboarding but the flag wasn't persisted.
-  if (!profile?.onboarding_completed_at) {
-    const { data: hasPlan } = await supabase
-      .from("user_plans")
-      .select("id")
-      .eq("user_id", user.id)
-      .eq("status", "active")
-      .limit(1)
-      .maybeSingle();
-    if (!hasPlan) redirect("/onboarding");
+  if (!profile?.onboarding_completed_at && !activePlanResult.data) {
+    redirect("/onboarding");
   }
 
-  // Heal stalled progression + enforce daily pacing before reading plan days.
-  const timeZone = profile.timezone || "UTC";
-  await repairPlanProgression(user.id, timeZone);
+  const plan = activePlanResult.data;
 
-  const { data: plan } = await supabase
-    .from("user_plans")
-    .select("*")
-    .eq("user_id", user.id)
-    .eq("status", "active")
-    .order("started_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
+  // Heal stalled progression + enforce daily pacing before reading plan days.
+  const timeZone = profile?.timezone || "UTC";
+  await repairPlanProgression(user.id, timeZone);
 
   let days: PlanDayWithWorkoutName[] = [];
 

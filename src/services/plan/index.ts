@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { createClient } from "@/lib/supabase/server";
 import type { UserPlan, UserPlanDay, PlanTemplateDay } from "@/lib/types/database";
 import { getLocalDayKey, getLocalToday } from "@/lib/dates";
@@ -20,7 +21,9 @@ import {
   type ComposedBlock,
 } from "@/lib/plan-blocks";
 
-export async function getActivePlan(userId: string): Promise<UserPlan | null> {
+export const getActivePlan = cache(async function getActivePlan(
+  userId: string
+): Promise<UserPlan | null> {
   const supabase = await createClient();
   // Tolerant read: newest active row wins. The unique partial index added in
   // migration 0027 makes duplicates impossible going forward; this keeps
@@ -36,7 +39,7 @@ export async function getActivePlan(userId: string): Promise<UserPlan | null> {
     .maybeSingle();
 
   return (data as UserPlan) ?? null;
-}
+});
 
 export async function getPlanDays(userPlanId: string): Promise<UserPlanDay[]> {
   const supabase = await createClient();

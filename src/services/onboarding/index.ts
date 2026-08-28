@@ -1,8 +1,16 @@
+import { cache } from "react";
 import { createClient } from "@/lib/supabase/server";
 import { getLocalDayKey } from "@/lib/dates";
 import type { Profile, FitnessProfile, WeightEntry, UserRestrictionRow } from "@/lib/types/database";
 
-export async function getProfile(userId: string): Promise<Profile | null> {
+/**
+ * Cached profile read. Wrapping in React `cache()` deduplicates the profile
+ * table query within a single request — the protected layout, dashboard, plan
+ * and other server components all resolve to ONE round-trip instead of N.
+ */
+export const getProfile = cache(async function getProfile(
+  userId: string
+): Promise<Profile | null> {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("profiles")
@@ -12,7 +20,7 @@ export async function getProfile(userId: string): Promise<Profile | null> {
 
   if (error) return null;
   return data as Profile;
-}
+});
 
 export async function getFitnessProfile(userId: string): Promise<FitnessProfile | null> {
   const supabase = await createClient();

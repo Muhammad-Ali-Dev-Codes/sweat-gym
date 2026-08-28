@@ -13,23 +13,25 @@ export default async function SettingsGateLayout({
 
   if (!user) redirect("/login");
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("onboarding_completed_at")
-    .eq("user_id", user.id)
-    .maybeSingle();
-
-  // Guard against onboarding loop: if the flag is missing but an active plan
-  // exists, the user completed onboarding but the flag wasn't persisted.
-  if (!profile?.onboarding_completed_at) {
-    const { data: hasPlan } = await supabase
+  const [profile, hasPlan] = await Promise.all([
+    supabase
+      .from("profiles")
+      .select("onboarding_completed_at")
+      .eq("user_id", user.id)
+      .maybeSingle(),
+    supabase
       .from("user_plans")
       .select("id")
       .eq("user_id", user.id)
       .eq("status", "active")
       .limit(1)
-      .maybeSingle();
-    if (!hasPlan) redirect("/onboarding");
+      .maybeSingle(),
+  ]);
+
+  // Guard against onboarding loop: if the flag is missing but an active plan
+  // exists, the user completed onboarding but the flag wasn't persisted.
+  if (!profile?.data?.onboarding_completed_at && !hasPlan.data) {
+    redirect("/onboarding");
   }
 
   return <>{children}</>;

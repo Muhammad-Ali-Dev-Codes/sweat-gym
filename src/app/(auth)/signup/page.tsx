@@ -116,6 +116,8 @@ export default function SignupPage() {
           placeholder="you@example.com"
           autoComplete="email"
           required
+          invalid={!!error}
+          describedBy="signup-form-error"
         />
 
         <div className="relative">
@@ -128,12 +130,14 @@ export default function SignupPage() {
             placeholder="Minimum 8 characters"
             autoComplete="new-password"
             required
+            invalid={!!error}
+            describedBy="signup-form-error"
           />
           <button
             type="button"
             onClick={() => setShowPassword((v) => !v)}
             aria-label={showPassword ? "Hide password" : "Show password"}
-            className="absolute top-9 right-3 grid size-8 place-items-center rounded-lg text-muted-foreground transition-colors hover:text-foreground"
+            className="absolute top-9 right-3 grid size-8 place-items-center rounded-lg text-muted-foreground transition-colors hover:text-foreground before:absolute before:-inset-1.5 before:content-['']"
           >
             {showPassword ? <EyeOff className="size-4.5" aria-hidden /> : <Eye className="size-4.5" aria-hidden />}
           </button>
@@ -148,6 +152,8 @@ export default function SignupPage() {
           placeholder="Re-enter your password"
           autoComplete="new-password"
           required
+          invalid={!!error}
+          describedBy="signup-form-error"
         />
 
         {/* Live requirements checklist */}
@@ -178,7 +184,7 @@ export default function SignupPage() {
           ))}
         </motion.ul>
 
-        <FormError message={error} />
+        <FormError message={error} id="signup-form-error" />
 
         <SubmitButton loading={loading} loadingLabel="Creating account…">
           Register

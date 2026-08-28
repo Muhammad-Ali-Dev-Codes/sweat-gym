@@ -70,6 +70,8 @@ export default function LoginPage() {
           placeholder="you@example.com"
           autoComplete="email"
           required
+          invalid={!!error}
+          describedBy="login-form-error"
         />
         <AuthField
           id="password"
@@ -80,6 +82,8 @@ export default function LoginPage() {
           placeholder="Your password"
           autoComplete="current-password"
           required
+          invalid={!!error}
+          describedBy="login-form-error"
         />
 
         <div className="flex items-center justify-between pt-1">
@@ -100,7 +104,7 @@ export default function LoginPage() {
           </Link>
         </div>
 
-        <FormError message={error} />
+        <FormError message={error} id="login-form-error" />
 
         <SubmitButton loading={loading} loadingLabel="Signing in…">
           Login

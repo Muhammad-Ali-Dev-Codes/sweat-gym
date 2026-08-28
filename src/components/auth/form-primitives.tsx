@@ -18,6 +18,8 @@ type AuthFieldProps = {
   required?: boolean;
   minLength?: number;
   icon?: ReactNode;
+  invalid?: boolean;
+  describedBy?: string;
 };
 
 export function AuthField({
@@ -31,6 +33,8 @@ export function AuthField({
   required,
   minLength,
   icon,
+  invalid,
+  describedBy,
 }: AuthFieldProps) {
   const [showPassword, setShowPassword] = useState(false);
   const isPassword = type === "password";
@@ -60,9 +64,12 @@ export function AuthField({
           autoComplete={autoComplete}
           required={required}
           minLength={minLength}
+          aria-invalid={invalid ? true : undefined}
+          aria-describedby={invalid && describedBy ? describedBy : undefined}
           className={cn(
             "h-11 w-full border-b-2 border-border bg-transparent pr-10 text-[15px] text-foreground outline-none transition-colors duration-200 placeholder:text-muted-foreground/60 focus:border-ring",
-            icon && "pl-10"
+            icon && "pl-10",
+            invalid && "border-destructive"
           )}
         />
         {isPassword && (
@@ -70,7 +77,7 @@ export function AuthField({
             type="button"
             onClick={() => setShowPassword((v) => !v)}
             aria-label={showPassword ? "Hide password" : "Show password"}
-            className="absolute top-1/2 right-0 grid size-9 -translate-y-1/2 place-items-center rounded-lg text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            className="absolute top-1/2 right-0 grid size-9 -translate-y-1/2 place-items-center rounded-lg text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none before:absolute before:-inset-0.5 before:content-['']"
           >
             {showPassword ? (
               <EyeOff className="size-5" aria-hidden />
@@ -104,11 +111,18 @@ export function AuthCard({ children }: { children: ReactNode }) {
   );
 }
 
-export function FormError({ message }: { message: string }) {
+export function FormError({
+  message,
+  id,
+}: {
+  message: string;
+  id?: string;
+}) {
   if (!message) return null;
   return (
     <motion.div
       role="alert"
+      id={id}
       initial={{ opacity: 0, y: -6 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ type: "spring", stiffness: 400, damping: 28 }}
