@@ -346,6 +346,9 @@ export interface PlanDayWithWorkout extends UserPlanDay {
         exercise_mode: string;
         is_low_impact: boolean;
         requires_jumping: boolean;
+        exercise_focus_areas: {
+          focus_areas: { name: string; slug: string } | null;
+        }[];
       };
     }[];
   };
