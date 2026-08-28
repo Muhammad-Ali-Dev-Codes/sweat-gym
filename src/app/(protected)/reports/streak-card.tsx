@@ -68,7 +68,7 @@ export function StreakCard({ streak, timeZone }: StreakCardProps) {
           <p className="text-3xl font-black leading-none tracking-tighter text-muted-foreground tabular-nums">
             <AnimatedNumber value={streak.longest} />
           </p>
-          <p className="mt-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-muted-foreground/70">
+          <p className="mt-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
             Longest
           </p>
         </div>

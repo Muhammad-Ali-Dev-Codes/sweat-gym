@@ -20,8 +20,10 @@ import { Reveal } from "@/components/layout/reveal";
 import {
   getGatedNextDay,
   getPacingBlockedDayNumber,
+  getActivePlan,
   repairPlanProgression,
 } from "@/services/plan";
+import { getProfile } from "@/services/onboarding";
 import { cn } from "@/lib/utils";
 import { computeStreaks, getLocalDayKey } from "@/lib/dates";
 import { RegeneratePlanButton } from "./regenerate-plan-button";
@@ -31,7 +33,6 @@ import { DashboardCalorieInsights } from "./dashboard-calorie-insights";
 import { DashboardCalorieSummary } from "./dashboard-calorie-summary";
 import type { ReactNode } from "react";
 import type {
-  Profile,
   FitnessProfile,
   UserPlan,
   UserPlanDay,
@@ -188,26 +189,9 @@ export default async function DashboardPage() {
 
   if (!user) redirect("/login");
 
-  const { data: profileData } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("user_id", user.id)
-    .single();
+  const profile = await getProfile(user.id);
 
-  const profile = profileData as Profile | null;
-
-  // Fetch the active plan early — used both as an onboarding-loop guard and
-  // for the main dashboard rendering below.
-  const { data: activePlanResult } = await supabase
-    .from("user_plans")
-    .select("*")
-    .eq("user_id", user.id)
-    .eq("status", "active")
-    .order("started_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
-
-  const hasActivePlan = Boolean(activePlanResult);
+  const hasActivePlan = Boolean(await getActivePlan(user.id));
 
   // Redirect to onboarding ONLY when the flag is missing AND no plan exists.
   // If a plan exists, the user completed onboarding (plan generation succeeded)
@@ -234,7 +218,7 @@ export default async function DashboardPage() {
   ]);
 
   const fitnessProfile = fpResult.data as FitnessProfile | null;
-  const plan = activePlanResult as UserPlan | null;
+  const plan = (await getActivePlan(user.id)) as UserPlan | null;
   const sessions = (sessionsResult.data as SessionRow[] | null) ?? [];
   const weights = (weightsResult.data as WeightEntry[] | null) ?? [];
   const currentWeight = weights[0] ?? null;
@@ -395,7 +379,7 @@ export default async function DashboardPage() {
                             ? "bg-gradient-to-br from-orange-600 to-amber-400 text-white shadow-md shadow-orange-500/30"
                             : isToday
                               ? "border-2 border-dashed border-ring/60 text-muted-foreground"
-                              : "bg-muted text-muted-foreground/70"
+                              : "bg-muted text-muted-foreground"
                         )}
                       >
                         {day
@@ -759,11 +743,11 @@ export default async function DashboardPage() {
                   </h3>
                   <div className="mt-5 grid grid-cols-2 gap-2 border-t border-border pt-3 text-xs font-semibold text-muted-foreground tabular-nums">
                     <span className="inline-flex flex-col gap-1">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/70">Duration</span>
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Duration</span>
                       <span className="inline-flex items-center gap-1.5 text-sm text-foreground"><Clock className="size-4" aria-hidden />{formatClock(session.duration_seconds ?? 0)}</span>
                     </span>
                     <span className="inline-flex flex-col gap-1">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/70">Burned</span>
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Burned</span>
                       <span className="inline-flex items-center gap-1.5 text-sm text-foreground"><Flame className="size-4 text-energy" aria-hidden />{(session.estimated_calories ?? 0).toLocaleString()} kcal</span>
                     </span>
                   </div>

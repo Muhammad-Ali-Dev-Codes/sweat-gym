@@ -388,7 +388,7 @@ export function NotificationsClient({
           <div className="space-y-5">
             {groups.map((group) => (
               <div key={group.label}>
-                <h3 className="mb-1 text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+                <h3 className="mb-1 text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground">
                   {group.label}
                 </h3>
                 <ul className="-mx-1.5 divide-y divide-border">

@@ -2,8 +2,9 @@ import type { SupabaseClient, User } from "@supabase/supabase-js";
 import { cache } from "react";
 
 /** Max wall-clock time the online validation may take before we treat the
- * auth server as unreachable and fall back to the local session. */
-const GET_USER_TIMEOUT_MS = 3_000;
+ * auth server as unreachable and fall back to the local session. Kept short
+ * so a slow/blackholed auth server never stalls the render for long. */
+const GET_USER_TIMEOUT_MS = 1_500;
 
 /**
  * Resolve the authenticated user WITHOUT bouncing people to /login when

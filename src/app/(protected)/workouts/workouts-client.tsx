@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowDown, ArrowUp, Check, Clock, Copy, Dumbbell, GripVertical, Info, Play, Plus, Save, Trash2, Wind, X, Zap } from "lucide-react";
 import { useExerciseLibrary } from "@/hooks/use-exercises";
 import { ExerciseCard } from "@/components/ui/exercise-card";
 import { SearchBar } from "@/components/ui/search-bar";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogClose, DialogPopup, DialogTitle } from "@/components/ui/dialog";
 import { PageHeader } from "@/components/layout/page-header";
 import { deleteCustomWorkout, saveCustomWorkout } from "@/app/actions/custom-workout";
 import type { ExerciseWithRelations } from "@/lib/types/database";
@@ -23,7 +24,7 @@ type BuilderExercise = {
   animationUrl: string | null;
 };
 
-function ExerciseDetailsDialog({ exercise, onClose }: { exercise: ExerciseWithRelations; onClose: () => void }) {
+function ExerciseDetailsDialog({ exercise, open, onClose }: { exercise: ExerciseWithRelations; open: boolean; onClose: () => void }) {
   const focusAreas = exercise.exercise_focus_areas
     ?.map((relation) => relation.focus_areas?.name)
     .filter((name): name is string => Boolean(name)) ?? [];
@@ -34,20 +35,12 @@ function ExerciseDetailsDialog({ exercise, onClose }: { exercise: ExerciseWithRe
   const safetyNotes = exercise.safety_notes ?? [];
   const breathingTips = instructions.filter((step) => /breathe|breath|exhale|inhale/i.test(step));
 
-  useEffect(() => {
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") onClose();
-    }
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [onClose]);
-
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 p-0 backdrop-blur-sm sm:items-center sm:p-6" role="presentation" onMouseDown={onClose}>
-      <section role="dialog" aria-modal="true" aria-labelledby="custom-exercise-dialog-title" className="max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-t-3xl bg-background shadow-2xl sm:rounded-3xl" onMouseDown={(event) => event.stopPropagation()}>
+    <Dialog open={open} onOpenChange={(next) => { if (!next) onClose(); }}>
+      <DialogPopup className="max-h-[92vh] w-full max-w-2xl overflow-y-auto p-0">
         <div className="sticky top-0 z-10 flex items-center justify-between border-b border-border bg-background/95 px-5 py-4 backdrop-blur sm:px-7">
           <p className="text-xs font-black uppercase tracking-[0.22em] text-muted-foreground">Exercise details</p>
-          <button type="button" onClick={onClose} aria-label="Close exercise details" className="grid size-9 place-items-center rounded-full bg-secondary text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><X className="size-5" aria-hidden /></button>
+          <DialogClose onClick={onClose} aria-label="Close exercise details"><X className="size-5" aria-hidden /></DialogClose>
         </div>
         <div className="p-5 sm:p-7">
           <div className="grid gap-5 sm:grid-cols-[minmax(0,220px)_1fr] sm:items-start">
@@ -55,7 +48,7 @@ function ExerciseDetailsDialog({ exercise, onClose }: { exercise: ExerciseWithRe
               {exercise.animation_url ? <img src={exercise.animation_url} alt={`${exercise.name} demonstration`} className="size-full object-cover" /> : <div className="grid size-full place-items-center"><Dumbbell className="size-16 text-muted-foreground" aria-hidden /></div>}
             </div>
             <div>
-              <h2 id="custom-exercise-dialog-title" className="text-2xl font-black tracking-tight text-foreground">{exercise.name}</h2>
+              <DialogTitle className="text-2xl font-black tracking-tight text-foreground">{exercise.name}</DialogTitle>
               {exercise.description && <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{exercise.description}</p>}
               <div className="mt-4 flex flex-wrap gap-2 text-sm font-bold tabular-nums">
                 {exercise.exercise_mode === "duration" ? <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary px-3 py-1.5"><Clock className="size-4" aria-hidden />{exercise.duration_seconds ?? 30}s</span> : exercise.default_reps && <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary px-3 py-1.5"><Dumbbell className="size-4" aria-hidden />{exercise.default_sets ?? 3} x {exercise.default_reps}</span>}
@@ -69,8 +62,8 @@ function ExerciseDetailsDialog({ exercise, onClose }: { exercise: ExerciseWithRe
           <DetailList title="Breathing tips" icon={<Wind className="size-4" aria-hidden />} items={breathingTips.length > 0 ? breathingTips : ["Breathe steadily throughout the movement; never hold your breath."]} />
           {safetyNotes.length > 0 && <DetailList title="Safety notes" icon={<Info className="size-4" aria-hidden />} items={safetyNotes} />}
         </div>
-      </section>
-    </div>
+      </DialogPopup>
+    </Dialog>
   );
 }
 
@@ -268,7 +261,7 @@ export function CustomWorkoutsClient({ initialWorkouts }: { initialWorkouts: Cus
           {hasNextPage && <Button variant="outline" onClick={() => void fetchNextPage()} disabled={isFetchingNextPage} className="mt-4 w-full">{isFetchingNextPage ? "Loading exercises..." : "Load more exercises"}</Button>}
         </aside>
       </div>
-      {selectedExercise && <ExerciseDetailsDialog exercise={selectedExercise} onClose={() => setSelectedExercise(null)} />}
+      {selectedExercise && <ExerciseDetailsDialog exercise={selectedExercise} open={Boolean(selectedExercise)} onClose={() => setSelectedExercise(null)} />}
     </div>
   );
 }

@@ -65,7 +65,9 @@
   --secondary: oklch(0.96 0.01 70);
   --secondary-foreground: oklch(0.29 0.03 55);
   --muted: oklch(0.96 0.008 70);
-  --muted-foreground: oklch(0.5 0.025 60);
+  /* Lightness 0.47 keeps muted text ≥4.5:1 (AA) on white surfaces; 0.5 was
+     borderline (~4.4:1) and fails once combined with /70–/80 opacity. */
+  --muted-foreground: oklch(0.47 0.025 60);
   --accent: oklch(0.945 0.03 65);
   --accent-foreground: oklch(0.32 0.09 42);
   --destructive: oklch(0.577 0.245 27.325);

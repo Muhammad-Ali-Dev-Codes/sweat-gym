@@ -2,20 +2,22 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
+  ArrowDown,
   ArrowLeft,
+  ArrowUp,
   Check,
   ChevronRight,
   Clock,
   Dumbbell,
   Flame,
-  GripVertical,
   Info,
   Minus,
   Plus,
   RefreshCw,
   Play,
+  Trash2,
   Wind,
   X,
 } from "lucide-react";
@@ -23,7 +25,13 @@ import type { PlanDayWithWorkout } from "@/lib/types/database";
 import { formatClock } from "@/lib/duration";
 import { getPlanDayThumbnail, getWorkoutTypeLabel } from "@/lib/plan-thumbnails";
 import { cn } from "@/lib/utils";
-import { getPlanExerciseRecommendations, savePlanDayEdits, type PlanDayExerciseEdit } from "@/app/actions/plan-day-edit";
+import {
+  Dialog,
+  DialogClose,
+  DialogPopup,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { getPlanExerciseRecommendations, resetPlanDayEdits, savePlanDayEdits, type PlanDayExerciseEdit } from "@/app/actions/plan-day-edit";
 
 type ExerciseEntry = NonNullable<PlanDayWithWorkout["workouts"]>["workout_exercises"][number];
 type ExerciseDetail = NonNullable<ExerciseEntry["exercises"]> & {
@@ -49,7 +57,17 @@ function durationLabel(entry: ExerciseEntry): string {
   return formatClock(entry.duration_seconds ?? exercise?.duration_seconds ?? 30);
 }
 
-function PlanEditorDialog({ entries, planDayId, onClose }: { entries: ExerciseEntry[]; planDayId: string; onClose: () => void }) {
+function Stepper({ value, onChange, label, display }: { value: number; onChange: (amount: number) => void; label: string; display?: string }) {
+  return (
+    <div className="flex items-center gap-0.5 rounded-lg bg-secondary p-0.5">
+      <button type="button" onClick={() => onChange(-1)} aria-label={`Decrease ${label}`} className="relative grid size-8 place-items-center rounded-md text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring before:absolute before:-inset-1.5 before:content-['']"><Minus className="size-4" aria-hidden /></button>
+      <span className="min-w-10 text-center text-sm font-bold tabular-nums text-foreground">{display ?? value}</span>
+      <button type="button" onClick={() => onChange(1)} aria-label={`Increase ${label}`} className="relative grid size-8 place-items-center rounded-md text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring before:absolute before:-inset-1.5 before:content-['']"><Plus className="size-4" aria-hidden /></button>
+    </div>
+  );
+}
+
+function PlanEditorDialog({ entries, planDayId, open, onClose }: { entries: ExerciseEntry[]; planDayId: string; open: boolean; onClose: () => void }) {
   const [drafts, setDrafts] = useState<PlanDayExerciseEdit[]>(() => entries.map((entry) => ({
     exerciseId: entry.exercises?.id ?? "",
     sets: entry.sets,
@@ -64,16 +82,41 @@ function PlanEditorDialog({ entries, planDayId, onClose }: { entries: ExerciseEn
   const [recommendationsLoading, setRecommendationsLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
-  useEffect(() => {
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") onClose();
-    }
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [onClose]);
 
-  function updateDraft(index: number, field: "reps" | "durationSeconds", amount: number) {
-    setDrafts((current) => current.map((draft, draftIndex) => draftIndex === index ? { ...draft, [field]: Math.max(1, (draft[field] ?? 0) + amount) } : draft));
+  type EditableField = "reps" | "durationSeconds" | "sets" | "restSeconds";
+
+  function updateDraft(index: number, field: EditableField, amount: number) {
+    setDrafts((current) => current.map((draft, draftIndex) => {
+      if (draftIndex !== index) return draft;
+      const min = field === "restSeconds" ? 0 : 1;
+      const next = Math.max(min, (draft[field] ?? 0) + amount);
+      return { ...draft, [field]: next };
+    }));
+  }
+
+  function moveDraft(index: number, direction: -1 | 1) {
+    const target = index + direction;
+    if (target < 0 || target >= drafts.length) return;
+    setDrafts((current) => {
+      const next = [...current];
+      const [moved] = next.splice(index, 1);
+      next.splice(target, 0, moved);
+      return next;
+    });
+  }
+
+  function removeDraft(index: number) {
+    if (drafts.length <= 1) return;
+    setDrafts((current) => current.filter((_, draftIndex) => draftIndex !== index));
+    setReplacementExercises((current) => {
+      const next: Record<number, ExerciseRecommendation> = {};
+      for (const [key, value] of Object.entries(current)) {
+        const i = Number(key);
+        if (i < index) next[i] = value;
+        else if (i > index) next[i - 1] = value;
+      }
+      return next;
+    });
   }
 
   async function loadRecommendations(index: number) {
@@ -111,6 +154,10 @@ function PlanEditorDialog({ entries, planDayId, onClose }: { entries: ExerciseEn
   }
 
   async function save() {
+    if (drafts.length < 1) {
+      setMessage("A plan day must keep at least one exercise.");
+      return;
+    }
     setSaving(true);
     setMessage("");
     const result = await savePlanDayEdits(planDayId, drafts);
@@ -122,45 +169,98 @@ function PlanEditorDialog({ entries, planDayId, onClose }: { entries: ExerciseEn
     window.location.reload();
   }
 
+  const [resetting, setResetting] = useState(false);
+
+  async function reset() {
+    setResetting(true);
+    setMessage("");
+    const result = await resetPlanDayEdits(planDayId);
+    if (result.error) {
+      setMessage(result.error);
+      setResetting(false);
+      return;
+    }
+    window.location.reload();
+  }
+
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-background" role="presentation">
-      <section role="dialog" aria-modal="true" aria-labelledby="edit-plan-title" className="min-h-screen w-full bg-background">
+    <Dialog open={open} onOpenChange={(nextOpen) => { if (!nextOpen) onClose(); }}>
+      <DialogPopup className="inset-0 m-0 flex h-dvh max-h-none w-full max-w-none flex-col overflow-y-auto rounded-none border-0 bg-background p-0">
         <header className="sticky top-0 z-10 flex items-center gap-3 border-b border-border bg-background/95 px-4 py-4 backdrop-blur sm:px-6">
-          <button type="button" onClick={onClose} aria-label="Close edit plan" className="grid size-9 shrink-0 place-items-center rounded-full text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><ArrowLeft className="size-5" aria-hidden /></button>
-          <h2 id="edit-plan-title" className="text-xl font-black tracking-tight text-foreground">Edit plan</h2>
+          <DialogClose onClick={onClose} aria-label="Close edit plan" className="bg-transparent hover:bg-secondary"><ArrowLeft className="size-5" aria-hidden /></DialogClose>
+          <DialogTitle className="text-xl font-black tracking-tight text-foreground">Edit plan</DialogTitle>
         </header>
-        <div className="mx-auto max-w-xl px-3 pb-6 sm:px-5">
+        <div className="flex-1 overflow-y-auto">
+          <div className="mx-auto max-w-xl px-3 pb-6 sm:px-5">
           {entries.map((entry, index) => {
             const draft = drafts[index];
             const isDuration = draft.reps === null;
+            const canMoveUp = index > 0;
+            const canMoveDown = index < drafts.length - 1;
             return (
               <div key={entry.id} className="border-b border-border py-3">
                 <div className="flex min-h-28 items-center gap-1.5 sm:gap-2.5">
-                <button type="button" aria-label={`Reorder ${entry.exercises?.name ?? "exercise"}`} className="shrink-0 text-muted-foreground/60 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><GripVertical className="size-7" aria-hidden /></button>
-                <div className="relative size-14 shrink-0 overflow-hidden rounded-lg bg-secondary sm:size-20">
-                  {replacementExercises[index]?.animation_url || entry.exercises?.animation_url ? <img src={replacementExercises[index]?.animation_url ?? entry.exercises?.animation_url ?? ""} alt="" className="size-full object-cover" /> : <span className="grid size-full place-items-center text-2xl font-black text-muted-foreground">{entry.exercises?.name?.charAt(0) ?? "E"}</span>}
-                </div>
-                <div className="min-w-0 flex-1 self-stretch py-1">
-                  <div className="flex items-start justify-between gap-2">
-                    <h3 className="line-clamp-2 text-[13px] font-black uppercase leading-tight tracking-tight text-foreground sm:text-base">{replacementExercises[index]?.name ?? entry.exercises?.name ?? "Exercise"}</h3>
-                    <button type="button" onClick={() => void loadRecommendations(index)} aria-label={`Replace ${entry.exercises?.name ?? "exercise"}`} className="shrink-0 rounded-full p-1.5 text-teal-600 transition-colors hover:bg-teal-50 hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:text-teal-400 dark:hover:bg-teal-950"><RefreshCw className="size-4" aria-hidden /></button>
+                  <div className="flex shrink-0 flex-col gap-1">
+                    <button type="button" onClick={() => moveDraft(index, -1)} disabled={!canMoveUp} aria-label={`Move ${entry.exercises?.name ?? "exercise"} up`} className="relative grid size-7 place-items-center rounded-md text-muted-foreground/60 transition-colors hover:bg-secondary hover:text-foreground disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring before:absolute before:-inset-2 before:content-['']"><ArrowUp className="size-4" aria-hidden /></button>
+                    <button type="button" onClick={() => moveDraft(index, 1)} disabled={!canMoveDown} aria-label={`Move ${entry.exercises?.name ?? "exercise"} down`} className="relative grid size-7 place-items-center rounded-md text-muted-foreground/60 transition-colors hover:bg-secondary hover:text-foreground disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring before:absolute before:-inset-2 before:content-['']"><ArrowDown className="size-4" aria-hidden /></button>
                   </div>
-                  <div className="mt-auto flex items-center gap-1.5 pt-3">
-                    <button type="button" onClick={() => updateDraft(index, isDuration ? "durationSeconds" : "reps", -1)} aria-label={`Decrease ${isDuration ? "duration" : "reps"}`} className="grid size-8 place-items-center rounded-lg bg-secondary text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><Minus className="size-4" aria-hidden /></button>
-                    <span className="min-w-16 text-center text-base font-medium tabular-nums text-foreground">{isDuration ? formatClock(draft.durationSeconds ?? 30) : `x${draft.reps}`}</span>
-                    <button type="button" onClick={() => updateDraft(index, isDuration ? "durationSeconds" : "reps", 1)} aria-label={`Increase ${isDuration ? "duration" : "reps"}`} className="grid size-8 place-items-center rounded-lg bg-secondary text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><Plus className="size-4" aria-hidden /></button>
+                  <div className="relative size-14 shrink-0 overflow-hidden rounded-lg bg-secondary sm:size-20">
+                    {replacementExercises[index]?.animation_url || entry.exercises?.animation_url ? <img src={replacementExercises[index]?.animation_url ?? entry.exercises?.animation_url ?? ""} alt="" className="size-full object-cover" /> : <span className="grid size-full place-items-center text-2xl font-black text-muted-foreground">{entry.exercises?.name?.charAt(0) ?? "E"}</span>}
                   </div>
-                </div>
+                  <div className="min-w-0 flex-1 self-stretch py-1">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex min-w-0 items-center gap-2">
+                        <h3 className="line-clamp-2 text-[13px] font-black uppercase leading-tight tracking-tight text-foreground sm:text-base">{replacementExercises[index]?.name ?? entry.exercises?.name ?? "Exercise"}</h3>
+                        <button type="button" onClick={() => removeDraft(index)} disabled={drafts.length <= 1} aria-label={`Remove ${entry.exercises?.name ?? "exercise"}`} className="shrink-0 rounded-full p-1.5 text-rose-600 transition-colors hover:bg-rose-50 hover:text-rose-700 disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:text-rose-400 dark:hover:bg-rose-950"><Trash2 className="size-4" aria-hidden /></button>
+                      </div>
+                      <button type="button" onClick={() => void loadRecommendations(index)} aria-label={`Replace ${entry.exercises?.name ?? "exercise"}`} className="shrink-0 rounded-full p-1.5 text-teal-600 transition-colors hover:bg-teal-50 hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:text-teal-400 dark:hover:bg-teal-950"><RefreshCw className="size-4" aria-hidden /></button>
+                    </div>
+                    <div className="mt-auto flex flex-wrap items-center gap-x-2.5 gap-y-2 pt-3">
+                      <span className="text-[11px] font-black uppercase tracking-wider text-muted-foreground">Sets</span>
+                      <Stepper value={draft.sets} onChange={(n) => updateDraft(index, "sets", n)} label={`sets for ${entry.exercises?.name ?? "exercise"}`} />
+                      {isDuration ? (
+                        <>
+                          <span className="text-[11px] font-black uppercase tracking-wider text-muted-foreground">Duration</span>
+                          <Stepper value={draft.durationSeconds ?? 30} display={formatClock(draft.durationSeconds ?? 30)} onChange={(n) => updateDraft(index, "durationSeconds", n)} label={`duration for ${entry.exercises?.name ?? "exercise"}`} />
+                        </>
+                      ) : (
+                        <>
+                          <span className="text-[11px] font-black uppercase tracking-wider text-muted-foreground">Reps</span>
+                          <Stepper value={draft.reps ?? 10} display={`x${draft.reps}`} onChange={(n) => updateDraft(index, "reps", n)} label={`reps for ${entry.exercises?.name ?? "exercise"}`} />
+                        </>
+                      )}
+                      <span className="text-[11px] font-black uppercase tracking-wider text-muted-foreground">Rest (s)</span>
+                      <Stepper value={draft.restSeconds} onChange={(n) => updateDraft(index, "restSeconds", n)} label={`rest for ${entry.exercises?.name ?? "exercise"}`} />
+                    </div>
+                  </div>
                 </div>
               </div>
             );
           })}
           {message && <p className="mt-4 text-sm font-semibold text-destructive" role="alert">{message}</p>}
-          <button type="button" onClick={() => void save()} disabled={saving} className="mt-6 w-full rounded-full bg-energy px-5 py-3 text-sm font-black text-white shadow-lg shadow-energy/20 transition-transform hover:scale-[1.01] disabled:opacity-60">{saving ? "Saving..." : "Save changes"}</button>
+          <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end">
+            <button type="button" onClick={() => void reset()} disabled={resetting} className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-border px-5 py-3 text-sm font-bold text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><RefreshCw className="size-4" aria-hidden />{resetting ? "Resetting..." : "Reset to default"}</button>
+            <button type="button" onClick={() => void save()} disabled={saving} className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-energy px-5 py-3 text-sm font-black text-white shadow-lg shadow-energy/20 transition-transform hover:scale-[1.01] disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{saving ? "Saving..." : "Save changes"}</button>
+          </div>
         </div>
-      </section>
-      {recommendationIndex !== null && <div className="fixed inset-0 z-[60] flex items-end justify-center bg-black/45 p-0 backdrop-blur-sm sm:items-center sm:p-6" role="presentation" onMouseDown={() => setRecommendationIndex(null)}><section role="dialog" aria-modal="true" aria-labelledby="replace-exercise-title" className="max-h-[88vh] w-full max-w-lg overflow-y-auto rounded-t-3xl bg-background p-5 shadow-2xl sm:rounded-3xl sm:p-7" onMouseDown={(event) => event.stopPropagation()}><div className="flex items-start justify-between gap-4"><div><p className="text-xs font-black uppercase tracking-[0.2em] text-muted-foreground">Current: {replacementExercises[recommendationIndex]?.name ?? entries[recommendationIndex].exercises?.name ?? "Exercise"}</p><h3 id="replace-exercise-title" className="mt-2 text-2xl font-black tracking-tight text-foreground">Replace it with...</h3></div><button type="button" onClick={() => setRecommendationIndex(null)} aria-label="Close replacement dialog" className="grid size-9 place-items-center rounded-full bg-secondary text-foreground"><X className="size-5" aria-hidden /></button></div><div className="mt-6 flex items-center gap-2 text-sm font-bold text-energy"><span className="size-2 rounded-full bg-energy" aria-hidden />Recommended</div><div className="mt-3 space-y-2">{recommendations.length > 0 ? recommendations.map((recommendation) => <button key={recommendation.id} type="button" onClick={() => chooseRecommendation(recommendationIndex, recommendation)} className="flex w-full items-center gap-3 rounded-xl p-2 text-left transition-colors hover:bg-secondary"><span className="size-16 shrink-0 overflow-hidden rounded-lg bg-secondary">{recommendation.animation_url && <img src={recommendation.animation_url} alt="" className="size-full object-cover" />}</span><span className="min-w-0 flex-1"><span className="block truncate text-base font-black uppercase text-foreground">{recommendation.name}</span><span className="mt-1 inline-flex rounded-full bg-secondary px-2.5 py-1 text-xs font-semibold text-muted-foreground">Similar</span></span><span className="grid size-6 shrink-0 place-items-center rounded-full border-2 border-muted-foreground/25" aria-hidden /></button>) : <p className="py-8 text-center text-sm text-muted-foreground">{recommendationsLoading ? "Finding compatible exercises..." : recommendationMessage}</p>}</div></section></div>}
-    </div>
+        </div>
+      </DialogPopup>
+      <Dialog open={recommendationIndex !== null} onOpenChange={(next) => { if (!next) setRecommendationIndex(null); }}>
+        <DialogPopup className="max-h-[88vh] overflow-y-auto p-5 sm:p-7">
+          {recommendationIndex !== null && (<>
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-muted-foreground">Current: {replacementExercises[recommendationIndex]?.name ?? entries[recommendationIndex].exercises?.name ?? "Exercise"}</p>
+                <DialogTitle className="mt-2 text-2xl font-black tracking-tight text-foreground">Replace it with...</DialogTitle>
+              </div>
+              <DialogClose onClick={() => setRecommendationIndex(null)} aria-label="Close replacement dialog"><X className="size-5" aria-hidden /></DialogClose>
+            </div>
+            <div className="mt-6 flex items-center gap-2 text-sm font-bold text-energy"><span className="size-2 rounded-full bg-energy" aria-hidden />Recommended</div>
+            <div className="mt-3 space-y-2">{recommendations.length > 0 ? recommendations.map((recommendation) => <button key={recommendation.id} type="button" onClick={() => chooseRecommendation(recommendationIndex, recommendation)} className="flex w-full items-center gap-3 rounded-xl p-2 text-left transition-colors hover:bg-secondary"><span className="size-16 shrink-0 overflow-hidden rounded-lg bg-secondary">{recommendation.animation_url && <img src={recommendation.animation_url} alt="" className="size-full object-cover" />}</span><span className="min-w-0 flex-1"><span className="block truncate text-base font-black uppercase text-foreground">{recommendation.name}</span><span className="mt-1 inline-flex rounded-full bg-secondary px-2.5 py-1 text-xs font-semibold text-muted-foreground">Similar</span></span><span className="grid size-6 shrink-0 place-items-center rounded-full border-2 border-muted-foreground/25" aria-hidden /></button>) : <p className="py-8 text-center text-sm text-muted-foreground">{recommendationsLoading ? "Finding compatible exercises..." : recommendationMessage}</p>}</div>
+          </>)}
+        </DialogPopup>
+      </Dialog>
+    </Dialog>
   );
 }
 
@@ -205,9 +305,11 @@ function FocusAreaSkeleton({ areas }: { areas: string[] }) {
 
 function ExerciseDialog({
   entry,
+  open,
   onClose,
 }: {
   entry: ExerciseEntry;
+  open: boolean;
   onClose: () => void;
 }) {
   const exercise = entry.exercises as ExerciseDetail | null;
@@ -219,19 +321,11 @@ function ExerciseDialog({
     : ["Keep your back neutral and move with control.", "Avoid moving too quickly or using momentum."];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 p-0 backdrop-blur-sm sm:items-center sm:p-6" role="presentation" onMouseDown={onClose}>
-      <section
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="exercise-dialog-title"
-        className="max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-t-3xl bg-background shadow-2xl sm:rounded-3xl"
-        onMouseDown={(event) => event.stopPropagation()}
-      >
-        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-border bg-background/95 px-5 py-4 backdrop-blur sm:px-7">
+    <Dialog open={open} onOpenChange={(next) => { if (!next) onClose(); }}>
+      <DialogPopup className="max-h-[92vh] w-full max-w-2xl overflow-y-auto p-0">
+        <div className="sticky top-0 z-10 flex items-center justify-between gap-2 border-b border-border bg-background/95 px-5 py-4 backdrop-blur sm:px-7">
           <p className="text-xs font-black uppercase tracking-[0.22em] text-muted-foreground">Exercise details</p>
-          <button type="button" onClick={onClose} aria-label="Close exercise details" className="grid size-9 place-items-center rounded-full bg-secondary text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-            <X className="size-5" aria-hidden />
-          </button>
+          <DialogClose onClick={onClose} aria-label="Close exercise details"><X className="size-5" aria-hidden /></DialogClose>
         </div>
 
         <div className="p-5 sm:p-7">
@@ -245,7 +339,7 @@ function ExerciseDialog({
               )}
             </div>
             <div>
-              <h2 id="exercise-dialog-title" className="text-2xl font-black tracking-tight text-foreground">{exercise.name}</h2>
+              <DialogTitle className="text-2xl font-black tracking-tight text-foreground">{exercise.name}</DialogTitle>
               <div className="mt-4 flex flex-wrap gap-2 text-sm font-bold tabular-nums">
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary px-3 py-1.5"><Clock className="size-4" aria-hidden />{durationLabel(entry)}+</span>
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-secondary px-3 py-1.5"><Dumbbell className="size-4" aria-hidden />{entry.sets} set{entry.sets === 1 ? "" : "s"}</span>
@@ -259,8 +353,8 @@ function ExerciseDialog({
           <DetailList title="Common mistakes to avoid" icon={<Check className="size-4" aria-hidden />} items={mistakes} />
           <DetailList title="Breathing tips" icon={<Wind className="size-4" aria-hidden />} items={breathingTips(exercise)} />
         </div>
-      </section>
-    </div>
+      </DialogPopup>
+    </Dialog>
   );
 }
 
@@ -293,8 +387,8 @@ export function PlanDayDetail({ day }: { day: PlanDayWithWorkout }) {
       <ol className="mt-4 space-y-3">{exercises.map((entry, index) => <li key={entry.id}><button type="button" onClick={() => setSelectedExercise(entry)} className="titan-card group flex w-full items-center gap-4 p-4 text-left transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><span className="relative size-16 shrink-0 overflow-hidden rounded-xl bg-secondary sm:size-20">{entry.exercises?.animation_url ? <img src={entry.exercises.animation_url} alt="" className="size-full object-cover" /> : <span className="grid size-full place-items-center text-lg font-black text-muted-foreground">{index + 1}</span>}<span className="absolute left-1 top-1 grid size-5 place-items-center rounded-md bg-black/65 text-[10px] font-black text-white">{index + 1}</span></span><span className="min-w-0 flex-1"><span className="block truncate text-base font-extrabold text-foreground">{entry.exercises?.name ?? "Exercise"}</span><span className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-xs font-semibold text-muted-foreground tabular-nums"><span>{durationLabel(entry)}+</span><span>{entry.sets} set{entry.sets === 1 ? "" : "s"}</span>{entry.reps !== null && <span>{entry.reps} reps</span>}</span></span><ChevronRight className="size-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-1" aria-hidden /></button></li>)}</ol>
     </section>
     <Link href={`/workout?planDayId=${day.id}&autoStart=1`} className="mt-6 flex h-13 w-full items-center justify-center gap-2 rounded-full bg-foreground px-6 py-3.5 text-base font-bold text-background shadow-lg sm:hidden"><Play className="size-5 fill-background" aria-hidden />Start workout</Link>
-    {selectedExercise && <ExerciseDialog entry={selectedExercise} onClose={() => setSelectedExercise(null)} />}
-    {isEditingPlan && <PlanEditorDialog entries={exercises} planDayId={day.id} onClose={() => setIsEditingPlan(false)} />}
+    {selectedExercise && <ExerciseDialog entry={selectedExercise} open={Boolean(selectedExercise)} onClose={() => setSelectedExercise(null)} />}
+    {isEditingPlan && <PlanEditorDialog entries={exercises} planDayId={day.id} open={isEditingPlan} onClose={() => setIsEditingPlan(false)} />}
   </div>;
 }
 

@@ -37,6 +37,23 @@ export async function savePlanDayEdits(planDayId: string, exercises: PlanDayExer
   return { workoutId };
 }
 
+export async function resetPlanDayEdits(planDayId: string) {
+  if (!z.string().uuid().safeParse(planDayId).success) return { error: "Invalid plan day" };
+
+  const supabase = await createClient();
+  const user = await getVerifiedUser(supabase);
+  if (!user) return { error: "Not authenticated" };
+
+  const { data: workoutId, error } = await supabase.rpc("reset_plan_day_workout", {
+    p_plan_day_id: planDayId,
+  });
+  if (error || !workoutId) return { error: error?.message ?? "Unable to reset plan edits" };
+
+  revalidatePath(`/plan/${planDayId}`);
+  revalidatePath("/plan");
+  return { workoutId };
+}
+
 export async function getPlanExerciseRecommendations(planDayId: string, exerciseId: string) {
   if (!z.string().uuid().safeParse(planDayId).success || !z.string().uuid().safeParse(exerciseId).success) return { exercises: [], error: "Invalid exercise" };
 

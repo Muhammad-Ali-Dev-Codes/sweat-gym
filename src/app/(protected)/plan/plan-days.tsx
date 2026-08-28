@@ -57,7 +57,7 @@ export function PlanDays({
                 Week {weekIndex + 1}
               </h3>
               <span aria-hidden className="h-px flex-1 bg-border" />
-              <span className="text-[11px] font-bold text-muted-foreground/70 tabular-nums">
+              <span className="text-[11px] font-bold text-muted-foreground tabular-nums">
                 {doneCount}/{weekDays.length} done
               </span>
             </header>
@@ -191,7 +191,7 @@ export function PlanDays({
                               "truncate text-[11px] font-medium",
                               isAvailable
                                 ? "text-white/75"
-                                : "text-muted-foreground/80"
+                                : "text-muted-foreground"
                             )}
                           >
                             {displayWorkoutName(day.workouts?.name)}

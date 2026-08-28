@@ -4,6 +4,7 @@ import { useState } from "react";
 import { X, SlidersHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "./button";
+import { Dialog, DialogClose, DialogPopup, DialogTitle } from "./dialog";
 import type { ExerciseFilters, ExerciseDifficulty } from "@/lib/types/database";
 
 const CATEGORIES = [
@@ -76,9 +77,10 @@ function FilterSection({ label, options, selected, onSelect }: FilterSectionProp
           <button
             key={opt.value}
             type="button"
+            aria-pressed={selected === opt.value}
             onClick={() => onSelect(opt.value)}
             className={cn(
-              "rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-ring",
+              "relative rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-ring before:absolute before:-inset-1.5 before:content-['']",
               selected === opt.value
                 ? "border-primary bg-primary text-primary-foreground shadow-sm shadow-primary/30"
                 : "border-border bg-card text-muted-foreground hover:border-primary/30 hover:text-primary"
@@ -93,6 +95,7 @@ function FilterSection({ label, options, selected, onSelect }: FilterSectionProp
 }
 
 type ExerciseFilterSheetProps = {
+  open: boolean;
   filters: ExerciseFilters;
   onApply: (filters: ExerciseFilters) => void;
   onClose: () => void;
@@ -100,6 +103,7 @@ type ExerciseFilterSheetProps = {
 };
 
 function ExerciseFilterSheet({
+  open,
   filters,
   onApply,
   onClose,
@@ -120,17 +124,10 @@ function ExerciseFilterSheet({
   ].filter(Boolean).length;
 
   return (
-    <>
-      <div
-        className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"
-        onClick={onClose}
-        aria-hidden="true"
-      />
-      <div
-        role="dialog"
-        aria-label="Filter exercises"
+    <Dialog open={open} onOpenChange={(next) => { if (!next) onClose(); }}>
+      <DialogPopup
         className={cn(
-          "fixed inset-x-0 bottom-0 z-50 max-h-[85vh] overflow-y-auto rounded-t-3xl border-t border-border bg-background p-6 shadow-2xl",
+          "inset-x-0 bottom-0 top-auto m-0 max-h-[85vh] w-full max-w-none rounded-t-3xl rounded-b-none border-b-0 p-6",
           "font-[family-name:var(--font-geist-sans)]",
           className
         )}
@@ -138,24 +135,23 @@ function ExerciseFilterSheet({
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <SlidersHorizontal className="size-4 text-muted-foreground" aria-hidden />
-            <h2 className="text-lg font-extrabold text-foreground">Filters</h2>
+            <DialogTitle className="text-lg font-extrabold text-foreground">Filters</DialogTitle>
             {activeCount > 0 && (
               <span className="grid size-5 place-items-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
                 {activeCount}
               </span>
             )}
           </div>
-          <button
-            type="button"
+          <DialogClose
             onClick={onClose}
-            className="grid size-8 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+            className="size-8 bg-transparent text-muted-foreground hover:bg-secondary hover:text-foreground"
             aria-label="Close filters"
           >
             <X className="size-5" />
-          </button>
+          </DialogClose>
         </div>
 
-        <div className="space-y-6">
+        <div className="max-h-[calc(85vh-8rem)] space-y-6 overflow-y-auto pr-1">
           <FilterSection
             label="Category"
             options={CATEGORIES}
@@ -188,7 +184,7 @@ function ExerciseFilterSheet({
           />
         </div>
 
-        <div className="sticky bottom-0 mt-8 flex gap-3">
+        <div className="mt-8 flex gap-3">
           {activeCount > 0 && (
             <Button
               variant="outline"
@@ -217,8 +213,8 @@ function ExerciseFilterSheet({
             Apply Filters
           </Button>
         </div>
-      </div>
-    </>
+      </DialogPopup>
+    </Dialog>
   );
 }
 

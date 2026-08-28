@@ -7,6 +7,7 @@ import { OfflineOverlay } from "@/components/offline-overlay";
 import { ReminderWatcher } from "@/components/reminder-watcher";
 import { SyncWatcher } from "@/components/sync-watcher";
 import { getUnreadNotificationCount } from "@/services/notification/feed";
+import { getProfile } from "@/services/onboarding";
 import { computeStreaks } from "@/lib/dates";
 
 export default async function ProtectedLayout({
@@ -21,29 +22,27 @@ export default async function ProtectedLayout({
     redirect("/login");
   }
 
-  const [{ data: profileData }, unreadCount] = await Promise.all([
-    supabase.from("profiles").select("full_name, timezone").eq("user_id", user.id).single(),
-    getUnreadNotificationCount(user.id),
-  ]);
+  const [profile, unreadCount, prefsResult, recentSessionsResult] =
+    await Promise.all([
+      getProfile(user.id),
+      getUnreadNotificationCount(user.id),
+      supabase
+        .from("notification_preferences")
+        .select("workout_reminders, streak_reminders, reminder_time")
+        .eq("user_id", user.id)
+        .maybeSingle(),
+      supabase
+        .from("workout_sessions")
+        .select("completed_at")
+        .eq("user_id", user.id)
+        .eq("status", "completed")
+        .order("completed_at", { ascending: false })
+        .limit(10),
+    ]);
 
-  const timeZone = profileData?.timezone || "UTC";
-
-  // Reminder preferences (defaults when no row exists) + current streak so
-  // the reminder engine can use the streak-protection variant.
-  const [{ data: prefsRow }, { data: recentSessions }] = await Promise.all([
-    supabase
-      .from("notification_preferences")
-      .select("workout_reminders, streak_reminders, reminder_time")
-      .eq("user_id", user.id)
-      .maybeSingle(),
-    supabase
-      .from("workout_sessions")
-      .select("completed_at")
-      .eq("user_id", user.id)
-      .eq("status", "completed")
-      .order("completed_at", { ascending: false })
-      .limit(10),
-  ]);
+  const timeZone = profile?.timezone || "UTC";
+  const prefsRow = prefsResult.data;
+  const recentSessions = recentSessionsResult.data;
 
   const currentStreak = computeStreaks(
     (recentSessions ?? [])
@@ -55,7 +54,7 @@ export default async function ProtectedLayout({
   return (
     <AppShell
       user={{
-        name: profileData?.full_name ?? null,
+        name: profile?.full_name ?? null,
         email: user.email ?? null,
       }}
       unreadNotifications={unreadCount}
