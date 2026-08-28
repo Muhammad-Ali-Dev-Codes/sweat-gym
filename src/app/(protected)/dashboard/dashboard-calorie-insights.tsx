@@ -13,6 +13,11 @@ import {
 import { ArrowRight, Flame } from "lucide-react";
 import { CHART_TOOLTIP_STYLE } from "../reports/chart-theme";
 
+type DailyCalories = {
+  label: string;
+  calories: number;
+};
+
 export function DashboardCalorieInsights({
   days,
   calories,
@@ -28,13 +33,16 @@ export function DashboardCalorieInsights({
 }) {
   const weekCalories = calories.reduce((sum, value) => sum + value, 0);
   const activeDays = calories.filter((value) => value > 0).length;
-  const averageCalories = activeDays > 0 ? Math.round(weekCalories / activeDays) : 0;
   const bestDayIndex = calories.indexOf(Math.max(...calories));
   const bestDayCalories = calories[bestDayIndex] ?? 0;
   const bestDayLabel =
     activeDays > 0
       ? days[bestDayIndex].toLocaleDateString("en-US", { weekday: "long", timeZone })
       : null;
+  const dailyCalories: DailyCalories[] = days.map((day, index) => ({
+    label: day.toLocaleDateString("en-US", { weekday: "short", timeZone }),
+    calories: calories[index] ?? 0,
+  }));
 
   return (
     <section aria-label="Calorie insights" className="titan-card overflow-hidden">
@@ -75,35 +83,31 @@ export function DashboardCalorieInsights({
       <div className="px-6 py-6 sm:px-8 sm:py-7">
       <div className="flex items-center justify-between gap-4">
         <div>
-          <p className="text-sm font-extrabold text-foreground">Your week in motion</p>
-          <p className="mt-1 text-xs font-medium text-muted-foreground">{averageCalories.toLocaleString()} kcal average on active days</p>
+          <p className="text-sm font-extrabold text-foreground">Daily calorie burn</p>
+          <p className="mt-1 text-xs font-medium text-muted-foreground">Calories burned across each day this week</p>
         </div>
         <span className="text-xs font-bold tabular-nums text-muted-foreground">{activeDays}/7 active</span>
       </div>
 
       <div className="mt-6 h-52 w-full sm:h-60">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-            data={days.map((day, index) => ({
-              label: day.toLocaleDateString("en-US", { weekday: "short", timeZone }),
-              calories: calories[index] ?? 0,
-            }))}
+          <BarChart data={dailyCalories}
             margin={{ top: 8, right: 8, left: -18, bottom: 0 }}
-            barCategoryGap="20%"
+            barCategoryGap="0%"
           >
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="currentColor" className="text-border" />
-            <XAxis dataKey="label" tickLine={false} axisLine={false} tick={{ fontSize: 11 }} />
-            <YAxis tickLine={false} axisLine={false} tick={{ fontSize: 11 }} width={40} domain={[0, maxCalories]} />
+            <XAxis dataKey="label" tickLine={false} axisLine={false} tick={{ fontSize: 10 }} label={{ value: "Days", position: "insideBottom", offset: -2, fontSize: 11 }} />
+            <YAxis allowDecimals={false} tickLine={false} axisLine={false} tick={{ fontSize: 11 }} width={40} domain={[0, maxCalories]} label={{ value: "Calories", angle: -90, position: "insideLeft", fontSize: 11 }} />
             <Tooltip
               contentStyle={CHART_TOOLTIP_STYLE}
               formatter={(value) => [`${Number(value).toLocaleString()} kcal`, "Burned"]}
             />
             <Bar
               dataKey="calories"
-              stroke="var(--energy)"
-              fill="var(--energy)"
-              radius={[7, 7, 0, 0]}
-              maxBarSize={52}
+              fill="var(--chart-2)"
+              stroke="var(--foreground)"
+              strokeWidth={1}
+              maxBarSize={80}
             />
           </BarChart>
         </ResponsiveContainer>
