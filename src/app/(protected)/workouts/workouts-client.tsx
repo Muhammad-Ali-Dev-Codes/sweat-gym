@@ -106,10 +106,6 @@ export function CustomWorkoutsClient({ initialWorkouts }: { initialWorkouts: Cus
   const library = useMemo(() => data?.pages.flatMap((page) => page.exercises) ?? [], [data]);
   const estimatedMinutes = Math.max(1, Math.round(builderExercises.reduce((total, exercise) => total + (exercise.durationSeconds ?? 60) * exercise.sets + exercise.restSeconds * Math.max(0, exercise.sets - 1), 0) / 60));
 
-  useEffect(() => {
-    if (hasNextPage && !isFetchingNextPage) void fetchNextPage();
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
-
   function resetBuilder() {
     setSelectedId(undefined);
     setName("My Custom Workout");
@@ -269,6 +265,7 @@ export function CustomWorkoutsClient({ initialWorkouts }: { initialWorkouts: Cus
           <div className="space-y-2">
             {library.map((exercise) => <ExerciseCard key={exercise.id} exercise={exercise} onExerciseClick={() => setSelectedExercise(exercise)}><Button variant="outline" size="icon" onClick={() => addExercise(exercise)} aria-label={`Add ${exercise.name}`}><Plus className="size-4" /></Button></ExerciseCard>)}
           </div>
+          {hasNextPage && <Button variant="outline" onClick={() => void fetchNextPage()} disabled={isFetchingNextPage} className="mt-4 w-full">{isFetchingNextPage ? "Loading exercises..." : "Load more exercises"}</Button>}
         </aside>
       </div>
       {selectedExercise && <ExerciseDetailsDialog exercise={selectedExercise} onClose={() => setSelectedExercise(null)} />}

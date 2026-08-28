@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowLeft,
   Check,
@@ -10,7 +10,11 @@ import {
   Clock,
   Dumbbell,
   Flame,
+  GripVertical,
   Info,
+  Minus,
+  Plus,
+  RefreshCw,
   Play,
   Wind,
   X,
@@ -19,6 +23,7 @@ import type { PlanDayWithWorkout } from "@/lib/types/database";
 import { formatClock } from "@/lib/duration";
 import { getPlanDayThumbnail, getWorkoutTypeLabel } from "@/lib/plan-thumbnails";
 import { cn } from "@/lib/utils";
+import { getPlanExerciseRecommendations, savePlanDayEdits, type PlanDayExerciseEdit } from "@/app/actions/plan-day-edit";
 
 type ExerciseEntry = NonNullable<PlanDayWithWorkout["workouts"]>["workout_exercises"][number];
 type ExerciseDetail = NonNullable<ExerciseEntry["exercises"]> & {
@@ -26,6 +31,7 @@ type ExerciseDetail = NonNullable<ExerciseEntry["exercises"]> & {
   form_tips?: string[] | null;
   exercise_focus_areas?: { focus_areas: { name: string; slug: string } | null }[];
 };
+type ExerciseRecommendation = { id: string; name: string; animation_url: string | null; exercise_mode: string; default_reps: number | null; duration_seconds: number | null };
 
 function focusAreas(exercise: ExerciseDetail): string[] {
   return exercise.exercise_focus_areas
@@ -41,6 +47,121 @@ function breathingTips(exercise: ExerciseDetail): string[] {
 function durationLabel(entry: ExerciseEntry): string {
   const exercise = entry.exercises as ExerciseDetail | null;
   return formatClock(entry.duration_seconds ?? exercise?.duration_seconds ?? 30);
+}
+
+function PlanEditorDialog({ entries, planDayId, onClose }: { entries: ExerciseEntry[]; planDayId: string; onClose: () => void }) {
+  const [drafts, setDrafts] = useState<PlanDayExerciseEdit[]>(() => entries.map((entry) => ({
+    exerciseId: entry.exercises?.id ?? "",
+    sets: entry.sets,
+    reps: entry.reps,
+    durationSeconds: entry.duration_seconds,
+    restSeconds: entry.rest_seconds,
+  })));
+  const [recommendationIndex, setRecommendationIndex] = useState<number | null>(null);
+  const [recommendations, setRecommendations] = useState<ExerciseRecommendation[]>([]);
+  const [replacementExercises, setReplacementExercises] = useState<Record<number, ExerciseRecommendation>>({});
+  const [recommendationMessage, setRecommendationMessage] = useState("");
+  const [recommendationsLoading, setRecommendationsLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState("");
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") onClose();
+    }
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
+  function updateDraft(index: number, field: "reps" | "durationSeconds", amount: number) {
+    setDrafts((current) => current.map((draft, draftIndex) => draftIndex === index ? { ...draft, [field]: Math.max(1, (draft[field] ?? 0) + amount) } : draft));
+  }
+
+  async function loadRecommendations(index: number) {
+    setRecommendationIndex(index);
+    setRecommendations([]);
+    setRecommendationMessage("");
+    setRecommendationsLoading(true);
+    try {
+      const timeout = new Promise<never>((_, reject) => {
+        window.setTimeout(() => reject(new Error("Recommendation request timed out")), 8_000);
+      });
+      const result = await Promise.race([
+        getPlanExerciseRecommendations(planDayId, drafts[index].exerciseId),
+        timeout,
+      ]);
+      setRecommendations(result.exercises);
+      if (result.error) setRecommendationMessage(result.error);
+      else if (result.exercises.length === 0) setRecommendationMessage("No compatible replacement exercises were found.");
+    } catch {
+      setRecommendationMessage("Unable to load replacement exercises. Please try again.");
+    } finally {
+      setRecommendationsLoading(false);
+    }
+  }
+
+  function chooseRecommendation(index: number, exercise: ExerciseRecommendation) {
+    setReplacementExercises((current) => ({ ...current, [index]: exercise }));
+    setDrafts((current) => current.map((draft, draftIndex) => draftIndex === index ? {
+      ...draft,
+      exerciseId: exercise.id,
+      reps: exercise.exercise_mode === "duration" ? null : (draft.reps ?? exercise.default_reps ?? 10),
+      durationSeconds: exercise.exercise_mode === "duration" ? (draft.durationSeconds ?? exercise.duration_seconds ?? 30) : null,
+    } : draft));
+    setRecommendationIndex(null);
+  }
+
+  async function save() {
+    setSaving(true);
+    setMessage("");
+    const result = await savePlanDayEdits(planDayId, drafts);
+    if (result.error) {
+      setMessage(result.error);
+      setSaving(false);
+      return;
+    }
+    window.location.reload();
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-background" role="presentation">
+      <section role="dialog" aria-modal="true" aria-labelledby="edit-plan-title" className="min-h-screen w-full bg-background">
+        <header className="sticky top-0 z-10 flex items-center gap-3 border-b border-border bg-background/95 px-4 py-4 backdrop-blur sm:px-6">
+          <button type="button" onClick={onClose} aria-label="Close edit plan" className="grid size-9 shrink-0 place-items-center rounded-full text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><ArrowLeft className="size-5" aria-hidden /></button>
+          <h2 id="edit-plan-title" className="text-xl font-black tracking-tight text-foreground">Edit plan</h2>
+        </header>
+        <div className="mx-auto max-w-xl px-3 pb-6 sm:px-5">
+          {entries.map((entry, index) => {
+            const draft = drafts[index];
+            const isDuration = draft.reps === null;
+            return (
+              <div key={entry.id} className="border-b border-border py-3">
+                <div className="flex min-h-28 items-center gap-1.5 sm:gap-2.5">
+                <button type="button" aria-label={`Reorder ${entry.exercises?.name ?? "exercise"}`} className="shrink-0 text-muted-foreground/60 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><GripVertical className="size-7" aria-hidden /></button>
+                <div className="relative size-14 shrink-0 overflow-hidden rounded-lg bg-secondary sm:size-20">
+                  {replacementExercises[index]?.animation_url || entry.exercises?.animation_url ? <img src={replacementExercises[index]?.animation_url ?? entry.exercises?.animation_url ?? ""} alt="" className="size-full object-cover" /> : <span className="grid size-full place-items-center text-2xl font-black text-muted-foreground">{entry.exercises?.name?.charAt(0) ?? "E"}</span>}
+                </div>
+                <div className="min-w-0 flex-1 self-stretch py-1">
+                  <div className="flex items-start justify-between gap-2">
+                    <h3 className="line-clamp-2 text-[13px] font-black uppercase leading-tight tracking-tight text-foreground sm:text-base">{replacementExercises[index]?.name ?? entry.exercises?.name ?? "Exercise"}</h3>
+                    <button type="button" onClick={() => void loadRecommendations(index)} aria-label={`Replace ${entry.exercises?.name ?? "exercise"}`} className="shrink-0 rounded-full p-1.5 text-teal-600 transition-colors hover:bg-teal-50 hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:text-teal-400 dark:hover:bg-teal-950"><RefreshCw className="size-4" aria-hidden /></button>
+                  </div>
+                  <div className="mt-auto flex items-center gap-1.5 pt-3">
+                    <button type="button" onClick={() => updateDraft(index, isDuration ? "durationSeconds" : "reps", -1)} aria-label={`Decrease ${isDuration ? "duration" : "reps"}`} className="grid size-8 place-items-center rounded-lg bg-secondary text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><Minus className="size-4" aria-hidden /></button>
+                    <span className="min-w-16 text-center text-base font-medium tabular-nums text-foreground">{isDuration ? formatClock(draft.durationSeconds ?? 30) : `x${draft.reps}`}</span>
+                    <button type="button" onClick={() => updateDraft(index, isDuration ? "durationSeconds" : "reps", 1)} aria-label={`Increase ${isDuration ? "duration" : "reps"}`} className="grid size-8 place-items-center rounded-lg bg-secondary text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><Plus className="size-4" aria-hidden /></button>
+                  </div>
+                </div>
+                </div>
+              </div>
+            );
+          })}
+          {message && <p className="mt-4 text-sm font-semibold text-destructive" role="alert">{message}</p>}
+          <button type="button" onClick={() => void save()} disabled={saving} className="mt-6 w-full rounded-full bg-energy px-5 py-3 text-sm font-black text-white shadow-lg shadow-energy/20 transition-transform hover:scale-[1.01] disabled:opacity-60">{saving ? "Saving..." : "Save changes"}</button>
+        </div>
+      </section>
+      {recommendationIndex !== null && <div className="fixed inset-0 z-[60] flex items-end justify-center bg-black/45 p-0 backdrop-blur-sm sm:items-center sm:p-6" role="presentation" onMouseDown={() => setRecommendationIndex(null)}><section role="dialog" aria-modal="true" aria-labelledby="replace-exercise-title" className="max-h-[88vh] w-full max-w-lg overflow-y-auto rounded-t-3xl bg-background p-5 shadow-2xl sm:rounded-3xl sm:p-7" onMouseDown={(event) => event.stopPropagation()}><div className="flex items-start justify-between gap-4"><div><p className="text-xs font-black uppercase tracking-[0.2em] text-muted-foreground">Current: {replacementExercises[recommendationIndex]?.name ?? entries[recommendationIndex].exercises?.name ?? "Exercise"}</p><h3 id="replace-exercise-title" className="mt-2 text-2xl font-black tracking-tight text-foreground">Replace it with...</h3></div><button type="button" onClick={() => setRecommendationIndex(null)} aria-label="Close replacement dialog" className="grid size-9 place-items-center rounded-full bg-secondary text-foreground"><X className="size-5" aria-hidden /></button></div><div className="mt-6 flex items-center gap-2 text-sm font-bold text-energy"><span className="size-2 rounded-full bg-energy" aria-hidden />Recommended</div><div className="mt-3 space-y-2">{recommendations.length > 0 ? recommendations.map((recommendation) => <button key={recommendation.id} type="button" onClick={() => chooseRecommendation(recommendationIndex, recommendation)} className="flex w-full items-center gap-3 rounded-xl p-2 text-left transition-colors hover:bg-secondary"><span className="size-16 shrink-0 overflow-hidden rounded-lg bg-secondary">{recommendation.animation_url && <img src={recommendation.animation_url} alt="" className="size-full object-cover" />}</span><span className="min-w-0 flex-1"><span className="block truncate text-base font-black uppercase text-foreground">{recommendation.name}</span><span className="mt-1 inline-flex rounded-full bg-secondary px-2.5 py-1 text-xs font-semibold text-muted-foreground">Similar</span></span><span className="grid size-6 shrink-0 place-items-center rounded-full border-2 border-muted-foreground/25" aria-hidden /></button>) : <p className="py-8 text-center text-sm text-muted-foreground">{recommendationsLoading ? "Finding compatible exercises..." : recommendationMessage}</p>}</div></section></div>}
+    </div>
+  );
 }
 
 function FocusAreaSkeleton({ areas }: { areas: string[] }) {
@@ -149,6 +270,7 @@ function DetailList({ title, icon, items, numbered = false }: { title: string; i
 
 export function PlanDayDetail({ day }: { day: PlanDayWithWorkout }) {
   const [selectedExercise, setSelectedExercise] = useState<ExerciseEntry | null>(null);
+  const [isEditingPlan, setIsEditingPlan] = useState(false);
   const workout = day.workouts;
   const exercises = [...(workout?.workout_exercises ?? [])].sort((a, b) => a.exercise_order - b.exercise_order);
   const plan = (day as PlanDayWithWorkout & { user_plans?: { plan_duration_days: number; plan_templates?: { name: string } | null } }).user_plans;
@@ -167,10 +289,12 @@ export function PlanDayDetail({ day }: { day: PlanDayWithWorkout }) {
     {workout?.description && <p className="mt-6 max-w-2xl text-sm leading-relaxed text-muted-foreground">{workout.description}</p>}
     <FocusAreaSkeleton areas={focusAreas} />
     <section className="mt-8"><div className="flex items-end justify-between gap-4"><div><p className="text-xs font-black uppercase tracking-[0.22em] text-muted-foreground">Today&apos;s session</p><h2 className="mt-1 text-2xl font-black tracking-tight text-foreground">Move through the exercises</h2></div><Link href={`/workout?planDayId=${day.id}&autoStart=1`} className="hidden items-center gap-2 rounded-full bg-foreground px-4 py-2.5 text-sm font-bold text-background transition-transform hover:scale-[1.02] sm:inline-flex"><Play className="size-4 fill-background" aria-hidden />Start</Link></div>
+      <div className="mt-8 flex items-center justify-between border-b border-border pb-4"><h3 className="text-2xl font-black tracking-tight text-foreground">Exercises <span className="font-semibold text-muted-foreground">({exercises.length})</span></h3><button type="button" onClick={() => setIsEditingPlan(true)} className="inline-flex items-center gap-1 text-base font-semibold text-teal-600 transition-colors hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:text-teal-400 dark:hover:text-teal-300"><span>Edit</span><ChevronRight className="size-4" aria-hidden /></button></div>
       <ol className="mt-4 space-y-3">{exercises.map((entry, index) => <li key={entry.id}><button type="button" onClick={() => setSelectedExercise(entry)} className="titan-card group flex w-full items-center gap-4 p-4 text-left transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"><span className="relative size-16 shrink-0 overflow-hidden rounded-xl bg-secondary sm:size-20">{entry.exercises?.animation_url ? <img src={entry.exercises.animation_url} alt="" className="size-full object-cover" /> : <span className="grid size-full place-items-center text-lg font-black text-muted-foreground">{index + 1}</span>}<span className="absolute left-1 top-1 grid size-5 place-items-center rounded-md bg-black/65 text-[10px] font-black text-white">{index + 1}</span></span><span className="min-w-0 flex-1"><span className="block truncate text-base font-extrabold text-foreground">{entry.exercises?.name ?? "Exercise"}</span><span className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-xs font-semibold text-muted-foreground tabular-nums"><span>{durationLabel(entry)}+</span><span>{entry.sets} set{entry.sets === 1 ? "" : "s"}</span>{entry.reps !== null && <span>{entry.reps} reps</span>}</span></span><ChevronRight className="size-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-1" aria-hidden /></button></li>)}</ol>
     </section>
     <Link href={`/workout?planDayId=${day.id}&autoStart=1`} className="mt-6 flex h-13 w-full items-center justify-center gap-2 rounded-full bg-foreground px-6 py-3.5 text-base font-bold text-background shadow-lg sm:hidden"><Play className="size-5 fill-background" aria-hidden />Start workout</Link>
     {selectedExercise && <ExerciseDialog entry={selectedExercise} onClose={() => setSelectedExercise(null)} />}
+    {isEditingPlan && <PlanEditorDialog entries={exercises} planDayId={day.id} onClose={() => setIsEditingPlan(false)} />}
   </div>;
 }
 

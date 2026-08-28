@@ -23,6 +23,10 @@ const item = {
   },
 };
 
+function displayWorkoutName(name: string | null | undefined): string {
+  return name?.replace(/\s+\(Edited\)$/, "") || "Workout session";
+}
+
 export function PlanDays({
   days,
   opensTomorrowDay = null,
@@ -190,7 +194,7 @@ export function PlanDays({
                                 : "text-muted-foreground/80"
                             )}
                           >
-                            {day.workouts?.name ?? "Workout session"}
+                            {displayWorkoutName(day.workouts?.name)}
                           </p>
                           <div
                             className={cn(
@@ -213,7 +217,7 @@ export function PlanDays({
                         </div>
 
                         {/* Action button */}
-                        <div className="absolute right-3 bottom-3 sm:right-4 sm:bottom-4">
+                        <div className="absolute top-1/2 right-3 z-10 -translate-y-1/2 sm:right-4">
                           {isAvailable ? (
                             <span className="grid size-9 place-items-center rounded-full bg-white text-orange-600 shadow-lg transition-transform duration-200 group-hover:scale-110 group-active:scale-95">
                               <Play className="ml-0.5 size-4 fill-orange-600" aria-hidden />
