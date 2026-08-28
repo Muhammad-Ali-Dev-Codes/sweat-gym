@@ -4,7 +4,7 @@ import type { WorkoutSession, WorkoutExerciseSessionWithJoins } from "@/lib/type
 export async function getOrCreateSession(data: {
   userId: string;
   workoutId: string;
-  source: "plan" | "discover";
+  source: "plan" | "discover" | "custom";
   planDayId?: string;
   clientOperationId: string;
 }): Promise<WorkoutSession | null> {
@@ -78,7 +78,7 @@ export async function getSession(sessionId: string): Promise<WorkoutSession | nu
 export async function getIncompleteSession(
   userId: string,
   workoutId: string,
-  opts?: { source?: "plan" | "discover"; planDayId?: string }
+  opts?: { source?: "plan" | "discover" | "custom"; planDayId?: string }
 ): Promise<WorkoutSession | null> {
   const supabase = await createClient();
   let query = supabase
@@ -95,7 +95,7 @@ export async function getIncompleteSession(
   } else if (opts?.source === "plan") {
     // Plan sessions are always bound to a plan day; never match NULL-day rows.
     query = query.not("user_plan_day_id", "is", null);
-  } else if (opts?.source === "discover") {
+  } else if (opts?.source === "discover" || opts?.source === "custom") {
     query = query.is("user_plan_day_id", null);
   }
 

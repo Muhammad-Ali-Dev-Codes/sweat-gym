@@ -1,0 +1,2 @@
+-- Migration 0038 exists on the linked project but is not present in this checkout.
+-- The original remote migration is preserved in Supabase migration history.

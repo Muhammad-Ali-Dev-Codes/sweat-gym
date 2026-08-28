@@ -9,6 +9,7 @@ import {
   Dumbbell,
   LayoutDashboard,
   List,
+  ListPlus,
   User,
   type LucideIcon,
 } from "lucide-react";
@@ -19,6 +20,7 @@ const NAV_ITEMS = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/plan", label: "Plan", icon: CalendarDays },
   { href: "/exercises", label: "Exercises", icon: List },
+  { href: "/workouts", label: "Custom Workouts", icon: ListPlus },
   { href: "/discover", label: "Discover", icon: Compass },
   { href: "/workout", label: "Workout", icon: Dumbbell },
   { href: "/reports", label: "Reports", icon: ChartColumn },
@@ -62,14 +64,14 @@ function NavItem({
       className={cn(
         "relative flex h-11 items-center gap-3.5 rounded-xl text-sm font-medium transition-colors duration-200 outline-none focus-visible:ring-2 focus-visible:ring-white/60",
         active
-          ? "bg-white/10 text-white"
+          ? "rounded-full bg-[#ff5a1f] text-white shadow-lg shadow-orange-500/30"
           : "text-zinc-400 hover:bg-white/5 hover:text-zinc-100"
       )}
     >
       <span
         aria-hidden
         className={cn(
-          "absolute top-1/2 -left-[18px] h-6 w-1 -translate-y-1/2 rounded-r-full bg-white transition-all duration-300 ease-out",
+          "absolute top-1/2 -left-[18px] h-6 w-1 -translate-y-1/2 rounded-r-full bg-[#ff5a1f] transition-all duration-300 ease-out",
           active ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0"
         )}
       />

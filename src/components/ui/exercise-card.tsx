@@ -9,6 +9,7 @@ type ExerciseCardProps = {
   exercise: ExerciseWithRelations;
   isFavorited?: boolean;
   onFavoriteToggle?: () => void;
+  onExerciseClick?: () => void;
   children?: React.ReactNode;
   className?: string;
 };
@@ -26,6 +27,7 @@ function getEquipmentName(exercise: ExerciseWithRelations): string {
 
 function ExerciseCard({
   exercise,
+  onExerciseClick,
   children,
   className,
 }: ExerciseCardProps) {
@@ -49,11 +51,46 @@ function ExerciseCard({
         className
       )}
     >
-      <Link
-        href={`/exercises/${exercise.slug}`}
-        aria-label={`View ${exercise.name} exercise details`}
-        className="flex min-w-0 flex-1 items-center gap-3.5 outline-none"
-      >
+      {onExerciseClick ? (
+        <button
+          type="button"
+          onClick={onExerciseClick}
+          aria-label={`View ${exercise.name} exercise details`}
+          className="flex min-w-0 flex-1 items-center gap-3.5 text-left outline-none"
+        >
+          <ExerciseCardContent exercise={exercise} primaryMuscle={primaryMuscle} equipment={equipment} repLabel={repLabel} />
+        </button>
+      ) : (
+        <Link
+          href={`/exercises/${exercise.slug}`}
+          aria-label={`View ${exercise.name} exercise details`}
+          className="flex min-w-0 flex-1 items-center gap-3.5 outline-none"
+        >
+          <ExerciseCardContent exercise={exercise} primaryMuscle={primaryMuscle} equipment={equipment} repLabel={repLabel} />
+        </Link>
+      )}
+    
+      {children && (
+        <div className="shrink-0">
+          {children}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ExerciseCardContent({
+  exercise,
+  primaryMuscle,
+  equipment,
+  repLabel,
+}: {
+  exercise: ExerciseWithRelations;
+  primaryMuscle: string;
+  equipment: string;
+  repLabel: string | null;
+}) {
+  return <>
         {exercise.animation_url ? (
           <span className="relative size-14 shrink-0 overflow-hidden rounded-lg bg-secondary">
             <img
@@ -93,15 +130,7 @@ function ExerciseCard({
           className="size-4 shrink-0 text-muted-foreground"
           aria-hidden
         />
-      </Link>
-
-      {children && (
-        <div className="shrink-0">
-          {children}
-        </div>
-      )}
-    </div>
-  );
+  </>;
 }
 
 export { ExerciseCard };

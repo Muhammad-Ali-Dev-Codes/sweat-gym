@@ -153,6 +153,7 @@ export default function WorkoutPage() {
   const searchParams = useSearchParams();
   const planDayId = searchParams.get("planDayId");
   const workoutIdParam = searchParams.get("workoutId");
+  const customWorkout = searchParams.get("source") === "custom";
   const autoStart = Boolean(planDayId || workoutIdParam);
 
   const [loading, setLoading] = useState(!!planDayId || !!workoutIdParam);
@@ -540,7 +541,8 @@ export default function WorkoutPage() {
     const workoutKey = planDay?.workout_id ?? workoutIdParam;
     if (!workoutKey) return;
 
-    const source = planDayId ? ("plan" as const) : ("discover" as const);
+    const source = planDayId ? ("plan" as const) : customWorkout ? ("custom" as const) : ("discover" as const);
+    const offlineSource = source === "custom" ? ("discover" as const) : source;
     const startedAt = new Date();
 
     // Online path: authoritative server-side session creation.
@@ -623,7 +625,7 @@ export default function WorkoutPage() {
 
       const created = await startOfflineWorkout({
         workoutId: workoutKey,
-        source,
+        source: offlineSource,
         userPlanDayId: planDayId ?? undefined,
         planDayNumber: planDay?.day_number,
         startedAt,
@@ -733,7 +735,7 @@ export default function WorkoutPage() {
             payload: {
               workoutSessionId: sessionId,
               workoutId: planDay?.workout_id ?? workoutIdParam,
-              source: planDayId ? "plan" : "discover",
+              source: planDayId ? "plan" : customWorkout ? "custom" : "discover",
               userPlanDayId: planDayId,
               startedAt: startTime?.toISOString() ?? new Date().toISOString(),
               completedAt: new Date().toISOString(),
@@ -810,6 +812,7 @@ export default function WorkoutPage() {
     planDay,
     planDayId,
     workoutIdParam,
+    customWorkout,
     buildBulkResults,
     exercises.length,
     progressKey,
