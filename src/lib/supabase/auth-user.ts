@@ -1,4 +1,5 @@
 import type { SupabaseClient, User } from "@supabase/supabase-js";
+import { cache } from "react";
 
 /** Max wall-clock time the online validation may take before we treat the
  * auth server as unreachable and fall back to the local session. */
@@ -27,7 +28,7 @@ const GET_USER_TIMEOUT_MS = 3_000;
  * Use `getVerifiedUser` for MUTATIONS: it fails closed and never trusts the
  * local session.
  */
-export async function getAuthUser(
+export const getAuthUser = cache(async function getAuthUser(
   supabase: SupabaseClient,
   timeoutMs: number = GET_USER_TIMEOUT_MS
 ): Promise<User | null> {
@@ -76,7 +77,7 @@ export async function getAuthUser(
     default:
       return fallbackSessionUser(session);
   }
-}
+});
 
 /**
  * Offline fallback identity from an unverified local session. Only valid

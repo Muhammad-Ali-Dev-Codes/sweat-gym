@@ -1,6 +1,5 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
-import { getAuthUser } from "@/lib/supabase/auth-user";
 import { rateLimit } from "@/lib/rate-limit";
 
 const publicRoutes = ["/", "/login", "/signup", "/forgot-password", "/reset-password", "/verify-email"];
@@ -71,9 +70,11 @@ export async function proxy(request: NextRequest) {
     }
   );
 
-  // Offline-tolerant: falls back to the cookie session when Supabase Auth
-  // is unreachable, so people aren't bounced to /login while offline.
-  const user = await getAuthUser(supabase);
+  // The protected server layout and API handlers perform the authoritative
+  // auth check. Middleware only needs the local cookie session to avoid adding
+  // a network auth round-trip before every page render.
+  const { data: { session } } = await supabase.auth.getSession();
+  const user = session?.user ?? null;
 
   const pathname = request.nextUrl.pathname;
   const isPublicRoute = publicRoutes.some((route) => pathname === route || pathname.startsWith("/auth/"));

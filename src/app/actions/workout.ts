@@ -122,8 +122,12 @@ export async function startWorkout(input: {
 
   const data = parsed.data;
   const supabase = await createClient();
-  const user = await getVerifiedUser(supabase);
+  // Auth verification can be slower on a cold/dev Supabase connection. Keep
+  // this mutation fail-closed, but avoid treating a valid session as logged
+  // out after the shared 3-second default timeout.
+  const user = await getVerifiedUser(supabase, 30_000);
   if (!user) return { sessionId: "", exercises: [], error: "Not authenticated" };
+  let actualWorkoutId = data.workoutId;
 
   // Abandonment sweep: sessions left open >24h are closed out and any plan
   // day they held 'in_progress' is returned to 'available' so progression
@@ -173,6 +177,9 @@ export async function startWorkout(input: {
     ) {
       return { sessionId: "", exercises: [], error: "This day is not available yet" };
     }
+    // The plan day is authoritative. The client may still hold the previous
+    // workout id after a plan edit, so never create a session from that value.
+    actualWorkoutId = day.workout_id;
 
     if (day.status !== "completed") {
       const { data: pacingProfile } = await supabase
@@ -284,8 +291,6 @@ export async function startWorkout(input: {
       .eq("workout_session_id", existing.id);
     await supabase.from("workout_sessions").delete().eq("id", existing.id);
   }
-
-  const actualWorkoutId = data.workoutId;
 
   // Restriction-aware replacement happens at session creation time.
   // Applied to BOTH sources: plan templates are pre-vetted per level but

@@ -28,6 +28,7 @@ import { RegeneratePlanButton } from "./regenerate-plan-button";
 import { RecoverPlanButton } from "@/components/recover-plan-button";
 import { DashboardWeightInsights } from "./dashboard-weight-insights";
 import { DashboardCalorieInsights } from "./dashboard-calorie-insights";
+import { DashboardCalorieSummary } from "./dashboard-calorie-summary";
 import type { ReactNode } from "react";
 import type {
   Profile,
@@ -166,12 +167,15 @@ function StatBlock({
   label: string;
 }) {
   return (
-    <div>
-      <Icon className={cn("size-5", tone)} aria-hidden />
-      <p className="mt-5 text-5xl font-black leading-none tracking-tighter text-foreground tabular-nums">
+    <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-5">
+      <div className="flex items-center justify-between gap-2">
+        <Icon className={cn("size-5", tone)} aria-hidden />
+        <span className={cn("h-1.5 w-10 rounded-full bg-current opacity-25", tone)} aria-hidden />
+      </div>
+      <p className="mt-6 text-3xl font-black leading-none tracking-tight text-foreground tabular-nums sm:text-4xl">
         {value}
       </p>
-      <p className="mt-2.5 text-[11px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+      <p className="mt-2.5 text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground sm:text-[11px]">
         {label}
       </p>
     </div>
@@ -567,6 +571,15 @@ export default async function DashboardPage() {
             targetWeight={targetWeight}
             timeZone={timeZone}
           />
+          <DashboardCalorieSummary
+            calories={week.calories}
+            totalCalories={totalCalories}
+          />
+        </section>
+      </Reveal>
+
+      <Reveal delay={0.1}>
+        <section className="grid grid-cols-1 gap-4 lg:grid-cols-5">
 
           {/* Weekly activity */}
           <div className="titan-card p-7 sm:p-9 lg:col-span-2">
@@ -641,10 +654,14 @@ export default async function DashboardPage() {
       {/* Quick stats — editorial */}
       <Reveal delay={0.12}>
         <section aria-label="Quick stats">
-          <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-muted-foreground">
-            All-time hustle
-          </p>
-          <div className="mt-8 grid grid-cols-2 gap-x-8 gap-y-12 lg:grid-cols-4 lg:gap-x-12">
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-muted-foreground">All-time hustle</p>
+              <h2 className="mt-1.5 text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">Your training signal</h2>
+            </div>
+            <span className="hidden rounded-full bg-energy/10 px-3 py-1.5 text-xs font-bold text-energy sm:inline-flex">Lifetime totals</span>
+          </div>
+          <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
             <StatBlock
               icon={Flame}
               tone="text-energy"
@@ -720,15 +737,17 @@ export default async function DashboardPage() {
             </div>
           ) : (
             <div className="-mx-4 mt-8 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-4 no-scrollbar sm:-mx-6 sm:px-6 lg:-mx-10 lg:px-10">
-              {recentSessions.map((session) => (
+              {recentSessions.map((session, index) => (
                 <article
                   key={session.id}
-                  className="titan-card w-[270px] shrink-0 snap-start p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                  className="titan-card relative w-[270px] shrink-0 snap-start overflow-hidden p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
                 >
+                  <div className={cn("absolute inset-x-0 top-0 h-1", index === 0 ? "bg-energy" : "bg-foreground/15")} aria-hidden />
                   <div className="flex items-start justify-between gap-2">
                     <span className="flex size-10 items-center justify-center rounded-xl bg-secondary text-secondary-foreground">
                       <Dumbbell className="size-5" aria-hidden />
                     </span>
+                    <span className="text-3xl font-black leading-none text-foreground/10 tabular-nums">{String(index + 1).padStart(2, "0")}</span>
                     <span className="rounded-full bg-secondary px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
                       {session.completed_at
                         ? formatSessionDate(session.completed_at, timeZone)
@@ -738,14 +757,14 @@ export default async function DashboardPage() {
                   <h3 className="mt-5 truncate text-base font-extrabold text-foreground">
                     {session.workouts?.name ?? "Workout"}
                   </h3>
-                  <div className="mt-2.5 flex items-center gap-4 text-sm font-semibold text-muted-foreground tabular-nums">
-                    <span className="inline-flex items-center gap-1.5">
-                      <Clock className="size-4" aria-hidden />
-                      {formatClock(session.duration_seconds ?? 0)}
+                  <div className="mt-5 grid grid-cols-2 gap-2 border-t border-border pt-3 text-xs font-semibold text-muted-foreground tabular-nums">
+                    <span className="inline-flex flex-col gap-1">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/70">Duration</span>
+                      <span className="inline-flex items-center gap-1.5 text-sm text-foreground"><Clock className="size-4" aria-hidden />{formatClock(session.duration_seconds ?? 0)}</span>
                     </span>
-                    <span className="inline-flex items-center gap-1.5">
-                      <Flame className="size-4 text-energy" aria-hidden />
-                      {(session.estimated_calories ?? 0).toLocaleString()} kcal
+                    <span className="inline-flex flex-col gap-1">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/70">Burned</span>
+                      <span className="inline-flex items-center gap-1.5 text-sm text-foreground"><Flame className="size-4 text-energy" aria-hidden />{(session.estimated_calories ?? 0).toLocaleString()} kcal</span>
                     </span>
                   </div>
                 </article>
