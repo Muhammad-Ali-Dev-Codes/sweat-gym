@@ -14,7 +14,7 @@ const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
 
 const StartSchema = z.object({
   workoutId: z.string().uuid(),
-  source: z.enum(["plan", "discover"]),
+  source: z.enum(["plan", "discover", "custom"]),
   planDayId: z.string().uuid().optional(),
 });
 
@@ -114,7 +114,7 @@ function toView(row: ExerciseSessionRow): WorkoutExerciseView {
  */
 export async function startWorkout(input: {
   workoutId: string;
-  source: "plan" | "discover";
+  source: "plan" | "discover" | "custom";
   planDayId?: string;
 }): Promise<StartWorkoutResult> {
   const parsed = StartSchema.safeParse(input);
