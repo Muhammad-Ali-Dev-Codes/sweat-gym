@@ -146,28 +146,23 @@ export function planningEquivalentKg(
 }
 
 /**
- * §6 Hard application data cap: at most 1,000 exercise kcal are RECOGNIZED
- * per calendar day. Not a recommended exercise target — never encourage
- * users to burn 1,000 kcal/day.
+ * Exercise calories are tracked as the actual estimated burn for each session.
+ * The app does not truncate values at a daily cap because the dashboard and
+ * reports should reflect the user's true workout effort.
  */
-export const EXERCISE_KCAL_DAILY_CAP = 1000;
+export const EXERCISE_KCAL_DAILY_CAP = Number.POSITIVE_INFINITY;
 
 /**
- * §6 Recognized exercise contribution for a session, given how much exercise
- * energy has already been recognized earlier the same day. A 1,250 kcal
- * workout estimate contributes 1,000 kcal (or less if the day is already
- * capped). Never displayed as a goal.
+ * Recognized exercise contribution for a session, preserving the estimate as-is.
+ * Any per-day aggregation happens in the reporting layer based on the actual
+ * session totals, without forcing a synthetic 1,000 kcal ceiling.
  */
 export function recognizeExerciseCalories(
   estimatedKcal: number,
   alreadyRecognizedTodayKcal = 0
 ): number {
   if (!Number.isFinite(estimatedKcal) || estimatedKcal <= 0) return 0;
-  const remainingToday = Math.max(
-    0,
-    EXERCISE_KCAL_DAILY_CAP - Math.max(0, alreadyRecognizedTodayKcal)
-  );
-  return Math.min(Math.round(estimatedKcal), remainingToday);
+  return Math.round(estimatedKcal);
 }
 
 /**

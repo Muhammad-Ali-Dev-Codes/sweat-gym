@@ -25,6 +25,7 @@ import {
 } from "@/services/plan";
 import { getProfile } from "@/services/onboarding";
 import { cn } from "@/lib/utils";
+import { planningEquivalentKg } from "@/lib/weight-loss";
 import { computeStreaks, getLocalDayKey } from "@/lib/dates";
 import { RegeneratePlanButton } from "./regenerate-plan-button";
 import { RecoverPlanButton } from "@/components/recover-plan-button";
@@ -289,6 +290,7 @@ export default async function DashboardPage() {
     (sum, s) => sum + Math.round((s.duration_seconds ?? 0) / 60),
     0
   );
+  const estimatedWeightLoss = planningEquivalentKg(totalCalories);
   const streak = computeStreak(sessions, timeZone);
   const week = buildWeekActivity(sessions, timeZone);
   const recentSessions = sessions.slice(0, 5);
@@ -554,6 +556,7 @@ export default async function DashboardPage() {
             entries={weights}
             targetWeight={targetWeight}
             timeZone={timeZone}
+            estimatedWeightLoss={estimatedWeightLoss}
           />
           <DashboardCalorieSummary
             calories={week.calories}
@@ -670,6 +673,14 @@ export default async function DashboardPage() {
               value={sessions.length.toLocaleString()}
               label="Workouts done"
             />
+            {estimatedWeightLoss > 0 && (
+              <StatBlock
+                icon={Target}
+                tone="text-rose-500 dark:text-rose-400"
+                value={estimatedWeightLoss.toFixed(1)}
+                label="Estimated loss"
+              />
+            )}
           </div>
         </section>
       </Reveal>
