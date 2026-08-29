@@ -67,9 +67,9 @@ export function AuthField({
           aria-invalid={invalid ? true : undefined}
           aria-describedby={invalid && describedBy ? describedBy : undefined}
           className={cn(
-            "h-11 w-full border-b-2 border-border bg-transparent pr-10 text-[15px] text-foreground outline-none transition-colors duration-200 placeholder:text-muted-foreground/60 focus:border-ring",
+            "h-11 w-full border-b-2 border-border bg-transparent pr-10 text-[15px] text-foreground outline-none transition-colors duration-200 placeholder:text-muted-foreground/60 focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-primary",
             icon && "pl-10",
-            invalid && "border-destructive"
+            invalid && "border-destructive focus:border-destructive"
           )}
         />
         {isPassword && (
