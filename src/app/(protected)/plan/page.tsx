@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getAuthUser } from "@/lib/supabase/auth-user";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import type {
   PlanDayWithWorkoutName,
   UserPlanDayBlock,
@@ -12,6 +13,7 @@ import { getGatedNextDay, repairPlanProgression, getActivePlan } from "@/service
 import { getProfile } from "@/services/onboarding";
 import { formatClock } from "@/lib/duration";
 import { cn } from "@/lib/utils";
+import { getPlanDayThumbnail } from "@/lib/plan-thumbnails";
 import {
   DAILY_SESSION_TARGET_KCAL,
   plannedDailyDeficitKcal,
@@ -64,6 +66,13 @@ export default async function PlanPage() {
     .reduce((sum, d) => sum + d.target_calories, 0);
   const nextUp = days.find((d) => d.status === "available") ?? null;
   const opensTomorrowDay = getGatedNextDay(days, timeZone);
+  const currentDayThumbnail =
+    nextUp?.day_number ?? (opensTomorrowDay !== null ? opensTomorrowDay : null);
+  const planDuration = plan ? (Number(plan.plan_duration_days) as PlanDurationDays) : 30;
+  const currentDayThumbnailSrc =
+    currentDayThumbnail && plan
+      ? getPlanDayThumbnail(currentDayThumbnail, planDuration)
+      : null;
 
   // Composed hour for the featured day: ordered videos summing to exactly
   // 3,600 s / 1,100 kcal at the uniform session rate.
@@ -171,30 +180,58 @@ export default async function PlanPage() {
               {nextUp ? (
                 <Link
                   href={`/workout?planDayId=${nextUp.id}&autoStart=1`}
-                  className="group relative flex w-full items-center gap-4 rounded-2xl border border-white/10 bg-white/8 p-4 backdrop-blur transition-all duration-300 outline-none hover:bg-white/12 focus-visible:ring-2 focus-visible:ring-white sm:ml-auto sm:w-auto sm:max-w-xs"
+                  className="group relative flex w-full items-center gap-4 rounded-2xl border border-white/10 bg-white/8 p-4 backdrop-blur transition-all duration-300 outline-none hover:bg-white/12 focus-visible:ring-2 focus-visible:ring-white sm:ml-auto sm:w-auto sm:max-w-[440px]"
                 >
-                  <span className="grid size-11 shrink-0 place-items-center rounded-full bg-white text-zinc-900 shadow-lg transition-transform duration-200 group-hover:scale-110 group-active:scale-95">
-                    <Play className="ml-0.5 size-4.5 fill-zinc-900" aria-hidden />
-                  </span>
-                  <span className="min-w-0">
-                    <span className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-amber-400">
-                      <span className="size-1.5 animate-pulse rounded-full bg-amber-400" />
-                      Up next · Day {nextUp.day_number}
+                  <div className="flex min-w-0 flex-1 items-center gap-4">
+                    <span className="grid size-11 shrink-0 place-items-center rounded-full bg-white text-zinc-900 shadow-lg transition-transform duration-200 group-hover:scale-110 group-active:scale-95">
+                      <Play className="ml-0.5 size-4.5 fill-zinc-900" aria-hidden />
                     </span>
-                    <span className="block truncate text-sm font-extrabold text-white">
-                      {nextUp.workouts?.name ?? "Today's workout"}
+                    <span className="min-w-0">
+                      <span className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-amber-400">
+                        <span className="size-1.5 animate-pulse rounded-full bg-amber-400" />
+                        Up next · Day {nextUp.day_number}
+                      </span>
+                      <span className="block truncate text-sm font-extrabold text-white">
+                        {nextUp.workouts?.name ?? "Today's workout"}
+                      </span>
                     </span>
-                  </span>
+                  </div>
+
+                  {currentDayThumbnailSrc && (
+                    <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-white/10 bg-black/10 shadow-lg shadow-black/20">
+                      <Image
+                        src={currentDayThumbnailSrc}
+                        alt={`Day ${nextUp.day_number} plan thumbnail`}
+                        fill
+                        className="object-cover"
+                        sizes="80px"
+                      />
+                    </div>
+                  )}
                 </Link>
               ) : opensTomorrowDay !== null ? (
-                <div className="flex w-full items-center gap-3 rounded-2xl border border-white/10 bg-white/8 p-4 backdrop-blur sm:ml-auto sm:w-auto sm:max-w-xs">
-                  <span className="grid size-11 shrink-0 place-items-center rounded-full bg-white/10 text-amber-400">
-                    <Lock className="size-4.5" aria-hidden />
-                  </span>
-                  <span className="text-xs font-semibold text-zinc-300">
-                    Day {opensTomorrowDay} unlocks tomorrow — you&apos;ve done
-                    your part today.
-                  </span>
+                <div className="flex w-full items-center gap-3 rounded-2xl border border-white/10 bg-white/8 p-4 backdrop-blur sm:ml-auto sm:w-auto sm:max-w-[440px]">
+                  <div className="flex min-w-0 flex-1 items-center gap-3">
+                    <span className="grid size-11 shrink-0 place-items-center rounded-full bg-white/10 text-amber-400">
+                      <Lock className="size-4.5" aria-hidden />
+                    </span>
+                    <span className="text-xs font-semibold text-zinc-300">
+                      Day {opensTomorrowDay} unlocks tomorrow — you&apos;ve done
+                      your part today.
+                    </span>
+                  </div>
+
+                  {currentDayThumbnailSrc && (
+                    <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-white/10 bg-black/10 shadow-lg shadow-black/20">
+                      <Image
+                        src={currentDayThumbnailSrc}
+                        alt={`Day ${opensTomorrowDay} plan thumbnail`}
+                        fill
+                        className="object-cover opacity-90"
+                        sizes="80px"
+                      />
+                    </div>
+                  )}
                 </div>
               ) : null}
             </div>

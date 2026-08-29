@@ -4,9 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import {
-  ArrowDown,
+  AlignJustify,
   ArrowLeft,
-  ArrowUp,
   Check,
   ChevronRight,
   Clock,
@@ -105,6 +104,11 @@ function PlanEditorDialog({ entries, planDayId, open, onClose }: { entries: Exer
     });
   }
 
+  function compactDisplayValue(draft: PlanDayExerciseEdit, isDuration: boolean) {
+    if (isDuration) return formatClock(draft.durationSeconds ?? 30);
+    return `x${draft.reps ?? 10}`;
+  }
+
   function removeDraft(index: number) {
     if (drafts.length <= 1) return;
     setDrafts((current) => current.filter((_, draftIndex) => draftIndex !== index));
@@ -186,51 +190,114 @@ function PlanEditorDialog({ entries, planDayId, open, onClose }: { entries: Exer
   return (
     <Dialog open={open} onOpenChange={(nextOpen) => { if (!nextOpen) onClose(); }}>
       <DialogPopup className="inset-0 m-0 flex h-dvh max-h-none w-full max-w-none flex-col overflow-y-auto rounded-none border-0 bg-background p-0">
-        <header className="sticky top-0 z-10 flex items-center gap-3 border-b border-border bg-background/95 px-4 py-4 backdrop-blur sm:px-6">
+        <header className="sticky top-0 z-10 flex items-center gap-3 border-b border-border bg-background/95 px-4 py-3 backdrop-blur sm:px-6">
           <DialogClose onClick={onClose} aria-label="Close edit plan" className="bg-transparent hover:bg-secondary"><ArrowLeft className="size-5" aria-hidden /></DialogClose>
-          <DialogTitle className="text-xl font-black tracking-tight text-foreground">Edit plan</DialogTitle>
+          <DialogTitle className="text-[22px] font-black tracking-[-0.04em] text-foreground">Edit plan</DialogTitle>
         </header>
         <div className="flex-1 overflow-y-auto">
-          <div className="mx-auto max-w-xl px-3 pb-6 sm:px-5">
+          <div className="mx-auto max-w-xl px-2 pb-5 sm:px-4">
           {entries.map((entry, index) => {
             const draft = drafts[index];
             const isDuration = draft.reps === null;
-            const canMoveUp = index > 0;
-            const canMoveDown = index < drafts.length - 1;
+            const exerciseName = replacementExercises[index]?.name ?? entry.exercises?.name ?? "Exercise";
+
             return (
               <div key={entry.id} className="border-b border-border py-3">
-                <div className="flex min-h-28 items-center gap-1.5 sm:gap-2.5">
-                  <div className="flex shrink-0 flex-col gap-1">
-                    <button type="button" onClick={() => moveDraft(index, -1)} disabled={!canMoveUp} aria-label={`Move ${entry.exercises?.name ?? "exercise"} up`} className="relative grid size-7 place-items-center rounded-md text-muted-foreground/60 transition-colors hover:bg-secondary hover:text-foreground disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring before:absolute before:-inset-2 before:content-['']"><ArrowUp className="size-4" aria-hidden /></button>
-                    <button type="button" onClick={() => moveDraft(index, 1)} disabled={!canMoveDown} aria-label={`Move ${entry.exercises?.name ?? "exercise"} down`} className="relative grid size-7 place-items-center rounded-md text-muted-foreground/60 transition-colors hover:bg-secondary hover:text-foreground disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring before:absolute before:-inset-2 before:content-['']"><ArrowDown className="size-4" aria-hidden /></button>
+                <div className="flex items-center gap-2 sm:gap-2.5">
+                  <div className="flex shrink-0 items-center text-muted-foreground/70">
+                    <AlignJustify className="size-4" aria-hidden />
                   </div>
-                  <div className="relative size-14 shrink-0 overflow-hidden rounded-lg bg-secondary sm:size-20">
-                    {replacementExercises[index]?.animation_url || entry.exercises?.animation_url ? <img src={replacementExercises[index]?.animation_url ?? entry.exercises?.animation_url ?? ""} alt="" className="size-full object-cover" /> : <span className="grid size-full place-items-center text-2xl font-black text-muted-foreground">{entry.exercises?.name?.charAt(0) ?? "E"}</span>}
+
+                  <div className="relative size-14 shrink-0 overflow-hidden rounded-xl bg-[#edf2f5] sm:size-16">
+                    {replacementExercises[index]?.animation_url || entry.exercises?.animation_url ? (
+                      <img src={replacementExercises[index]?.animation_url ?? entry.exercises?.animation_url ?? ""} alt="" className="size-full object-cover" />
+                    ) : (
+                      <span className="grid size-full place-items-center text-lg font-black text-muted-foreground">{exerciseName.charAt(0)}</span>
+                    )}
                   </div>
-                  <div className="min-w-0 flex-1 self-stretch py-1">
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="flex min-w-0 items-center gap-2">
-                        <h3 className="line-clamp-2 text-[13px] font-black uppercase leading-tight tracking-tight text-foreground sm:text-base">{replacementExercises[index]?.name ?? entry.exercises?.name ?? "Exercise"}</h3>
-                        <button type="button" onClick={() => removeDraft(index)} disabled={drafts.length <= 1} aria-label={`Remove ${entry.exercises?.name ?? "exercise"}`} className="shrink-0 rounded-full p-1.5 text-rose-600 transition-colors hover:bg-rose-50 hover:text-rose-700 disabled:pointer-events-none disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:text-rose-400 dark:hover:bg-rose-950"><Trash2 className="size-4" aria-hidden /></button>
-                      </div>
-                      <button type="button" onClick={() => void loadRecommendations(index)} aria-label={`Replace ${entry.exercises?.name ?? "exercise"}`} className="shrink-0 rounded-full p-1.5 text-teal-600 transition-colors hover:bg-teal-50 hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring dark:text-teal-400 dark:hover:bg-teal-950"><RefreshCw className="size-4" aria-hidden /></button>
+
+                  <div className="min-w-0 flex-1">
+                    <div className="flex min-h-[40px] items-center justify-between gap-2">
+                      <h3 className="line-clamp-2 min-w-0 flex-1 text-[12px] font-black uppercase leading-[1] tracking-[-0.04em] text-foreground sm:text-[15px]">
+                        {exerciseName}
+                      </h3>
+
+                      <button
+                        type="button"
+                        onClick={() => void loadRecommendations(index)}
+                        aria-label={`Replace ${exerciseName}`}
+                        className="grid size-7 shrink-0 place-items-center rounded-full border border-[#2ec4b6]/40 bg-[#ecfffd] text-[#2ec4b6] shadow-sm transition-colors hover:bg-[#dffdfa] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      >
+                        <RefreshCw className="size-3.5" aria-hidden />
+                      </button>
                     </div>
-                    <div className="mt-auto flex flex-wrap items-center gap-x-2.5 gap-y-2 pt-3">
-                      <span className="text-[11px] font-black uppercase tracking-wider text-muted-foreground">Sets</span>
-                      <Stepper value={draft.sets} onChange={(n) => updateDraft(index, "sets", n)} label={`sets for ${entry.exercises?.name ?? "exercise"}`} />
-                      {isDuration ? (
-                        <>
-                          <span className="text-[11px] font-black uppercase tracking-wider text-muted-foreground">Duration</span>
-                          <Stepper value={draft.durationSeconds ?? 30} display={formatClock(draft.durationSeconds ?? 30)} onChange={(n) => updateDraft(index, "durationSeconds", n)} label={`duration for ${entry.exercises?.name ?? "exercise"}`} />
-                        </>
-                      ) : (
-                        <>
-                          <span className="text-[11px] font-black uppercase tracking-wider text-muted-foreground">Reps</span>
-                          <Stepper value={draft.reps ?? 10} display={`x${draft.reps}`} onChange={(n) => updateDraft(index, "reps", n)} label={`reps for ${entry.exercises?.name ?? "exercise"}`} />
-                        </>
-                      )}
-                      <span className="text-[11px] font-black uppercase tracking-wider text-muted-foreground">Rest (s)</span>
-                      <Stepper value={draft.restSeconds} onChange={(n) => updateDraft(index, "restSeconds", n)} label={`rest for ${entry.exercises?.name ?? "exercise"}`} />
+
+                    <div className="mt-2 flex items-center gap-2">
+                      <div className="flex items-center gap-1.5 rounded-lg bg-secondary p-0.5">
+                        <button
+                          type="button"
+                          onClick={() => updateDraft(index, "sets", -1)}
+                          aria-label={`Decrease sets for ${exerciseName}`}
+                          className="grid size-6 place-items-center rounded-md text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        >
+                          <Minus className="size-3.5" aria-hidden />
+                        </button>
+                        <span className="min-w-[46px] text-center text-[12px] font-black uppercase tracking-[0.08em] text-foreground tabular-nums">
+                          {draft.sets ?? 1}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => updateDraft(index, "sets", 1)}
+                          aria-label={`Increase sets for ${exerciseName}`}
+                          className="grid size-6 place-items-center rounded-md text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        >
+                          <Plus className="size-3.5" aria-hidden />
+                        </button>
+                      </div>
+
+                      <div className="flex items-center gap-1.5 rounded-lg bg-secondary p-0.5">
+                        <button
+                          type="button"
+                          onClick={() => updateDraft(index, isDuration ? "durationSeconds" : "reps", -1)}
+                          aria-label={`Decrease ${isDuration ? "duration" : "reps"} for ${exerciseName}`}
+                          className="grid size-6 place-items-center rounded-md text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        >
+                          <Minus className="size-3.5" aria-hidden />
+                        </button>
+                        <span className="min-w-[58px] text-center text-[12px] font-black uppercase tracking-[0.08em] text-foreground tabular-nums">
+                          {compactDisplayValue(draft, isDuration)}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => updateDraft(index, isDuration ? "durationSeconds" : "reps", 1)}
+                          aria-label={`Increase ${isDuration ? "duration" : "reps"} for ${exerciseName}`}
+                          className="grid size-6 place-items-center rounded-md text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        >
+                          <Plus className="size-3.5" aria-hidden />
+                        </button>
+                      </div>
+
+                      <div className="flex items-center gap-1.5 rounded-lg bg-secondary p-0.5">
+                        <button
+                          type="button"
+                          onClick={() => updateDraft(index, "restSeconds", -5)}
+                          aria-label={`Decrease rest for ${exerciseName}`}
+                          className="grid size-6 place-items-center rounded-md text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        >
+                          <Minus className="size-3.5" aria-hidden />
+                        </button>
+                        <span className="min-w-[46px] text-center text-[12px] font-black uppercase tracking-[0.08em] text-foreground tabular-nums">
+                          {draft.restSeconds ?? 0}s
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => updateDraft(index, "restSeconds", 5)}
+                          aria-label={`Increase rest for ${exerciseName}`}
+                          className="grid size-6 place-items-center rounded-md text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        >
+                          <Plus className="size-3.5" aria-hidden />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
