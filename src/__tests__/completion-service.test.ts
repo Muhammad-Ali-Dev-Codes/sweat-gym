@@ -117,8 +117,8 @@ describe("finalizeWorkoutCompletion", () => {
     ).rejects.toThrow("Session not found");
   });
 
-  it("passes recognized (capped) calories to the RPC and maps the summary", async () => {
-    // One earlier session today already recognized 900 kcal -> only 100 remain.
+  it("passes the full estimated calories to the RPC and maps the summary without a daily truncation cap", async () => {
+    // Earlier same-day sessions should not shrink this workout's estimate.
     const { rpc } = setupSupabase({
       workoutSessionsSingle: SESSION,
       completedSameDay: [{ estimated_calories: 900 }],
@@ -143,13 +143,13 @@ describe("finalizeWorkoutCompletion", () => {
     expect(rpc).toHaveBeenCalledWith("complete_workout_session_rpc", {
       p_session_id: "s1",
       p_duration_seconds: 3600,
-      p_estimated_calories: 100, // 1000/day recognition cap enforced
+      p_estimated_calories: 1100,
       p_timezone: "UTC",
     });
     expect(summary.planDayCompleted).toBe(true);
     expect(summary.nextDayUnlocked).toBe(true);
     expect(summary.currentStreak).toBe(3);
-    expect(summary.calories).toBe(100);
+    expect(summary.calories).toBe(1100);
   });
 
   it("treats an RPC already_completed reply as an idempotent replay", async () => {

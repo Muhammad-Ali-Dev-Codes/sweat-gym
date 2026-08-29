@@ -50,12 +50,12 @@ export function DashboardCalorieSummary({
         ))}
       </dl>
 
-      <div className="mt-5 h-44 w-full">
+      <div className="mt-5 h-64 w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={chartData} margin={{ top: 8, right: 4, left: -18, bottom: 0 }}>
+          <LineChart data={chartData} margin={{ top: 8, right: 8, left: 28, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="currentColor" className="text-border" />
             <XAxis dataKey="label" tickLine={false} axisLine={false} tick={{ fontSize: 10 }} />
-            <YAxis allowDecimals={false} tickLine={false} axisLine={false} tick={{ fontSize: 10 }} width={36} domain={[0, "dataMax"]} />
+            <YAxis allowDecimals={false} tickLine={false} axisLine={false} tick={{ fontSize: 10 }} width={5} domain={[0, "dataMax"]} />
             <Tooltip contentStyle={CHART_TOOLTIP_STYLE} formatter={(value) => [`${Number(value).toLocaleString()} kcal`, "Burned"]} labelFormatter={(label) => label} />
             <Line type="monotone" dataKey="calories" stroke="var(--energy)" strokeWidth={2.5} dot={{ r: 3, strokeWidth: 2, fill: "var(--energy)" }} activeDot={{ r: 5 }} />
           </LineChart>

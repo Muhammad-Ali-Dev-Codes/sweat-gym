@@ -150,6 +150,12 @@ export function ReportsClient({ data }: ReportsClientProps) {
     return planningEquivalentKg(totalRecognized);
   }, [sessions, timeZone]);
 
+  // Estimated weight loss from all-time burned calories (7,700 kcal = 1 kg)
+  const estimatedWeightLoss = useMemo(
+    () => planningEquivalentKg(allTime.calories),
+    [allTime.calories]
+  );
+
   const insights = useMemo(
     () =>
       buildInsights({
@@ -310,7 +316,7 @@ export function ReportsClient({ data }: ReportsClientProps) {
           />
           {/* Weight logging still available for brand-new users */}
           <div className="mt-6 grid grid-cols-1">
-            <WeightProgressCard summary={weight} />
+            <WeightProgressCard summary={weight} estimatedWeightLoss={estimatedWeightLoss} />
           </div>
         </motion.div>
       ) : (
@@ -449,7 +455,7 @@ export function ReportsClient({ data }: ReportsClientProps) {
 
             {/* Weight progress + history + log form */}
             <motion.div variants={item} className="lg:col-span-2">
-              <WeightProgressCard summary={weight} />
+              <WeightProgressCard summary={weight} estimatedWeightLoss={estimatedWeightLoss} />
             </motion.div>
 
             {/* All-time totals */}

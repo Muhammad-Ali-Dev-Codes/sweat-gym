@@ -27,10 +27,12 @@ export function DashboardWeightInsights({
   entries,
   targetWeight,
   timeZone,
+  estimatedWeightLoss,
 }: {
   entries: WeightEntry[];
   targetWeight: number | null;
   timeZone: string;
+  estimatedWeightLoss?: number;
 }) {
   const [rangeKey, setRangeKey] = useState<WeightRangeKey>("30");
   const allSummary = useMemo(() => weightSummary(entries, targetWeight, timeZone), [entries, targetWeight, timeZone]);
@@ -80,6 +82,7 @@ export function DashboardWeightInsights({
             ["Current", `${allSummary.currentWeight.toFixed(1)} kg`],
             ["Start", `${allSummary.startWeight.toFixed(1)} kg`],
             ["Target", targetWeight === null ? "—" : `${targetWeight.toFixed(1)} kg`],
+            ...(estimatedWeightLoss && estimatedWeightLoss > 0 ? [["Est. loss", `~${estimatedWeightLoss.toFixed(1)} kg*`]] : []),
             ["Change", `${allSummary.totalChange > 0 ? "+" : ""}${allSummary.totalChange.toFixed(1)} kg`],
           ].map(([label, value]) => (
             <div key={label} className="rounded-xl bg-secondary/70 px-3 py-2.5">
@@ -136,6 +139,12 @@ export function DashboardWeightInsights({
           </span>
         )}
       </div>
+
+      {estimatedWeightLoss && estimatedWeightLoss > 0 && (
+        <p className="mt-3 text-xs font-medium text-muted-foreground italic">
+          * Est. loss assumes 7,700 kcal ≈ 1 kg. Actual weight depends on diet, water retention, and time.
+        </p>
+      )}
     </section>
   );
 }

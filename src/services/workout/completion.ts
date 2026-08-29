@@ -74,17 +74,10 @@ export async function finalizeWorkoutCompletion(params: {
   // Uniform product burn rate: a full 60-minute session = 1,100 kcal.
   const rawCalories = estimateCalories(durationSeconds);
 
-  // §6 Exercise-recognition cap: at most 1,000 exercise kcal are recognized
-  // per calendar day (hard data cap, NOT a recommended target). Earlier
-  // sessions today reduce what this session contributes. Exercise calories
-  // are NOT total expenditure and NOT an energy deficit (§7).
-  const recognizedCalories = await recognizeDailyCappedCalories(
-    supabase,
-    params.userId,
-    session.started_at,
-    timeZone,
-    rawCalories
-  );
+  // Keep the full estimated burn for this session. The dashboard and reports
+  // should reflect the actual workout effort without imposing a synthetic
+  // 1,000 kcal daily ceiling.
+  const recognizedCalories = recognizeExerciseCalories(rawCalories);
 
   const { data: rpcData, error: rpcError } = await supabase.rpc(
     "complete_workout_session_rpc",
@@ -123,48 +116,3 @@ export async function finalizeWorkoutCompletion(params: {
   };
 }
 
-/**
- * Raw session estimate capped by the remaining daily exercise-recognition
- * budget (1,000 kcal/day across all sessions on that session's local day).
- */
-async function recognizeDailyCappedCalories(
-  supabase: Awaited<ReturnType<typeof createClient>>,
-  userId: string,
-  startedAt: string | null,
-  timeZone: string,
-  rawCalories: number
-): Promise<number> {
-  // Anchor the cap to the session's own calendar day, falling back to today
-  // when the session has no start timestamp.
-  const anchor = startedAt ?? new Date().toISOString();
-  const dayKey = getLocalDayKey(anchor, timeZone);
-
-  const dayStartIso = toIsoStartOfDay(dayKey);
-  const dayEndIso = toIsoStartOfDay(shiftOneDay(dayKey));
-
-  const { data: rows } = await supabase
-    .from("workout_sessions")
-    .select("completed_at, estimated_calories")
-    .eq("user_id", userId)
-    .eq("status", "completed")
-    .gte("completed_at", dayStartIso)
-    .lt("completed_at", dayEndIso);
-
-  const alreadyRecognized = (rows ?? []).reduce(
-    (sum, r) => sum + (r.estimated_calories ?? 0),
-    0
-  );
-
-  return recognizeExerciseCalories(rawCalories, alreadyRecognized);
-}
-
-/** UTC instant of a local day key's midnight (best-effort; DST skews are acceptable for capping). */
-function toIsoStartOfDay(dayKey: string): string {
-  const [y, m, d] = dayKey.split("-").map(Number);
-  return new Date(Date.UTC(y, m - 1, d, 0, 0, 0)).toISOString();
-}
-
-function shiftOneDay(dayKey: string): string {
-  const [y, m, d] = dayKey.split("-").map(Number);
-  return new Date(Date.UTC(y, m - 1, d + 1)).toISOString().slice(0, 10);
-}

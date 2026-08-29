@@ -320,20 +320,20 @@ describe("one-hour session rule (60 min = 1,100 kcal)", () => {
 });
 
 describe("exercise calorie recognition cap (§6)", () => {
-  it("caps a single 1,250 kcal workout at 1,000 recognized kcal", () => {
-    expect(recognizeExerciseCalories(1250)).toBe(1000);
+  it("passes through a single workout estimate above 1,000 kcal without truncation", () => {
+    expect(recognizeExerciseCalories(1250)).toBe(1250);
   });
 
   it("passes through estimates below the cap", () => {
     expect(recognizeExerciseCalories(350)).toBe(350);
   });
 
-  it("reduces recognition by what earlier sessions already used today", () => {
-    expect(recognizeExerciseCalories(600, 700)).toBe(300);
+  it("does not reduce recognition based on prior activity in the same day", () => {
+    expect(recognizeExerciseCalories(600, 700)).toBe(600);
   });
 
-  it("recognizes nothing once the day is fully capped", () => {
-    expect(recognizeExerciseCalories(400, EXERCISE_KCAL_DAILY_CAP)).toBe(0);
+  it("does not cap a full-day total at 1,000 kcal", () => {
+    expect(recognizeExerciseCalories(400, EXERCISE_KCAL_DAILY_CAP)).toBe(400);
   });
 
   it("never recognizes negative or invalid estimates", () => {
@@ -345,7 +345,7 @@ describe("exercise calorie recognition cap (§6)", () => {
 describe("per-day recognition across sessions (§6/§7)", () => {
   const dayKey = (iso: string) => iso.slice(0, 10);
 
-  it("caps each local day independently at 1,000 kcal", () => {
+  it("sums each day independently without a 1,000 kcal cap", () => {
     const byDay = recognizedExerciseKcalByDay(
       [
         { completed_at: "2026-01-01T08:00:00Z", estimated_calories: 700 },
@@ -354,8 +354,8 @@ describe("per-day recognition across sessions (§6/§7)", () => {
       ],
       dayKey
     );
-    expect(byDay.get("2026-01-01")).toBe(1000); // 700 + capped 300
-    expect(byDay.get("2026-01-02")).toBe(1000); // 1250 capped to 1000
+    expect(byDay.get("2026-01-01")).toBe(1300);
+    expect(byDay.get("2026-01-02")).toBe(1250);
   });
 
   it("ignores sessions without a completion time", () => {
