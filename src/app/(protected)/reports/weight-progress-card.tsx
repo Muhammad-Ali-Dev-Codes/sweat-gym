@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useTransition, useEffect } from "react";
+import { useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import {
   Line,
@@ -15,7 +15,7 @@ import { motion } from "motion/react";
 import { Scale, Check, Loader2 } from "lucide-react";
 import { AnimatedNumber } from "@/components/ui/animated-number";
 import type { WeightSummary } from "@/lib/reports/calculate";
-import { logWeight, autoUpdateWeightFromCalories } from "@/app/actions/weight";
+import { logWeight } from "@/app/actions/weight";
 import { CHART_TOOLTIP_STYLE } from "./chart-theme";
 import { cn } from "@/lib/utils";
 
@@ -32,33 +32,7 @@ export function WeightProgressCard({ summary, estimatedWeightLoss }: WeightCardP
   const [loggingWeight, setLoggingWeight] = useState(false);
   const [weightLogged, setWeightLogged] = useState(false);
   const [weightError, setWeightError] = useState<string | null>(null);
-  const [autoUpdateAttempted, setAutoUpdateAttempted] = useState(false);
   const [, startTransition] = useTransition();
-
-  // Auto-update weight on mount if estimated loss available
-  useEffect(() => {
-    // Only attempt once per component mount
-    if (autoUpdateAttempted) return;
-    if (!summary || estimatedWeightLoss == null || estimatedWeightLoss <= 0) return;
-
-    setAutoUpdateAttempted(true);
-
-    const performAutoUpdate = async () => {
-      try {
-        const result = await autoUpdateWeightFromCalories();
-        if (result.success && result.newWeight) {
-          console.log("Auto-updated weight to:", result.newWeight);
-          startTransition(() => router.refresh());
-        } else {
-          console.log("Auto-update result:", result.error);
-        }
-      } catch (err) {
-        console.error("Auto-update error:", err);
-      }
-    };
-
-    performAutoUpdate();
-  }, []);
 
   const chartData = useMemo(
     () =>
