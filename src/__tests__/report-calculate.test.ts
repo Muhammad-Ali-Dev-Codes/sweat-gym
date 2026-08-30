@@ -11,6 +11,7 @@ import {
   compareMetric,
   streakInfo,
   EMPTY_SUMMARY,
+  sumEstimatedCalories,
 } from "@/lib/reports/calculate";
 
 const TZ = "UTC";
@@ -39,6 +40,26 @@ const RANGE_WEEK = {
   endDayKey: "2026-08-22",
   days: 7,
 };
+
+describe("sumEstimatedCalories", () => {
+  it("matches the report summary total across all sessions", () => {
+    const sessions = [
+      session("a", "2026-08-17T09:00:00Z", 20, 100),
+      session("b", "2026-08-18T14:00:00Z", 30, 150),
+      session("c", "2026-08-18T18:00:00Z", 10, 50),
+      session("d", "2026-08-19T10:00:00Z", 25, 311),
+    ];
+
+    const allTime = summarizeSessions(
+      sessions,
+      { key: "allTime", startDayKey: null, endDayKey: "2026-08-19", days: null },
+      TZ
+    );
+
+    expect(sumEstimatedCalories(sessions)).toBe(611);
+    expect(allTime.calories).toBe(611);
+  });
+});
 
 describe("summarizeSessions", () => {
   it("returns the zero summary for no workouts (no NaN)", () => {
