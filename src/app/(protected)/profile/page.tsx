@@ -448,7 +448,7 @@ export default function ProfilePage() {
 
             <div className="min-w-0 flex-1">
               <h2 className="truncate text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
-                {firstName}
+                {displayName}
               </h2>
               <p className="mt-0.5 truncate text-sm text-zinc-400">{getMotivation(streak, training.sessions)}</p>
               <div className="mt-3 flex flex-wrap items-center gap-2">

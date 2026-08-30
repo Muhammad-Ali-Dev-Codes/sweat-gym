@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { getAuthUser } from "@/lib/supabase/auth-user";
 import { redirect } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import {
   Flame,
@@ -32,6 +33,8 @@ import { RecoverPlanButton } from "@/components/recover-plan-button";
 import { DashboardWeightInsights } from "./dashboard-weight-insights";
 import { DashboardCalorieInsights } from "./dashboard-calorie-insights";
 import { DashboardCalorieSummary } from "./dashboard-calorie-summary";
+import { getPlanDayThumbnail } from "@/lib/plan-thumbnails";
+import { sumEstimatedCalories } from "@/lib/reports/calculate";
 import type { ReactNode } from "react";
 import type {
   FitnessProfile,
@@ -98,6 +101,11 @@ function localHourAndWeekday(
 function getFirstName(fullName: string | undefined): string {
   const first = fullName?.trim().split(/\s+/)[0];
   return first || "Athlete";
+}
+
+function getDisplayName(fullName: string | undefined): string {
+  const trimmed = fullName?.trim();
+  return trimmed || "Athlete";
 }
 
 function computeStreak(sessions: SessionRow[], timeZone: string): number {
@@ -276,16 +284,14 @@ export default async function DashboardPage() {
   // be null when we arrived via the active-plan fallback, but in that case the
   // profile row must exist (plan generation requires it).
   const firstName = getFirstName(profile?.full_name);
+  const displayName = getDisplayName(profile?.full_name);
   // Greeting and daily motivation follow the member's local calendar.
   const timeZone = profile?.timezone || "UTC";
   const { hour: localHour, weekday: localWeekday } = localHourAndWeekday(new Date(), timeZone);
   const greeting = getGreeting(localHour);
   const motivation = MOTIVATIONS[localWeekday];
 
-  const totalCalories = sessions.reduce(
-    (sum, s) => sum + (s.estimated_calories ?? 0),
-    0
-  );
+  const totalCalories = sumEstimatedCalories(sessions);
   const totalMinutes = sessions.reduce(
     (sum, s) => sum + Math.round((s.duration_seconds ?? 0) / 60),
     0
@@ -316,6 +322,11 @@ export default async function DashboardPage() {
       ? "Recovery day — see you tomorrow"
       : "Recovery day — you earned it"
     : currentDay?.workouts?.name ?? "Today's Workout";
+  const planDuration = plan ? (Number(plan.plan_duration_days) as 30 | 60 | 90) : 30;
+  const currentWorkoutImage =
+    currentDay && plan
+      ? getPlanDayThumbnail(currentDay.day_number, planDuration)
+      : null;
 
   return (
     <div className="space-y-14 font-[family-name:var(--font-geist-sans)] sm:space-y-20">
@@ -331,7 +342,7 @@ export default async function DashboardPage() {
                 {greeting}
               </p>
               <h1 className="mt-3 text-5xl font-black leading-none tracking-tighter text-foreground sm:text-6xl">
-                {firstName}.
+                {displayName}.
               </h1>
               <div className="mt-4 flex flex-wrap items-center gap-3">
                 <p className="text-sm font-medium text-muted-foreground sm:text-base">
@@ -412,77 +423,95 @@ export default async function DashboardPage() {
                 }
                 className="titan-card group relative block overflow-hidden p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg sm:p-8"
               >
-                <div className="flex flex-wrap items-center gap-2">
-                  {!isRecoveryDay && (
-                    <span className="rounded-md bg-energy/10 px-2.5 py-1 text-xs font-extrabold uppercase tracking-wider text-energy tabular-nums">
-                      Day {currentDay.day_number}
-                      <span className="font-semibold opacity-60">
-                        {" "}
-                        / {planDays.length || DEFAULT_PLAN_DAYS}
-                      </span>
-                    </span>
-                  )}
-                  {isRecoveryDay ? (
-                    gatedNextDay !== null ? (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground">
-                        <Clock className="size-3" aria-hidden />
-                        Day {gatedNextDay} unlocks tomorrow — see you then
-                      </span>
-                    ) : (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground">
-                        <Trophy className="size-3" aria-hidden />
-                        Recovery — explore something new
-                      </span>
-                    )
-                  ) : currentDay.status === "in_progress" ? (
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground">
-                      <span className="size-1.5 animate-pulse rounded-full bg-energy" />
-                      In progress
-                    </span>
-                  ) : null}
-                </div>
+                <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_240px] xl:items-center">
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      {!isRecoveryDay && (
+                        <span className="rounded-md bg-energy/10 px-2.5 py-1 text-xs font-extrabold uppercase tracking-wider text-energy tabular-nums">
+                          Day {currentDay.day_number}
+                          <span className="font-semibold opacity-60">
+                            {" "}
+                            / {planDays.length || DEFAULT_PLAN_DAYS}
+                          </span>
+                        </span>
+                      )}
+                      {isRecoveryDay ? (
+                        gatedNextDay !== null ? (
+                          <span className="inline-flex items-center gap-1 rounded-full bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground">
+                            <Clock className="size-3" aria-hidden />
+                            Day {gatedNextDay} unlocks tomorrow — see you then
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 rounded-full bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground">
+                            <Trophy className="size-3" aria-hidden />
+                            Recovery — explore something new
+                          </span>
+                        )
+                      ) : currentDay.status === "in_progress" ? (
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground">
+                          <span className="size-1.5 animate-pulse rounded-full bg-energy" />
+                          In progress
+                        </span>
+                      ) : null}
+                    </div>
 
-                <h2 className="mt-5 max-w-xl text-3xl font-black leading-[1.02] tracking-tight text-foreground sm:text-4xl">
-                  {heroTitle}
-                </h2>
+                    <h2 className="mt-5 max-w-xl text-3xl font-black leading-[1.02] tracking-tight text-foreground sm:text-4xl">
+                      {heroTitle}
+                    </h2>
 
-                <div className="mt-5 flex flex-wrap items-center gap-2 text-sm font-medium text-muted-foreground">
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1.5 tabular-nums">
-                    <Clock className="size-4" aria-hidden />
-                    {formatClock(currentDay.target_duration_seconds)}
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1.5 tabular-nums">
-                    <Flame className="size-4 text-energy" aria-hidden />
-                    {currentDay.target_calories.toLocaleString()} kcal
-                  </span>
-                </div>
-
-                  <div className="mt-6 max-w-sm">
-                    <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-                      <span>Plan progress</span>
-                      <span className="tabular-nums text-foreground">
-                        {progressPercent}%
+                    <div className="mt-5 flex flex-wrap items-center gap-2 text-sm font-medium text-muted-foreground">
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1.5 tabular-nums">
+                        <Clock className="size-4" aria-hidden />
+                        {formatClock(currentDay.target_duration_seconds)}
+                      </span>
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1.5 tabular-nums">
+                        <Flame className="size-4 text-energy" aria-hidden />
+                        {currentDay.target_calories.toLocaleString()} kcal
                       </span>
                     </div>
-                    <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-muted">
-                      <div
-                        className="h-full rounded-full bg-gradient-to-r from-orange-600 to-amber-400 transition-all duration-700"
-                        style={{ width: `${progressPercent}%` }}
+
+                    <div className="mt-6 max-w-sm">
+                      <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                        <span>Plan progress</span>
+                        <span className="tabular-nums text-foreground">
+                          {progressPercent}%
+                        </span>
+                      </div>
+                      <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-muted">
+                        <div
+                          className="h-full rounded-full bg-gradient-to-r from-orange-600 to-amber-400 transition-all duration-700"
+                          style={{ width: `${progressPercent}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="mt-7 flex items-center gap-3">
+                      <span className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-600 to-orange-500 px-7 py-3 text-base font-bold text-white shadow-lg shadow-orange-600/30 transition-transform duration-200 group-hover:scale-105 group-active:scale-95">
+                        <Zap className="size-5 fill-white" aria-hidden />
+                        {ctaLabel ?? "Explore extra workouts"}
+                      </span>
+                      <ChevronRight
+                        className="size-6 text-muted-foreground transition-transform duration-200 group-hover:translate-x-1"
+                        aria-hidden
                       />
                     </div>
                   </div>
 
-                  <div className="mt-7 flex items-center gap-3">
-                    <span className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-600 to-orange-500 px-7 py-3 text-base font-bold text-white shadow-lg shadow-orange-600/30 transition-transform duration-200 group-hover:scale-105 group-active:scale-95">
-                      <Zap className="size-5 fill-white" aria-hidden />
-                      {ctaLabel ?? "Explore extra workouts"}
-                    </span>
-                    <ChevronRight
-                      className="size-6 text-muted-foreground transition-transform duration-200 group-hover:translate-x-1"
-                      aria-hidden
-                    />
-                  </div>
-                </Link>
+                  {currentWorkoutImage && (
+                    <div className="relative h-40 overflow-hidden rounded-2xl border border-border/80 bg-muted shadow-inner sm:h-52 xl:h-full xl:min-h-[220px]">
+                      <Image
+                        src={currentWorkoutImage}
+                        alt={heroTitle}
+                        fill
+                        priority
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-width: 1280px) 100vw, 240px"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+                    </div>
+                  )}
+                </div>
+              </Link>
               ) : plan && allDaysDone ? (
                 <div className="titan-card relative overflow-hidden p-6 sm:p-8">
                   <span className="inline-flex items-center gap-2 rounded-md bg-amber-500/10 px-2.5 py-1 text-xs font-extrabold uppercase tracking-wider text-amber-600 dark:text-amber-400">

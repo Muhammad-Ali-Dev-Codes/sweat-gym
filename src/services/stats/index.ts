@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { computeStreaks } from "@/lib/dates";
+import { sumEstimatedCalories } from "@/lib/reports/calculate";
 
 export interface WorkoutStats {
   totalCompletedWorkouts: number;
@@ -53,10 +54,7 @@ export async function getWorkoutStats(
       estimated_calories: number | null;
     }[] | null) ?? [];
 
-  const totalCalories = sessions.reduce(
-    (sum, s) => sum + (s.estimated_calories ?? 0),
-    0
-  );
+  const totalCalories = sumEstimatedCalories(sessions);
   const totalSeconds = sessions.reduce(
     (sum, s) => sum + (s.duration_seconds ?? 0),
     0

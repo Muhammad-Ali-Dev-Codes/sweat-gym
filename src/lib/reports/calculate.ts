@@ -80,6 +80,10 @@ export function sessionsInRange<T extends ReportSession>(
   });
 }
 
+export function sumEstimatedCalories(sessions: readonly Pick<ReportSession, "estimated_calories">[]): number {
+  return sessions.reduce((sum, s) => sum + (s.estimated_calories ?? 0), 0);
+}
+
 export function summarizeSessions(
   sessions: readonly ReportSession[],
   range: Pick<ReportRange, "startDayKey" | "endDayKey" | "days" | "key">,
@@ -104,7 +108,7 @@ export function summarizeSessions(
   return {
     workouts: scoped.length,
     minutes,
-    calories: scoped.reduce((sum, s) => sum + (s.estimated_calories ?? 0), 0),
+    calories: sumEstimatedCalories(scoped),
     activeDays,
     avgMinutes: Math.round(minutes / scoped.length),
     longestSessionMinutes: Math.max(...durations),
